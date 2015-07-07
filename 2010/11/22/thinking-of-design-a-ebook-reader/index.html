@@ -1,0 +1,643 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="零碎的笔记" />
+
+
+
+  <meta name="keywords" content="Android,eBook," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: 'UA-49960399-2'
+    },
+    sidebar: 'hide'
+  };
+</script>
+
+
+
+
+  <title> 关于电子阅读软件的一些想法 // Xiaoke's Blog </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Xiaoke's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              关于电子阅读软件的一些想法
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2010-11-22
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Thoughts/">Thoughts</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2010/11/22/thinking-of-design-a-ebook-reader/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2010/11/22/thinking-of-design-a-ebook-reader/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>这是今天发在Twitter上的一些关于电子阅读软件设计和开发的一些想法的集合，分为三个部分，一是Android平台一些阅读软件的简单评测，而是电子阅读软件的功能需求分析，三是电子阅读软件UI设计原则的思考。</p>
+<p><strong>一、Android平台阅读软件的简单评测</strong></p>
+<ul>
+<li>91熊猫看书：启动速度慢，还要显示黑屏的LOGO，界面切换有点卡，本地书库只能载入指定路径的文件，书籍载入速度慢，按MENU键会显示系统状态栏，设置界面丑陋，系统空间和自定义颜色不协调，阅读界面无法滑动翻页</li>
+<li>iReader：无法上下拖拽阅读，无法点击翻页，设置项过多，过于分散，而且全都在一个界面杂乱不清晰，无法直接呼出常用选项，背景图片选择界面没有缩略图预览，主题只有白天和夜晚选项，没有字间距选项</li>
+<li>开卷有益：不支持ePub格式，下方快捷图标功能不够明确没有提示，默认字体过大，默认主题模板没有预览，其它方面没有太突出的缺点</li>
+<li>星际读书：界面较为美观，但菜单是iPhone风格，不符合Android的UI设计规范，书籍打开速度过慢，章节切换速度缓慢，只支持ePub格式，设置项层次过深，不直观，无法拖拽浏览，快捷图标没有说明功能不明确，不支持背景图片</li>
+<li>风行阅读：草色界面利于阅读，背景图片无法自定义，不支持ePub，无法批量导入书籍到书库，无法显示字间距，无法自定义背景图片，无法自动浏览，无法拖拽浏览，没有全文搜索</li>
+<li>My Books 阅读：<br>很简陋，书籍目录更改不方便，无法直接浏览文件，没有说明支持何种格式，书籍没有导入成功，阅读功能无法测试</li>
+<li>Aldiko<br>Reader：默认屏幕亮度100%，不人性化，章节切换过慢，设置预览界面简陋，不支持自定义本地文件导入目录，网络书城无法记录浏览位置和浏览记录，不支持拖拽浏览，不支持背景图片</li>
+<li>Laputa<br>Pro：界面较为美观，设置项不直观，不支持拖拽浏览，不支持背景设置，不支持间距设置，不支持自动浏览，不支持全文搜索</li>
+<li>FBReaderJ，是多平台的，还有PC版本，支持ePub，HTM和TXT，支持在线书库，各方面还算不错，但是本地书库文件过多时会卡死</li>
+<li>GGBook：默认扫描整个SD卡，不支持自定义目录，文件较多时添加书籍界面卡斯，点击某些书籍出现乱码，有时会强制关闭，与阅读有关的设置项过少，优点是同时支持拖拽，滑动和点击三种手势</li>
+<li>静读天下：国产阅读软件的新秀，设置项过于密集，层次较多，操作不便，下方图标同样没有功能说明，起始界面，设置界面与阅读界面为三种配色，风格不统一，<br>不能滑动翻页，不支持字间距</li>
+<li>iSilo：这是个比较特别的阅读软件，全平台都有，支持iSilo格式，Palm格式和TXT，还有文本编辑器的功能，但作为阅读软件功能简陋了点，对中文支持不好，无法自动识别编码，优点是速度快</li>
+</ul>
+<p>上面列举的软件几乎都缺少的功能包括：拖拽浏览，自动浏览，睡眠模式，压缩文件支持，HTML格式支持，背景图片设置。</p>
+<p><strong>二、基于以上对各个阅读软件优缺点分析，总结出的电子阅读软件的功能需求</strong></p>
+<p>阅读软件的功能分为两大块：</p>
+<pre><code><span class="bullet">1. </span>操作，与浏览，文件，系统，网络有关的功能 
+<span class="bullet">2. </span>样式，与字体，背景，颜色等有关的功能
+</code></pre><p>阅读软件基本功能需求：</p>
+<pre><code><span class="bullet">1. </span>文件浏览，包括打开本地文件，导入本地书籍，本地文件的复制粘贴，删除，导入，目录浏览；
+<span class="bullet">2. </span>阅读记录，包括阅读位置记录，书签管理，目录管理，章节提取；
+<span class="bullet">3. </span>文本功能，包括进度跳转，全文搜索，文字复制和分享
+<span class="bullet">4. </span>阅读手势，包括拖拽浏览，点击翻页，滑动翻页，翻页特效以及其它快捷手势操作；
+<span class="bullet">5. </span>支持格式，应该多样化，国内的至少应该支持TXT，Umd，Brm，ePub，Html，另外可能的话应该支持MOBI，iSilo，PDF，PDB等格式
+<span class="bullet">6. </span>主题功能，包括背景和字体颜色，字体大小，字间距行间距，背景图片，字体样式，阅读特效等；
+<span class="bullet">7. </span>其它功能，包括自动浏览，夜间模式，古文模式(竖式排版)，睡眠模式，屏幕旋转，文字编码，章节提取等
+<span class="bullet">8. </span>在线阅读，一个好的阅读软件应该支持在线阅读，包括网页的阅读，网络书城的书籍阅读；
+<span class="bullet">9. </span>书籍下载，内置书城，或者搜索下载；
+<span class="bullet">10. </span>图片浏览，支持漫画阅读，网页图片浏览；
+<span class="bullet">11. </span>压缩文件支持，一般移动设备都支持zip格式
+</code></pre><p><strong>三、阅读软件的UI设计原则</strong></p>
+<p>阅读软件UI设计要求：</p>
+<pre><code><span class="bullet">1. </span>功能突出，既然是阅读软件，阅读当然是最重要的功能，所以阅读界面的美观就非常重要，在功能同质化的年代，要吸引用户，界面很重要；
+<span class="bullet">2. </span>操作方便，常用的操作要直观方便，分类要清晰，层次不能过多，与阅读相关的设置要能即时预览效果
+<span class="bullet">3. </span>界面统一，软件的多个界面UI设计思路和风格要统一，要让人感觉到这是同一个软件，不能有突兀感，包括配色和布局都要规范，还要符合特定平台的UI设计原则，比如Symbia，Android和iPhone的UI显然是不同的
+<span class="bullet">4. </span>简洁明晰，所有的功能都应该有明确的说明和提示，图标设计应该直观的体现出它代表的功能，应该有详细的帮助说明和操作提示，所有可选的功能都应该可以关闭，对于触摸屏，所有的功能应该设计为既可以全部通过触摸操作完成，也可以使用菜单操作
+</code></pre><p>目前国内的阅读软件在功能方便都做得还不错，但普遍缺点是操作不够方便，不能即时预览设置，不支持国际通用格式。记下这些想法，为以后的开发做参考。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/"> #Android </a>
+          
+            <a href="/tags/eBook/"> #eBook </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2010/11/22/android-apk-files-decompile-how-to/">Android程序反编译流程</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2010/11/03/android-get-phone-and-network-info/">Android中检测手机网络类型</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2010/11/22/thinking-of-design-a-ebook-reader/"
+               data-title="关于电子阅读软件的一些想法" data-url="http://mcxiaoke/2010/11/22/thinking-of-design-a-ebook-reader/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="mcxiaoke" />
+          <p class="site-author-name">mcxiaoke</p>
+        </div>
+        <p class="site-description motion-element">零碎的笔记</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/mcxiaoke" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.douban.com/people/doiv" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://mcxiaoke.com/" target="_blank">Home</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">Links</p>
+            
+              <span class="links-of-author-item">
+              <a href="http://moment.douban.com/app/" target="_blank">豆瓣一刻</a>
+              </span>
+            
+          
+        </div>
+        
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2007 - 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">mcxiaoke</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"mcxiaoke"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/js/analytics_google-analytics.js?v=0.4.3"></script>
+
+
+</body>
+</html>

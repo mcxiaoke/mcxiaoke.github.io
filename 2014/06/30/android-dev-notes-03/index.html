@@ -1,0 +1,625 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="零碎的笔记" />
+
+
+
+  <meta name="keywords" content="Android,Tips," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: 'UA-49960399-2'
+    },
+    sidebar: 'hide'
+  };
+</script>
+
+
+
+
+  <title> Android开发杂记（三） // Xiaoke's Blog </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Xiaoke's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Android开发杂记（三）
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2014-06-30
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Android/">Android</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/06/30/android-dev-notes-03/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/06/30/android-dev-notes-03/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>这是另一部分的Android开发笔记整理</p>
+<h3 id="如何完全不显示一个Activity的UI">如何完全不显示一个Activity的UI</h3><p>可以使用 <code>android:theme=&quot;@android:style/Theme.NoDisplay&quot;</code> 但是有一个注意事项，见<br><a href="http://stackoverflow.com/questions/4551868/how-to-completely-get-rid-of-an-activitys-gui-avoid-a-black-screen" target="_blank" rel="external">how to completely get rid of an activity’s GUI</a></p>
+<h3 id="如何移除ActionBar底部的阴影">如何移除ActionBar底部的阴影</h3><p>自定义ActionBar的Style，使用 <code>&lt;item name=&quot;android:windowContentOverlay&quot;&gt;@null&lt;/item&gt;</code> 如果是使用ActionBarSherlock或ActionBarCompat，还需要添加 <code>&lt;item name=&quot;windowContentOverlay&quot;&gt;@null&lt;/item&gt;</code>，参考：<a href="http://stackoverflow.com/questions/11448679/how-can-i-have-a-drop-shadow-on-my-actionbar-actionbarsherlock" target="_blank" rel="external">How can I have a drop shadow on my ActionBar</a></p>
+<h3 id="使用Gradle时私密存储签名密钥">使用Gradle时私密存储签名密钥</h3><p>参考这个Gist：<a href="https://gist.github.com/mcxiaoke/8450376" target="_blank" rel="external">build.gradle</a></p>
+<h3 id="透明的Activity退出后，没有真正finish的问题">透明的Activity退出后，没有真正finish的问题</h3><p>具体见 <a href="http://blog.sina.com.cn/s/blog_601cbd070100npf8.html" target="_blank" rel="external">这里的分析</a><br>android:windowShowWallpaper = true的作用，这并不是在后面显示桌面，是配置Activity的背景为桌面背景</p>
+<h3 id="Background和Seletor必须使用真实的Drawable">Background和Seletor必须使用真实的Drawable</h3><p>否则，有些三星和摩托的机子上会没有背景，显示纯黑色，定义在colors.xml里的伪drawble不行</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">color</span> <span class="attribute">name</span>=<span class="value">"mail_published_time_color"</span>&gt;</span>#bcbcbc<span class="tag">&lt;/<span class="title">color</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">drawable</span> <span class="attribute">name</span>=<span class="value">"ab_bg_black"</span>&gt;</span>#aa191919<span class="tag">&lt;/<span class="title">drawable</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>必须是真实的图片drawable或者定义好的shape</p>
+<h3 id="合并多个git仓库，保留commit记录的方法">合并多个git仓库，保留commit记录的方法</h3><p>详情见<a href="http://stackoverflow.com/questions/1683531/how-to-import-existing-git-repository-into-another" target="_blank" rel="external">How to import existing GIT repository into another</a>和<a href="https://github.com/deercoder/Linux/blob/master/Git/git_merge_local_repos.md" target="_blank" rel="external">合并已存在的git仓库</a></p>
+<h3 id="WebView浏览位置的保存和恢复">WebView浏览位置的保存和恢复</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 保存位置</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">float</span> <span class="title">savePosition</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    LogUtils.v(TAG, <span class="string">"savePosition()"</span>);</span><br><span class="line">    <span class="keyword">float</span> top = getTop();</span><br><span class="line">    <span class="keyword">float</span> contentHeight = getContentHeight();</span><br><span class="line">    <span class="keyword">float</span> scrollY = getScrollY();</span><br><span class="line">    mSavedPosition = (scrollY - top) / contentHeight;</span><br><span class="line">    <span class="keyword">return</span> mSavedPosition;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 恢复位置</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">float</span> <span class="title">restorePosition</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    LogUtils.v(TAG, <span class="string">"restorePosition()"</span>);</span><br><span class="line">    <span class="keyword">if</span> (mSavedPosition &gt; <span class="number">0f</span>) &#123;</span><br><span class="line">        <span class="keyword">float</span> top = getTop();</span><br><span class="line">        <span class="keyword">float</span> contentHeight = getContentHeight();</span><br><span class="line">        <span class="keyword">float</span> height = contentHeight - top;</span><br><span class="line">        <span class="keyword">float</span> positionInViewPort = height * mSavedPosition;</span><br><span class="line">        <span class="keyword">int</span> positionY = Math.round(top + positionInViewPort);</span><br><span class="line">        scrollTo(<span class="number">0</span>, positionY);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> mSavedPosition;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="使用拨号键盘的SecretCode功能">使用拨号键盘的SecretCode功能</h3><p>Android的拨号键盘有一些特殊的定义键，可以启动自定义的Intent，用法：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">receiver</span> <span class="attribute">android:name</span>=<span class="value">".receiver.DiagnoserReceiver"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">action</span> <span class="attribute">android:name</span>=<span class="value">"android.provider.Telephony.SECRET_CODE"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">data</span> <span class="attribute">android:scheme</span>=<span class="value">"android_secret_code"</span> <span class="attribute">android:host</span>=<span class="value">"111222"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">receiver</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>参考资料：<br><a href="http://udinic.wordpress.com/2013/05/17/create-a-secret-doorway-to-your-app/" target="_blank" rel="external">Create a secret doorway to your app</a><br><a href="https://code.google.com/p/android-roms/wiki/Secret_Star_Codes" target="_blank" rel="external">Secret_Star_Codes</a></p>
+<h3 id="阻止点击DrawLayout时事件传递到下一层">阻止点击DrawLayout时事件传递到下一层</h3><p>方法是给Drawlayout添加一个OnClickListener<br>参考资料：<br><a href="http://stackoverflow.com/questions/18811973/android-how-do-i-keep-drawerlayout-from-passing-touch-events-to-the-underlying" target="_blank" rel="external">How do I keep DrawerLayout from passing touch events to the underlying view</a></p>
+<h3 id="没有root的情况下如何adb_pull_/data/data/package/下的数据">没有root的情况下如何adb pull /data/data/package/下的数据</h3><p>下面是一个查看应用数据库的例子脚本：</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">PACKAGE_NAME=com.your.<span class="keyword">package</span></span><br><span class="line">DB_NAME=data.db</span><br><span class="line">rm -rf <span class="variable">$&#123;DB_NAME&#125;</span></span><br><span class="line">adb shell <span class="string">"run-as <span class="subst">$&#123;PACKAGE_NAME&#125;</span> chmod 666 /data/data/<span class="subst">$&#123;PACKAGE_NAME&#125;</span>/databases/<span class="subst">$&#123;DB_NAME&#125;</span>"</span></span><br><span class="line">adb pull /data/data/<span class="variable">$&#123;PACKAGE_NAME&#125;</span>/databases/<span class="variable">$&#123;DB_NAME&#125;</span> /tmp/</span><br><span class="line">adb shell <span class="string">"run-as <span class="subst">$&#123;PACKAGE_NAME&#125;</span> chmod 600 /data/data/<span class="subst">$&#123;PACKAGE_NAME&#125;</span>/databases/<span class="subst">$&#123;DB_NAME&#125;</span>"</span></span><br><span class="line">sqlite3 /tmp/$&#123;DB_NAME</span><br></pre></td></tr></table></figure>
+<p>分析见：<br> <a href="http://stackoverflow.com/questions/18471780/android-adb-retrieve-database-using-run-as" target="_blank" rel="external">android adb, retrieve database using run-as</a><br><a href="http://blog.shvetsov.com/2013/02/access-android-app-data-without-root.html" target="_blank" rel="external">Access Android app data without root</a></p>
+<h3 id="快速获取电池电量的方法">快速获取电池电量的方法</h3><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Intent getBatteryStatus(Context context) &#123;</span><br><span class="line">    Context appContext = context.getApplicationContext();</span><br><span class="line">    <span class="keyword">return</span> appContext.registerReceiver(<span class="keyword">null</span>,</span><br><span class="line">            <span class="keyword">new</span> IntentFilter(Intent.ACTION_BATTERY_CHANGED));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">String</span> getBatteryInfo(Context context, Intent batteryIntent) &#123;</span><br><span class="line">    <span class="built_in">int</span> status = batteryIntent.getIntExtra(BatteryManager.EXTRA_STATUS, -<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">boolean</span> isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||</span><br><span class="line">            status == BatteryManager.BATTERY_STATUS_FULL;</span><br><span class="line">    <span class="built_in">int</span> chargePlug = batteryIntent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">boolean</span> usbCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_USB;</span><br><span class="line">    <span class="built_in">boolean</span> acCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_AC;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">int</span> level = batteryIntent.getIntExtra(BatteryManager.EXTRA_LEVEL, -<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">int</span> <span class="built_in">scale</span> = batteryIntent.getIntExtra(BatteryManager.EXTRA_SCALE, -<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">float</span> batteryPct = level / (<span class="built_in">float</span>) <span class="built_in">scale</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"Battery Info: isCharging="</span> + isCharging</span><br><span class="line">            + <span class="string">" usbCharge="</span> + usbCharge + <span class="string">" acCharge="</span> + acCharge</span><br><span class="line">            + <span class="string">" batteryPct="</span> + batteryPct;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>分析见：<a href="http://stackoverflow.com/questions/3661464/get-battery-level-before-broadcast-receiver-responds-for-intent-action-battery-c" target="_blank" rel="external">Get battery level before broadcast receiver responds for Intent.ACTION_BATTERY_CHANGED</a></p>
+<h3 id="ActionBar的Title是否可以点击的问题">ActionBar的Title是否可以点击的问题</h3><p>4.2之前和之后这个有变化，4.2之前只有Icon可以点击，如果没有Icon，Title就无法点击，4.2之后是Title和Icon一起作为点击区域<br>分析见：<a href="http://stackoverflow.com/questions/16209963/action-bar-icon-as-up-enabled-not-the-title/16216966#16216966" target="_blank" rel="external">Action Bar icon as up enabled not the title</a> </p>
+<h3 id="Webview滚动时背景闪烁的问题">Webview滚动时背景闪烁的问题</h3><p>因是渲染帧数不够<br>如果使用软件渲染，看下文：<a href="http://stackoverflow.com/questions/17315815/strange-webview-black-blinking-when-scrolling" target="_blank" rel="external">Strange webview black blinking when scrolling</a>，或者启用硬件加速</p>
+<h3 id="Java中使用try_catch的性能问题">Java中使用try catch的性能问题</h3><p>使用try catch并没有额外的性能损耗，只有异常真正发生时才会有性能损耗，详细分析见：<a href="http://stackoverflow.com/questions/2633834/should-java-try-blocks-be-scoped-as-tightly-as-possible" target="_blank" rel="external">Should java try blocks be scoped as tightly as possible</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/"> #Android </a>
+          
+            <a href="/tags/Tips/"> #Tips </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/06/30/vps-nginx-php5-fpm-config/">在VPS上配置Nginx和PHP</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/02/25/android-dev-notes-02/">Android开发杂记（二）</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2014/06/30/android-dev-notes-03/"
+               data-title="Android开发杂记（三）" data-url="http://mcxiaoke/2014/06/30/android-dev-notes-03/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="mcxiaoke" />
+          <p class="site-author-name">mcxiaoke</p>
+        </div>
+        <p class="site-description motion-element">零碎的笔记</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/mcxiaoke" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.douban.com/people/doiv" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://mcxiaoke.com/" target="_blank">Home</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">Links</p>
+            
+              <span class="links-of-author-item">
+              <a href="http://moment.douban.com/app/" target="_blank">豆瓣一刻</a>
+              </span>
+            
+          
+        </div>
+        
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何完全不显示一个Activity的UI"><span class="nav-number">1.</span> <span class="nav-text">如何完全不显示一个Activity的UI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何移除ActionBar底部的阴影"><span class="nav-number">2.</span> <span class="nav-text">如何移除ActionBar底部的阴影</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Gradle时私密存储签名密钥"><span class="nav-number">3.</span> <span class="nav-text">使用Gradle时私密存储签名密钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#透明的Activity退出后，没有真正finish的问题"><span class="nav-number">4.</span> <span class="nav-text">透明的Activity退出后，没有真正finish的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Background和Seletor必须使用真实的Drawable"><span class="nav-number">5.</span> <span class="nav-text">Background和Seletor必须使用真实的Drawable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#合并多个git仓库，保留commit记录的方法"><span class="nav-number">6.</span> <span class="nav-text">合并多个git仓库，保留commit记录的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WebView浏览位置的保存和恢复"><span class="nav-number">7.</span> <span class="nav-text">WebView浏览位置的保存和恢复</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用拨号键盘的SecretCode功能"><span class="nav-number">8.</span> <span class="nav-text">使用拨号键盘的SecretCode功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#阻止点击DrawLayout时事件传递到下一层"><span class="nav-number">9.</span> <span class="nav-text">阻止点击DrawLayout时事件传递到下一层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#没有root的情况下如何adb_pull_/data/data/package/下的数据"><span class="nav-number">10.</span> <span class="nav-text">没有root的情况下如何adb pull /data/data/package/下的数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速获取电池电量的方法"><span class="nav-number">11.</span> <span class="nav-text">快速获取电池电量的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ActionBar的Title是否可以点击的问题"><span class="nav-number">12.</span> <span class="nav-text">ActionBar的Title是否可以点击的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Webview滚动时背景闪烁的问题"><span class="nav-number">13.</span> <span class="nav-text">Webview滚动时背景闪烁的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java中使用try_catch的性能问题"><span class="nav-number">14.</span> <span class="nav-text">Java中使用try catch的性能问题</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2007 - 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">mcxiaoke</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"mcxiaoke"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/js/analytics_google-analytics.js?v=0.4.3"></script>
+
+
+</body>
+</html>

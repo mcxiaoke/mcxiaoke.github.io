@@ -1,0 +1,643 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="零碎的笔记" />
+
+
+
+  <meta name="keywords" content="C,Curl,MinGW,Windows," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: 'UA-49960399-2'
+    },
+    sidebar: 'hide'
+  };
+</script>
+
+
+
+
+  <title> 使用MinGW编译libcurl静态库 // Xiaoke's Blog </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Xiaoke's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              使用MinGW编译libcurl静态库
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2010-12-12
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Develop/">Develop</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2010/12/12/compile-and-use-libcurl-in-mingw-win32-how-to/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2010/12/12/compile-and-use-libcurl-in-mingw-win32-how-to/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>libcurl<br>7.21以后的版本在Windows下的编译比较简单，自带了MinGW和VC环境的Makefile文件，首先去Curl官网下载源代码：<br><a href="http://curl.haxx.se/download.html" target="_blank" rel="external">http://curl.haxx.se/download.html</a>，</p>
+<p>任选一个下载即可，推荐这个：<br><a href="http://curl.haxx.se/download/curl-7.21.2.tar.gz" target="_blank" rel="external">curl-7.21.2.tar.gz</a><br>下载完成后解压开，打开命令行进入curl源码目录，(在此之前请先设置好MinGW的环境变量)：  </p>
+<pre><code><span class="tag">cd</span> <span class="tag">curl-7</span><span class="class">.21</span><span class="class">.2</span> 
+</code></pre><p>编译libcurl库文件：  </p>
+<pre><code><span class="built_in">cd</span> lib  
+make <span class="operator">-f</span> Makefile.m32  
+</code></pre><p>等待编译完成即可<br>编译curl可执行文件： </p>
+<pre><code><span class="built_in">cd</span> ../src  
+make <span class="operator">-f</span> Makefile.m32  
+</code></pre><p>一会儿就编译完成了</p>
+<p>编译完成后，我们需要复制include头文件和库文件到一个目录供程序开发用 </p>
+<ol>
+<li>新建curllib目录  </li>
+<li>新建curllib/include目录，将源代码include目录里的curl文件夹复制到curllib/include目录，这些是使用libcurl需要的头文件  </li>
+<li>新建curllib/lib目录，将源代码lib目录里编译好的库文件libcurl.a，libcurldll.a，libcurl.dll复制到curllib目录  </li>
+<li>将MinGW安装目录下lib文件夹里的libwldap32.a和libws2_32.a复制到curllib/lib目录</li>
+</ol>
+<p>至此，curllib就是我们开发中要使用到的libcurl的全部文件，下面新建一个测试程序，假设文件名为curltest.c，代码如下：</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="command">\#</span>include <span class="command">\&lt;</span>stdio.h<span class="command">\&gt;</span>  </span><br><span class="line"><span class="command">\#</span>include <span class="command">\&lt;</span>curl/curl.h<span class="command">\&gt;</span></span><br><span class="line"></span><br><span class="line">int main(void)  </span><br><span class="line"><span class="special">&#123;</span>  </span><br><span class="line">CURL <span class="command">\*</span>curl;  </span><br><span class="line">CURLcode res;</span><br><span class="line"></span><br><span class="line">curl = curl<span class="command">\_</span>easy<span class="command">\_</span>init();  </span><br><span class="line">if(curl) <span class="special">&#123;</span>  </span><br><span class="line">curl<span class="command">\_</span>easy<span class="command">\_</span>setopt(curl, CURLOPT<span class="command">\_</span>URL, "www.google.com");  </span><br><span class="line">res = curl<span class="command">\_</span>easy<span class="command">\_</span>perform(curl);</span><br><span class="line"></span><br><span class="line">/<span class="command">\*</span> always cleanup <span class="command">\*</span>/  </span><br><span class="line">curl<span class="command">\_</span>easy<span class="command">\_</span>cleanup(curl);  </span><br><span class="line"><span class="special">&#125;</span>  </span><br><span class="line">return 0;  </span><br><span class="line"><span class="special">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>** 方法一、命令行编译使用licurl的程序</p>
+<p>假设测试代码curltest.c位于e:/project<br>假设curllib文件夹的位置为c:/curllib<br>命令行运行下列命令编译这个测试程序：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd <span class="symbol">e:</span>/project  </span><br><span class="line">gcc -<span class="constant">I</span>. -<span class="constant">Ic</span><span class="symbol">:/curllib/include</span> -g -<span class="constant">O2</span> -<span class="constant">DCURL</span>\_STATICLIB -c curltest.c  </span><br><span class="line">gcc -s -o curltest.exe curltest.o -<span class="constant">Lc</span><span class="symbol">:/curllib/lib</span> -lcurl -lwldap32</span><br><span class="line">-lws2\_32</span><br></pre></td></tr></table></figure>
+<p>这时可以看到curltest.c目录下生成了一个curltest.exe文件<br>接着在命令行输入：  </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">curltest</span><span class="class">.exe</span></span><br></pre></td></tr></table></figure>
+<p>如果看到命令行窗口输出一些HTML代码，就表示编译成功</p>
+<p>** 方法二、Code::Blocks中使用libcurl静态库</p>
+<ol>
+<li>新建工程，在工程里添加代码同上的curltest.c文件  </li>
+<li>将上面curllib/include目录下的curl文件夹复制到MinGW安装目录的include目录  </li>
+<li>工程名上右键打开Build Options选项，在Compiler<br>Settings选项卡下的#defines里面输入CURL_STATICLIB，（这表示使用静态库）  </li>
+<li>在Linker Settings选项卡下面的link<br>libraries里添加上面curllib/lib目录里的四个文件：</li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:curllibliblibcurl<span class="class">.a</span>  </span><br><span class="line">C:curllibliblibcurldll<span class="class">.a</span>  </span><br><span class="line">C:curllibliblibwldap32<span class="class">.a</span>  </span><br><span class="line">C:curllibliblibws2\_32.a</span><br></pre></td></tr></table></figure>
+<p>然后回到工程页面，点击Build即可</p>
+<p>今天为了编译和使用libcurl库折腾了一下午，记下来供需要的人参考，需要注意的是，本文中编译的是不带ssl和zlib支持的libcurl，如果需要编译支持ssl和zlib的curl，还需要先编译openssl，zlib和libssh，编译zlib比较简单，直接使用源码自带的makefile文件即可，编译openssl需要安装MSYS和Perl，还需要修改一些代码，libssh的编译依赖openssl，网上都可以找到方法，也可以看源码的README文件。</p>
+<p>附一篇在C语言中使用libcurl库的文章供参考：<br><a href="http://www.ibm.com/developerworks/cn/opensource/os-curl/" target="_blank" rel="external">使用 cURL 和 libcurl 通过 Internet<br>进行对话</a><br>下面几篇是Curl的文档和教程：<br><a href="http://curl.haxx.se/docs/httpscripting.html" target="_blank" rel="external">Scripting HTTP Requests Using<br>Curl</a><br><a href="http://curl.haxx.se/docs/manpage.html" target="_blank" rel="external">Curl Man Page</a><br><a href="http://curl.haxx.se/docs/manual.html" target="_blank" rel="external">Curl Mannul</a><br><a href="http://curl.haxx.se/libcurl/c/" target="_blank" rel="external">Using The libcurl C Interface</a><br><a href="http://curl.haxx.se/libcurl/c/example.html" target="_blank" rel="external">libcurl - small example<br>snippets</a><br><a href="http://curl.haxx.se/libcurl/c/libcurl-tutorial.html" target="_blank" rel="external">programming with<br>libcurl</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/"> #C </a>
+          
+            <a href="/tags/Curl/"> #Curl </a>
+          
+            <a href="/tags/MinGW/"> #MinGW </a>
+          
+            <a href="/tags/Windows/"> #Windows </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2011/02/01/android-intentservice-getting-started/">Android IntentService使用简介</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2010/11/22/android-apk-files-decompile-how-to/">Android程序反编译流程</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2010/12/12/compile-and-use-libcurl-in-mingw-win32-how-to/"
+               data-title="使用MinGW编译libcurl静态库" data-url="http://mcxiaoke/2010/12/12/compile-and-use-libcurl-in-mingw-win32-how-to/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="mcxiaoke" />
+          <p class="site-author-name">mcxiaoke</p>
+        </div>
+        <p class="site-description motion-element">零碎的笔记</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/mcxiaoke" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.douban.com/people/doiv" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://mcxiaoke.com/" target="_blank">Home</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">Links</p>
+            
+              <span class="links-of-author-item">
+              <a href="http://moment.douban.com/app/" target="_blank">豆瓣一刻</a>
+              </span>
+            
+          
+        </div>
+        
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2007 - 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">mcxiaoke</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"mcxiaoke"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/js/analytics_google-analytics.js?v=0.4.3"></script>
+
+
+</body>
+</html>

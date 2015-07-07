@@ -1,0 +1,715 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="零碎的笔记" />
+
+
+
+  <meta name="keywords" content="Android,Service," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: 'UA-49960399-2'
+    },
+    sidebar: 'hide'
+  };
+</script>
+
+
+
+
+  <title> Android IntentService使用简介 // Xiaoke's Blog </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Xiaoke's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Android IntentService使用简介
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2011-02-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Android/">Android</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2011/02/01/android-intentservice-getting-started/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2011/02/01/android-intentservice-getting-started/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>春节放假有点自己的时间，准备抽空做个饭否上传照片的工具，其中上传功能需要用到后台任务，Android上的后台任务主要有三种实现方式，一是按照常规的Java方式，自己写线程，二是使用SDK封装好的后台任务类AsyncTask，三是使用Service，线程和AsyncTask都是和Activity的生命周期绑定的，而Service有自己的独立生命周期，考虑到以后的扩展和代码的清晰，决定使用Service，看到国外的博客和Google<br>Groups里面都推荐使用IntentService，网上搜了一下，几乎没有中文的资料，于是决定记录一下学习使用IntentService的笔记。</p>
+<p>IntentService的位置是android.app.IntentService，官方文档的介绍我翻译一下：</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IntentService <span class="keyword">is</span> a base <span class="type">class</span> <span class="keyword">for</span> Services <span class="keyword">that</span> handle asynchronous requests (expressed <span class="keyword">as</span> Intents) <span class="function_start"><span class="keyword">on</span></span> demand. Clients send requests <span class="keyword">through</span> startService(Intent) calls; <span class="keyword">the</span> service <span class="keyword">is</span> started <span class="keyword">as</span> needed, handles each Intent <span class="keyword">in</span> turn using a worker thread, <span class="keyword">and</span> stops itself when <span class="keyword">it</span> runs <span class="keyword">out of</span> work.</span><br></pre></td></tr></table></figure>
+<p>IntentService是一个用于按需处理异步请求的Service基类，调用方通过<br>startService(Intent)启动服务，IntentService为每一个Intent开启一个单独的工作线程，并且在任务完成时自动终止服务。</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">This <span class="string">"work queue processor"</span> pattern <span class="keyword">is</span> commonly used <span class="keyword">to</span> offload tasks <span class="keyword">from</span> an <span class="type">application</span>'s main thread. The IntentService <span class="type">class</span> exists <span class="keyword">to</span> simplify this pattern <span class="keyword">and</span> take care <span class="keyword">of</span> <span class="keyword">the</span> mechanics. To use <span class="keyword">it</span>, extend IntentService <span class="keyword">and</span> implement onHandleIntent(Intent). IntentService will receive <span class="keyword">the</span> Intents, <span class="command">launch</span> a worker thread, <span class="keyword">and</span> stop <span class="keyword">the</span> service <span class="keyword">as</span> appropriate.</span><br></pre></td></tr></table></figure>
+<p>这种“工作队列处理器”模式通常用于某个程序主线程之外的后台任务。IntentService类简化了这种机制。要使用这种工作队列模式，只使用继承IntentService并实现onHandleIntent(Intent)方法。IntentService会接受Intents，启动工作线程，并在合适的时候终止服务。</p>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">All requests are handled <span class="keyword">on</span> a <span class="built_in">single</span> worker thread -- they may <span class="keyword">take</span> <span class="keyword">as</span> <span class="built_in">long</span> <span class="keyword">as</span> necessary (<span class="keyword">and</span> will <span class="keyword">not</span> block the application<span class="comment">'s main loop), but only one request will be processed at a time.</span></span><br></pre></td></tr></table></figure>
+<p>文档的最后说，所有的请求都由一个单独的线程处理，它们可以占用任意长的时间（不会造成主线程阻塞），但是同一时间智慧处理一个请求。我的理解是先进先出的队列模式。</p>
+<p>下面首先看看我的示例代码，这个是写的饭否照片上传的代码，</p>
+<pre><code>:::java
+<span class="keyword">package</span> com.mcxiaoke.fanfou.photo;
+
+<span class="keyword">import</span> java.io.File;  
+<span class="keyword">import</span> android.app.IntentService;  
+<span class="keyword">import</span> android.content.Intent;  
+<span class="keyword">import</span> android.os.IBinder;  
+<span class="keyword">import</span> android.util.Log;
+
+<span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">PhotoUploadService</span> <span class="keyword">extends</span> <span class="title">IntentService</span> </span>{  
+<span class="annotation">@Override</span>  
+<span class="keyword">public</span> <span class="function">IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>{  
+Log.d(tag, <span class="string">"onBind()"</span>);  
+<span class="function"><span class="keyword">return</span> <span class="keyword">super</span>.<span class="title">onBind</span><span class="params">(intent)</span></span>;  
+}
+
+<span class="annotation">@Override</span>  
+<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>{  
+Log.d(tag, <span class="string">"onCreate()"</span>);  
+<span class="keyword">super</span>.onCreate();  
+}
+
+<span class="annotation">@Override</span>  
+<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>{  
+Log.d(tag, <span class="string">"onDestroy()"</span>);  
+<span class="keyword">super</span>.onDestroy();  
+}
+
+<span class="annotation">@Override</span>  
+<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onStart</span><span class="params">(Intent intent, <span class="keyword">int</span> startId)</span> </span>{  
+Log.d(tag, <span class="string">"onStart()"</span>);  
+<span class="keyword">super</span>.onStart(intent, startId);  
+}
+
+<span class="annotation">@Override</span>  
+<span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">onStartCommand</span><span class="params">(Intent intent, <span class="keyword">int</span> flags, <span class="keyword">int</span> startId)</span> </span>{  
+Log.d(tag, <span class="string">"onStartCommand()"</span>);  
+<span class="function"><span class="keyword">return</span> <span class="keyword">super</span>.<span class="title">onStartCommand</span><span class="params">(intent, flags, startId)</span></span>;  
+}
+
+<span class="annotation">@Override</span>  
+<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">setIntentRedelivery</span><span class="params">(<span class="keyword">boolean</span> enabled)</span> </span>{  
+Log.d(tag, <span class="string">"setIntentRedelivery()"</span>);  
+<span class="keyword">super</span>.setIntentRedelivery(enabled);  
+}
+
+<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> String tag=<span class="string">"PhotoUploadService"</span>;
+
+<span class="comment">// public PhotoUploadService(String name) {  </span>
+<span class="comment">// super(name);  </span>
+<span class="comment">// Log.d(tag, "PhotoUploadService()");  </span>
+<span class="comment">// }</span>
+
+<span class="function"><span class="keyword">public</span> <span class="title">PhotoUploadService</span><span class="params">()</span> </span>{  
+<span class="keyword">super</span>(<span class="string">"PhotoUploadService"</span>);  
+Log.d(tag, <span class="string">"PhotoUploadService()"</span>);  
+}
+
+<span class="annotation">@Override</span>  
+<span class="keyword">protected</span> <span class="function"><span class="keyword">void</span> <span class="title">onHandleIntent</span><span class="params">(Intent intent)</span> </span>{  
+Log.d(tag, <span class="string">"onHandleIntent()"</span>);  
+File photo=<span class="keyword">new</span> File(intent.getStringExtra(<span class="string">"photo"</span>));  
+FanfouApi api=<span class="keyword">new</span> FanfouApi(<span class="string">"username"</span>, <span class="string">"password"</span>);  
+api.uploadPhoto(photo, <span class="string">"upload photo use service test."</span>);
+
+}  
+}  
+</code></pre><p>你要进行的后台任务写在onHandleIntent方法里就可以了，上面那个Override的方式都是我用于打印调试信息的，都可以不用重写。这里说一下IntentService的生命周期，根据Logcat打印的消息，那几个OnXXX的执行顺序从前到后依次是：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">PhotoUploadService</span><span class="params">()</span></span> -- 构造函数  </span><br><span class="line"><span class="function"><span class="title">onCreate</span><span class="params">()</span></span> -- 只在Service第一次启动时调用  </span><br><span class="line"><span class="function"><span class="title">onStartCommand</span><span class="params">()</span></span> -- 每次调用startService时都会调用这个方法  </span><br><span class="line"><span class="function"><span class="title">onStart</span><span class="params">()</span></span> -- SDK将这个方法标记为过时的，用<span class="function"><span class="title">onStartCommand</span><span class="params">()</span></span>替代  </span><br><span class="line"><span class="function"><span class="title">onHandleIntent</span><span class="params">()</span></span> -- 要做的任务都写在这个方法里  </span><br><span class="line"><span class="function"><span class="title">onDestroy</span><span class="params">()</span></span> -- 服务终止时调用</span><br></pre></td></tr></table></figure>
+<p>关于继承IntentService，构造函数需要注意一个地方，Eclipse默认生成的构造函数是  </p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">PhotoUploadService</span><span class="params">(String name)</span> </span>&#123;  </span><br><span class="line"><span class="keyword">super</span>(name);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用这个默认构造函数的话会报一个运行时错误： <code>java.lang.InstantiationException</code>，在Google Groups里找到了解决办法，继承IntentService的类必须有一个public的无参的构造函数，将上面Eclipse自动生成的构造函数改为下面这样的就可以了：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">PhotoUploadService</span><span class="params">()</span> </span>&#123;  </span><br><span class="line"><span class="keyword">super</span>(<span class="string">"someone"</span>);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>为什么要这样改，看IntentService构造函数的源码：  </p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">IntentService</span><span class="params">(String name)</span> </span>&#123;  </span><br><span class="line"><span class="keyword">super</span>();  </span><br><span class="line">mName = name;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>SDK文档里说构造函数里面的服务名字只在调试时有用，可以随便写一个名字。</p>
+<p>另一个需要特别指出的时，在onHandleIntent里不需要自己处理线程，或者新启线程，IntentService默认会为队列中的任务启动后台线程，源码中的实现是这样的：  </p>
+<pre><code>:::java
+<span class="keyword">private</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceHandler</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">Handler</span> {</span>  
+public <span class="type">ServiceHandler</span>(<span class="type">Looper</span> looper) {  
+<span class="keyword">super</span>(looper);  
+}
+
+<span class="annotation">@Override</span>  
+public void handleMessage(<span class="type">Message</span> msg) {  
+onHandleIntent((<span class="type">Intent</span>)msg.obj);  
+stopSelf(msg.arg1);  
+}  
+}
+
+<span class="annotation">@Override</span>  
+public void onCreate() {  
+<span class="keyword">super</span>.onCreate();  
+<span class="type">HandlerThread</span> thread = <span class="keyword">new</span> <span class="type">HandlerThread</span>(<span class="string">"IntentService["</span> + mName +
+<span class="string">"]"</span>);  
+thread.start();
+
+mServiceLooper = thread.getLooper();  
+mServiceHandler = <span class="keyword">new</span> <span class="type">ServiceHandler</span>(mServiceLooper);  
+}  
+</code></pre><p>看源码可以得知onHanldeIntent()是在新的后台线程HandlerThread里执行的，所以不需要要我们自己新开线程。</p>
+<p>参考资料：  </p>
+<p><a href="http://androidappdocs.appspot.com/reference/android/app/IntentService.html" target="_blank" rel="external">IntentService</a>  </p>
+<p><a href="http://androidappdocs.appspot.com/reference/android/app/Service.html" target="_blank" rel="external">Service</a><br><a href="http://stackoverflow.com/questions/3197335/android-restful-api-service" target="_blank" rel="external">Android: restful API<br>service</a><br><a href="https://groups.google.com/forum/#!topic/android-developers/YTXqvKP526w" target="_blank" rel="external">IntentService instantiation<br>exception</a><br><a href="http://stackoverflow.com/questions/3817272/android-design-considerations-asynchtask-vs-service-intentservice" target="_blank" rel="external">android design considerations: AsynchTask vs<br>Service</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/"> #Android </a>
+          
+            <a href="/tags/Service/"> #Service </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2011/02/26/android-dev-notes-01/">Android开发杂记（一）</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2010/12/12/compile-and-use-libcurl-in-mingw-win32-how-to/">使用MinGW编译libcurl静态库</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2011/02/01/android-intentservice-getting-started/"
+               data-title="Android IntentService使用简介" data-url="http://mcxiaoke/2011/02/01/android-intentservice-getting-started/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="mcxiaoke" />
+          <p class="site-author-name">mcxiaoke</p>
+        </div>
+        <p class="site-description motion-element">零碎的笔记</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/mcxiaoke" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.douban.com/people/doiv" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://mcxiaoke.com/" target="_blank">Home</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">Links</p>
+            
+              <span class="links-of-author-item">
+              <a href="http://moment.douban.com/app/" target="_blank">豆瓣一刻</a>
+              </span>
+            
+          
+        </div>
+        
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2007 - 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">mcxiaoke</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"mcxiaoke"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/js/analytics_google-analytics.js?v=0.4.3"></script>
+
+
+</body>
+</html>
