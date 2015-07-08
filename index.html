@@ -152,94 +152,6 @@
           
           
             
-              <a class="post-title-link" href="/2014/06/30/vps-nginx-php5-fpm-config/">
-                在VPS上配置Nginx和PHP
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2014-06-30
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <a href="/categories/Web/">Web</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2014/06/30/vps-nginx-php5-fpm-config/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/06/30/vps-nginx-php5-fpm-config/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>之前买了一个廉价VPS，系统是Ubuntu 12.04，一直没有用上，最近装上Nginx和PHP，下面就是配置记录。</p>
-<p>首先当然是安装各种必备的工具：</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">sudo</span> apt-<span class="preprocessor">get</span> install php5-<span class="preprocessor">common</span> php5-cli php5-fpm</span><br><span class="line"><span class="label">sudo</span> apt-<span class="preprocessor">get</span> install nginx</span><br></pre></td></tr></table></figure>
-<p>下面是nginx的配置文件，位置是 <code>/etc/nginx/sites-available/mcxiaoke.com</code></p>
-<p>这里假设我的域名是 <code>mcxiaoke.com</code></p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置HTTP站点</span></span><br><span class="line"><span class="title">server</span> &#123;</span><br><span class="line"><span class="title">listen</span> <span class="number">80</span>;</span><br><span class="line"><span class="comment"># 站点根目录</span></span><br><span class="line"><span class="title">root</span> /var/www/;</span><br><span class="line"></span><br><span class="line"><span class="title">index</span> index.php index.html index.htm index.php;</span><br><span class="line"></span><br><span class="line"><span class="title">server_name</span> mcxiaoke.com;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重定向所有HTTP到HTTPS</span></span><br><span class="line"><span class="title">rewrite</span><span class="regexp"> ^(.*)$</span> <span class="url">https://<span class="variable">$host</span><span class="variable">$1</span></span> <span class="built_in">permanent</span>;</span><br><span class="line"></span><br><span class="line"><span class="title">location</span> / &#123;</span><br><span class="line"><span class="title">try_files</span> <span class="variable">$uri</span> <span class="variable">$uri</span>/ /index.php<span class="variable">$is_args</span><span class="variable">$args</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title">error_page</span> <span class="number">404</span> /<span class="number">404</span>.html;</span><br><span class="line"></span><br><span class="line"><span class="comment"># redirect server error pages to the static page /50x.html</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="title">error_page</span> <span class="number">500</span> <span class="number">502</span> <span class="number">503</span> <span class="number">504</span> /50x.html;</span><br><span class="line"><span class="title">location</span> = /50x.html &#123;</span><br><span class="line"><span class="title">root</span> /usr/share/nginx/www;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置PHP</span></span><br><span class="line"><span class="title">location</span> <span class="regexp">~ \.php$</span> &#123;</span><br><span class="line"><span class="title">try_files</span> <span class="variable">$uri</span> =<span class="number">404</span>;</span><br><span class="line"><span class="title">fastcgi_pass</span> <span class="number">127.0.0.1:9000</span>;</span><br><span class="line"><span class="title">include</span> fastcgi_params;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置HTTPS站点</span></span><br><span class="line"><span class="title">server</span> &#123;</span><br><span class="line"><span class="title">listen</span> <span class="number">443</span>;</span><br><span class="line"><span class="title">server_name</span> mcxiaoke.com;</span><br><span class="line"><span class="comment">#站点根目录</span></span><br><span class="line"><span class="title">root</span> /var/www/;</span><br><span class="line"><span class="title">index</span> index.html index.htm index.php;</span><br><span class="line"></span><br><span class="line"><span class="title">ssl</span> <span class="built_in">on</span>;</span><br><span class="line"><span class="comment"># 这里是网站的SSL证书</span></span><br><span class="line"><span class="title">ssl_certificate</span> /etc/nginx/ssl/ssl.crt;</span><br><span class="line"><span class="title">ssl_certificate_key</span> /etc/nginx/ssl/ssl.key;</span><br><span class="line"></span><br><span class="line"><span class="title">ssl_session_timeout</span> <span class="number">10m</span>;</span><br><span class="line"></span><br><span class="line"><span class="title">ssl_ciphers</span> RC4:HIGH:!aNULL:!MD5;</span><br><span class="line"><span class="title">ssl_prefer_server_ciphers</span> <span class="built_in">on</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">#ssl_protocols SSLv3 TLSv1;</span></span><br><span class="line"><span class="comment">#ssl_ciphers ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv3:+EXP;</span></span><br><span class="line"><span class="comment">#ssl_prefer_server_ciphers on;</span></span><br><span class="line"></span><br><span class="line"><span class="title">location</span> / &#123;</span><br><span class="line"><span class="title">try_files</span> <span class="variable">$uri</span> <span class="variable">$uri</span>/ /index.php<span class="variable">$is_args</span><span class="variable">$args</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title">error_page</span> <span class="number">404</span> /<span class="number">404</span>.html;</span><br><span class="line"></span><br><span class="line"><span class="comment"># redirect server error pages to the static page /50x.html</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="title">error_page</span> <span class="number">500</span> <span class="number">502</span> <span class="number">503</span> <span class="number">504</span> /50x.html;</span><br><span class="line"><span class="title">location</span> = /50x.html &#123;</span><br><span class="line"><span class="title">root</span> /usr/share/nginx/www;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置PHP</span></span><br><span class="line"><span class="title">location</span> <span class="regexp">~ \.php$</span> &#123;</span><br><span class="line"><span class="title">try_files</span> <span class="variable">$uri</span> =<span class="number">404</span>;</span><br><span class="line"><span class="title">fastcgi_pass</span> <span class="number">127.0.0.1:9000</span>;</span><br><span class="line"><span class="title">include</span> fastcgi_params;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>配置好之后可以在某个目录下放一个info.php文件，内容如下：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="preprocessor">&lt;?php</span> phpinfo(); <span class="preprocessor">?&gt;</span></span>;</span><br></pre></td></tr></table></figure>
-<p>然后重启服务：</p>
-<figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="keyword">service</span> php5-fpm <span class="literal">restart</span></span><br><span class="line">sudo <span class="keyword">service</span> nginx <span class="literal">restart</span></span><br></pre></td></tr></table></figure>
-<p>如果能正常访问，能看到服务器的PHP配置信息，就表明配置没有问题。</p>
-<p>参考文章：<br><a href="https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-14-04" target="_blank" rel="external">How To Install LEMP stack on Ubuntu 14.04</a><br><a href="http://askubuntu.com/questions/134666/what-is-the-easiest-way-to-enable-php-on-nginx" target="_blank" rel="external">Mac OSX 10.9搭建nginx+mysql+php-fpm环境</a></p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
               <a class="post-title-link" href="/2014/06/30/android-dev-notes-03/">
                 Android开发杂记（三）
               </a>
@@ -308,6 +220,94 @@
 <h3 id="ActionBar的Title是否可以点击的问题">ActionBar的Title是否可以点击的问题</h3><p>4.2之前和之后这个有变化，4.2之前只有Icon可以点击，如果没有Icon，Title就无法点击，4.2之后是Title和Icon一起作为点击区域<br>分析见：<a href="http://stackoverflow.com/questions/16209963/action-bar-icon-as-up-enabled-not-the-title/16216966#16216966" target="_blank" rel="external">Action Bar icon as up enabled not the title</a> </p>
 <h3 id="Webview滚动时背景闪烁的问题">Webview滚动时背景闪烁的问题</h3><p>因是渲染帧数不够<br>如果使用软件渲染，看下文：<a href="http://stackoverflow.com/questions/17315815/strange-webview-black-blinking-when-scrolling" target="_blank" rel="external">Strange webview black blinking when scrolling</a>，或者启用硬件加速</p>
 <h3 id="Java中使用try_catch的性能问题">Java中使用try catch的性能问题</h3><p>使用try catch并没有额外的性能损耗，只有异常真正发生时才会有性能损耗，详细分析见：<a href="http://stackoverflow.com/questions/2633834/should-java-try-blocks-be-scoped-as-tightly-as-possible" target="_blank" rel="external">Should java try blocks be scoped as tightly as possible</a></p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/06/30/vps-nginx-php5-fpm-config/">
+                在VPS上配置Nginx和PHP
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2014-06-30
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Web/">Web</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/06/30/vps-nginx-php5-fpm-config/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/06/30/vps-nginx-php5-fpm-config/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>之前买了一个廉价VPS，系统是Ubuntu 12.04，一直没有用上，最近装上Nginx和PHP，下面就是配置记录。</p>
+<p>首先当然是安装各种必备的工具：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">sudo</span> apt-<span class="preprocessor">get</span> install php5-<span class="preprocessor">common</span> php5-cli php5-fpm</span><br><span class="line"><span class="label">sudo</span> apt-<span class="preprocessor">get</span> install nginx</span><br></pre></td></tr></table></figure>
+<p>下面是nginx的配置文件，位置是 <code>/etc/nginx/sites-available/mcxiaoke.com</code></p>
+<p>这里假设我的域名是 <code>mcxiaoke.com</code></p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置HTTP站点</span></span><br><span class="line"><span class="title">server</span> &#123;</span><br><span class="line"><span class="title">listen</span> <span class="number">80</span>;</span><br><span class="line"><span class="comment"># 站点根目录</span></span><br><span class="line"><span class="title">root</span> /var/www/;</span><br><span class="line"></span><br><span class="line"><span class="title">index</span> index.php index.html index.htm index.php;</span><br><span class="line"></span><br><span class="line"><span class="title">server_name</span> mcxiaoke.com;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重定向所有HTTP到HTTPS</span></span><br><span class="line"><span class="title">rewrite</span><span class="regexp"> ^(.*)$</span> <span class="url">https://<span class="variable">$host</span><span class="variable">$1</span></span> <span class="built_in">permanent</span>;</span><br><span class="line"></span><br><span class="line"><span class="title">location</span> / &#123;</span><br><span class="line"><span class="title">try_files</span> <span class="variable">$uri</span> <span class="variable">$uri</span>/ /index.php<span class="variable">$is_args</span><span class="variable">$args</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title">error_page</span> <span class="number">404</span> /<span class="number">404</span>.html;</span><br><span class="line"></span><br><span class="line"><span class="comment"># redirect server error pages to the static page /50x.html</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="title">error_page</span> <span class="number">500</span> <span class="number">502</span> <span class="number">503</span> <span class="number">504</span> /50x.html;</span><br><span class="line"><span class="title">location</span> = /50x.html &#123;</span><br><span class="line"><span class="title">root</span> /usr/share/nginx/www;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置PHP</span></span><br><span class="line"><span class="title">location</span> <span class="regexp">~ \.php$</span> &#123;</span><br><span class="line"><span class="title">try_files</span> <span class="variable">$uri</span> =<span class="number">404</span>;</span><br><span class="line"><span class="title">fastcgi_pass</span> <span class="number">127.0.0.1:9000</span>;</span><br><span class="line"><span class="title">include</span> fastcgi_params;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置HTTPS站点</span></span><br><span class="line"><span class="title">server</span> &#123;</span><br><span class="line"><span class="title">listen</span> <span class="number">443</span>;</span><br><span class="line"><span class="title">server_name</span> mcxiaoke.com;</span><br><span class="line"><span class="comment">#站点根目录</span></span><br><span class="line"><span class="title">root</span> /var/www/;</span><br><span class="line"><span class="title">index</span> index.html index.htm index.php;</span><br><span class="line"></span><br><span class="line"><span class="title">ssl</span> <span class="built_in">on</span>;</span><br><span class="line"><span class="comment"># 这里是网站的SSL证书</span></span><br><span class="line"><span class="title">ssl_certificate</span> /etc/nginx/ssl/ssl.crt;</span><br><span class="line"><span class="title">ssl_certificate_key</span> /etc/nginx/ssl/ssl.key;</span><br><span class="line"></span><br><span class="line"><span class="title">ssl_session_timeout</span> <span class="number">10m</span>;</span><br><span class="line"></span><br><span class="line"><span class="title">ssl_ciphers</span> RC4:HIGH:!aNULL:!MD5;</span><br><span class="line"><span class="title">ssl_prefer_server_ciphers</span> <span class="built_in">on</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">#ssl_protocols SSLv3 TLSv1;</span></span><br><span class="line"><span class="comment">#ssl_ciphers ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv3:+EXP;</span></span><br><span class="line"><span class="comment">#ssl_prefer_server_ciphers on;</span></span><br><span class="line"></span><br><span class="line"><span class="title">location</span> / &#123;</span><br><span class="line"><span class="title">try_files</span> <span class="variable">$uri</span> <span class="variable">$uri</span>/ /index.php<span class="variable">$is_args</span><span class="variable">$args</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title">error_page</span> <span class="number">404</span> /<span class="number">404</span>.html;</span><br><span class="line"></span><br><span class="line"><span class="comment"># redirect server error pages to the static page /50x.html</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="title">error_page</span> <span class="number">500</span> <span class="number">502</span> <span class="number">503</span> <span class="number">504</span> /50x.html;</span><br><span class="line"><span class="title">location</span> = /50x.html &#123;</span><br><span class="line"><span class="title">root</span> /usr/share/nginx/www;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置PHP</span></span><br><span class="line"><span class="title">location</span> <span class="regexp">~ \.php$</span> &#123;</span><br><span class="line"><span class="title">try_files</span> <span class="variable">$uri</span> =<span class="number">404</span>;</span><br><span class="line"><span class="title">fastcgi_pass</span> <span class="number">127.0.0.1:9000</span>;</span><br><span class="line"><span class="title">include</span> fastcgi_params;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>配置好之后可以在某个目录下放一个info.php文件，内容如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="preprocessor">&lt;?php</span> phpinfo(); <span class="preprocessor">?&gt;</span></span>;</span><br></pre></td></tr></table></figure>
+<p>然后重启服务：</p>
+<figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="keyword">service</span> php5-fpm <span class="literal">restart</span></span><br><span class="line">sudo <span class="keyword">service</span> nginx <span class="literal">restart</span></span><br></pre></td></tr></table></figure>
+<p>如果能正常访问，能看到服务器的PHP配置信息，就表明配置没有问题。</p>
+<p>参考文章：<br><a href="https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-14-04" target="_blank" rel="external">How To Install LEMP stack on Ubuntu 14.04</a><br><a href="http://askubuntu.com/questions/134666/what-is-the-easiest-way-to-enable-php-on-nginx" target="_blank" rel="external">Mac OSX 10.9搭建nginx+mysql+php-fpm环境</a></p>
 
         
       
