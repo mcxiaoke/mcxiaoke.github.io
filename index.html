@@ -152,6 +152,161 @@
           
           
             
+              <a class="post-title-link" href="/2015/07/15/python-module-date-time-notes/">
+                Python标准库笔记之datetime
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-07-15
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Python/">Python</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/15/python-module-date-time-notes/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/15/python-module-date-time-notes/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h4 id="datetime">datetime</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line">__author__ = <span class="string">'mcxiaoke'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> date, timedelta, datetime</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># 常量 datetime.MINYEAR=1, datetime.MAXYEAR=9999</span></span><br><span class="line"><span class="string">'''</span><br><span class="line">几个类方法</span><br><span class="line">datetime.date(year,month,day)</span><br><span class="line">datetime.time(hour,minute,second)</span><br><span class="line">datetime.datetime(year,month,day,hour,minute,second)</span><br><span class="line">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># date对象</span></span><br><span class="line"><span class="comment"># timedelta对象表示两个时间或日期的差值</span></span><br><span class="line">delta = timedelta(hours=-<span class="number">5</span>)</span><br><span class="line"><span class="comment"># out: datetime.timedelta(-1, 68400)</span></span><br><span class="line"><span class="keyword">print</span> delta.total_seconds()</span><br><span class="line"><span class="comment"># out: -18000.0</span></span><br><span class="line"><span class="keyword">print</span> date.today()  <span class="comment"># datetime.date(2015, 7, 4)</span></span><br><span class="line"><span class="keyword">print</span> date.fromtimestamp(time.time())  <span class="comment"># 2015-07-04</span></span><br><span class="line"></span><br><span class="line">today = date.today()</span><br><span class="line"><span class="keyword">print</span> today  <span class="comment"># 2015-07-04</span></span><br><span class="line">today == date.fromtimestamp(time.time())</span><br><span class="line"><span class="keyword">print</span> today  <span class="comment"># 2015-07-04</span></span><br><span class="line">birthday = date(today.year, <span class="number">10</span>, <span class="number">01</span>)</span><br><span class="line"><span class="keyword">print</span> birthday  <span class="comment"># 2015-10-01</span></span><br><span class="line">time_to_birthday = abs(birthday - today)</span><br><span class="line"><span class="keyword">print</span> time_to_birthday  <span class="comment"># 89 days, 0:00:00</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># datetime对象，类方法</span></span><br><span class="line"><span class="comment"># 构造函数 datetime(year, month, day[, hour[, minute[, second[, microsecond[, tzinfo]]]]])</span></span><br><span class="line"><span class="comment"># 返回当地时间</span></span><br><span class="line">datetime.today()  <span class="comment"># datetime.datetime(2015, 7, 4, 16, 32, 29, 748628)</span></span><br><span class="line"><span class="comment"># 返回当地时间</span></span><br><span class="line">datetime.now()  <span class="comment"># datetime.datetime(2015, 7, 4, 16, 32, 53, 701843)</span></span><br><span class="line"><span class="comment"># 返回UTC时间</span></span><br><span class="line">datetime.utcnow()  <span class="comment"># datetime.datetime(2015, 7, 4, 8, 34, 14, 433219)</span></span><br><span class="line"><span class="comment"># 根据时间戳构建当地时间</span></span><br><span class="line">datetime.fromtimestamp(time.time())  <span class="comment"># datetime.datetime(2015, 7, 4, 16, 34, 53, 402597)</span></span><br><span class="line"><span class="comment"># 根据时间戳构建UTC时间</span></span><br><span class="line">datetime.utcfromtimestamp(time.time())  <span class="comment"># datetime.datetime(2015, 7, 4, 8, 35, 36, 268517)</span></span><br><span class="line"><span class="comment"># 根据格式和日期字符串构造对象，用法同time模块的strptime()</span></span><br><span class="line"><span class="comment"># datetime.strptime(date_string, format)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># datetime对象，实例方法</span></span><br><span class="line">now = datetime.now()</span><br><span class="line"><span class="keyword">print</span> now.date()  <span class="comment"># 2015-07-04</span></span><br><span class="line"><span class="keyword">print</span> now.time()  <span class="comment"># 16:45:29.077727</span></span><br><span class="line"><span class="keyword">print</span> now.utcoffset()  <span class="comment"># None</span></span><br><span class="line"><span class="keyword">print</span> now.timetuple()</span><br><span class="line"><span class="comment"># out: time.struct_time(tm_year=2015, tm_mon=7, tm_mday=4,</span></span><br><span class="line"><span class="comment"># tm_hour=16, tm_min=46, tm_sec=29, tm_wday=5, tm_yday=185, tm_isdst=-1)</span></span><br><span class="line"><span class="comment"># 类似的还有 now.utctimetuple()</span></span><br><span class="line"><span class="keyword">print</span> now.__str__()  <span class="comment"># 2015-07-04 16:48:02.930730</span></span><br><span class="line"><span class="keyword">print</span> now.ctime()  <span class="comment"># 'Sat Jul  4 16:44:03 2015'</span></span><br><span class="line"><span class="keyword">print</span> now.strftime(<span class="string">'%Y-%m-%d %H:%M:%S'</span>)  <span class="comment"># 2015-07-04 16:49:25</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># time对象</span></span><br><span class="line">t = now.time()</span><br><span class="line"><span class="keyword">print</span> t.isoformat()  <span class="comment"># 返回ISO8601格式 16:52:19.700394</span></span><br><span class="line"><span class="keyword">print</span> t.utcoffset()  <span class="comment"># 返回时区偏移 None</span></span><br></pre></td></tr></table></figure>
+<h4 id="time">time</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line">__author__ = <span class="string">'mcxiaoke'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># 相关模块 datetime,calendar, locale</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 时区缩写表示</span></span><br><span class="line"><span class="string">'''</span><br><span class="line">GMT 格林威治标准时间 Greenwich Mean Time</span><br><span class="line">UTC 协调世界时 Coordinated Universal Time</span><br><span class="line">CST 可同时代表以下四个：</span><br><span class="line">Central Standard Time (USA) UT-6:00</span><br><span class="line">Central Standard Time (Australia) UT+9:30</span><br><span class="line">China Standard Time UT+8:00</span><br><span class="line">Cuba Standard Time UT-4:00</span><br><span class="line">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Unix时间起点是1970年1月1号0点，终点是2038年</span></span><br><span class="line">time.gmtime(<span class="number">0</span>)</span><br><span class="line"><span class="comment"># out: time.struct_time(tm_year=1970, tm_mon=1, tm_mday=1, tm_hour=0,</span></span><br><span class="line"><span class="comment"># tm_min=0, tm_sec=0, tm_wday=3, tm_yday=1, tm_isdst=0)</span></span><br><span class="line"><span class="comment"># UTC=GMT 两种叫法而已</span></span><br><span class="line"><span class="comment"># 返回当前的时间戳</span></span><br><span class="line">time.time()  <span class="comment"># out: 1435994390.769246</span></span><br><span class="line"><span class="comment"># 返回当前UTC/GMT时间，结果为 struct_time</span></span><br><span class="line">time.gmtime()</span><br><span class="line"><span class="comment"># out: time.struct_time(tm_year=2015, tm_mon=7, tm_mday=4, tm_hour=7,</span></span><br><span class="line"><span class="comment"># tm_min=20, tm_sec=35, tm_wday=5, tm_yday=185, tm_isdst=0)</span></span><br><span class="line"><span class="comment"># 返回当前时区的时间，结果为 struct_time</span></span><br><span class="line">time.localtime()</span><br><span class="line"><span class="comment"># out: time.struct_time(tm_year=2015, tm_mon=7, tm_mday=4, tm_hour=15,</span></span><br><span class="line"><span class="comment"># tm_min=21, tm_sec=30, tm_wday=5, tm_yday=185, tm_isdst=0)</span></span><br><span class="line"></span><br><span class="line">time.mktime(time.localtime())  <span class="comment"># 转换成时间戳</span></span><br><span class="line">time.asctime(time.localtime())  <span class="comment"># 转换成字符串</span></span><br><span class="line"><span class="comment"># out: 'Sat Jul  4 15:24:18 2015'</span></span><br><span class="line">time.asctime()  <span class="comment"># 默认使用 localtime()</span></span><br><span class="line">time.ctime()  <span class="comment"># 字符串表示的当地时间</span></span><br><span class="line"><span class="comment"># ctime(secs) = asctime(localtime(secs))</span></span><br><span class="line"><span class="comment"># ctime.sleep(seconds)  # 挂起当前线程一段时间，单位为秒</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 时间字符串格式化</span></span><br><span class="line"><span class="comment"># time.strftime(format[,t]) 格式化struct_time，默认是当前时间</span></span><br><span class="line"><span class="comment"># 转换成unicode编码 strftime(&lt;myformat&gt;).decode(locale.getlocale()</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"当前时间戳"</span>, time.time()</span><br><span class="line">time_text = time.strftime(</span><br><span class="line">    <span class="string">'%%A    (%A)    #当地星期几缩写\n '</span></span><br><span class="line">    <span class="string">'%%a    (%a)    #当地星期几全称\n '</span></span><br><span class="line">    <span class="string">'%%B    (%B)    #当地月份全称\n '</span></span><br><span class="line">    <span class="string">'%%b    (%b)    #当地月份缩写\n '</span></span><br><span class="line">    <span class="string">'%%c    (%c)    #当地日期和时间表示\n '</span></span><br><span class="line">    <span class="string">'%%d    (%d)    #代表日期天数的数字[01,31]\n '</span></span><br><span class="line">    <span class="string">'%%H    (%H)    #24小时制的小时数[00,23]\n '</span></span><br><span class="line">    <span class="string">'%%I    (%I)    #12小时制的小时数[01,12]\n '</span></span><br><span class="line">    <span class="string">'%%j    (%j)    #一年中的第几天[001,366]\n '</span></span><br><span class="line">    <span class="string">'%%m    (%m)    #代表日期月份的数字[01,12]\n '</span></span><br><span class="line">    <span class="string">'%%M    (%M)    #代表时间分钟的数字[00,59]\n '</span></span><br><span class="line">    <span class="string">'%%p    (%p)    #当地表示上午/下午的缩写，如AM/PM\n '</span></span><br><span class="line">    <span class="string">'%%S    (%S)    #代表时间秒数的数字[00,61]\n '</span></span><br><span class="line">    <span class="string">'%%U    (%U)    #一年中的第几周[00,53](星期日作为一周的开始)\n '</span></span><br><span class="line">    <span class="string">'%%w    (%w)    #代表日期星期几的数字[0(星期一),6]\n '</span></span><br><span class="line">    <span class="string">'%%W    (%W)    #一年中的第几周[00,53](星期一作为一周的开始)\n '</span></span><br><span class="line">    <span class="string">'%%x    (%x)    #当地的日期表示\n '</span></span><br><span class="line">    <span class="string">'%%X    (%X)    #当地的时间表示\n '</span></span><br><span class="line">    <span class="string">'%%y    (%y)    #二位数的年份表示\n '</span></span><br><span class="line">    <span class="string">'%%Y    (%Y)    #四位数的年份表示\n '</span></span><br><span class="line">    <span class="string">'%%Z    (%Z)    #当前时区表示\n '</span>)</span><br><span class="line"><span class="keyword">print</span> <span class="string">"当前时间结构"</span>, time.localtime()</span><br><span class="line"><span class="keyword">print</span> <span class="string">"时间格式举例"</span>, time.strftime(<span class="string">"%Y-%m-%d %H:%M:%S"</span>)</span><br><span class="line"><span class="keyword">print</span> time_text</span><br><span class="line"><span class="comment"># 输出的表示</span></span><br><span class="line"><span class="string">'''</span><br><span class="line">当前时间戳 1435997058.36</span><br><span class="line">当前时间结构 time.struct_time(tm_year=2015, tm_mon=7, tm_mday=4,</span><br><span class="line">tm_hour=16, tm_min=4, tm_sec=18, tm_wday=5, tm_yday=185, tm_isdst=0)</span><br><span class="line">时间格式举例 2015-07-04 16:04:18</span><br><span class="line">%A    (Saturday)    #当地星期几缩写</span><br><span class="line"> %a    (Sat)    #当地星期几全称</span><br><span class="line"> %B    (July)    #当地月份全称</span><br><span class="line"> %b    (Jul)    #当地月份缩写</span><br><span class="line"> %c    (Sat Jul  4 16:04:18 2015)    #当地日期和时间表示</span><br><span class="line"> %d    (04)    #代表日期天数的数字[01,31]</span><br><span class="line"> %H    (16)    #24小时制的小时数[00,23]</span><br><span class="line"> %I    (04)    #12小时制的小时数[01,12]</span><br><span class="line"> %j    (185)    #一年中的第几天[001,366]</span><br><span class="line"> %m    (07)    #代表日期月份的数字[01,12]</span><br><span class="line"> %M    (04)    #代表时间分钟的数字[00,59]</span><br><span class="line"> %p    (PM)    #当地表示上午/下午的缩写，如AM/PM</span><br><span class="line"> %S    (18)    #代表时间秒数的数字[00,61]</span><br><span class="line"> %U    (26)    #一年中的第几周[00,53](星期日作为一周的开始)</span><br><span class="line"> %w    (6)    #代表日期星期几的数字[0(星期一),6]</span><br><span class="line"> %W    (26)    #一年中的第几周[00,53](星期一作为一周的开始)</span><br><span class="line"> %x    (07/04/15)    #当地的日期表示</span><br><span class="line"> %X    (16:04:18)    #当地的时间表示</span><br><span class="line"> %y    (15)    #二位数的年份表示</span><br><span class="line"> %Y    (2015)    #四位数的年份表示</span><br><span class="line"> %Z    (CST)    #当前时区表示</span><br><span class="line">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 按格式解析时间，返回值为 struct_time</span></span><br><span class="line">time.strptime(<span class="string">'2005-09-01 9:45:20'</span>, <span class="string">'%Y-%m-%d %H:%M:%S'</span>)</span><br><span class="line"><span class="comment"># out: time.struct_time(tm_year=2005, tm_mon=9, tm_mday=1,</span></span><br><span class="line"><span class="comment"># tm_hour=9, tm_min=45, tm_sec=20, tm_wday=3, tm_yday=244, tm_isdst=-1)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># struct_time结构说明</span></span><br><span class="line"><span class="string">'''</span><br><span class="line">0   tm_year (for example, 1993)</span><br><span class="line">1   tm_mon  取值范围 [1, 12]</span><br><span class="line">2   tm_mday 取值范围 [1, 31]</span><br><span class="line">3   tm_hour 取值范围 [0, 23]</span><br><span class="line">4   tm_min  取值范围 [0, 59]</span><br><span class="line">5   tm_sec  取值范围 [0, 61]</span><br><span class="line">6   tm_wday 取值范围 [0, 6] # 星期一=0</span><br><span class="line">7   tm_yday 取值范围 [1, 366]</span><br><span class="line">8   tm_isdst 取值范围 0, 1 or -1</span><br><span class="line">'''</span></span><br></pre></td></tr></table></figure>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/15/python-module-string-notes/">
+                Python标准库笔记之string
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-07-15
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Python/">Python</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/15/python-module-string-notes/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/15/python-module-string-notes/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h4 id="String">String</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="comment"># Created by mcxiaoke on 15/7/4 17:01.</span></span><br><span class="line">__author__ = <span class="string">'mcxiaoke'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">from</span> string <span class="keyword">import</span> Template</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一些常量</span></span><br><span class="line"><span class="string">'''</span><br><span class="line">whitespace = ' \t\n\r\v\f'</span><br><span class="line">lowercase = 'abcdefghijklmnopqrstuvwxyz'</span><br><span class="line">uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'</span><br><span class="line">letters = lowercase + uppercase</span><br><span class="line">ascii_lowercase = lowercase</span><br><span class="line">ascii_uppercase = uppercase</span><br><span class="line">ascii_letters = ascii_lowercase + ascii_uppercase</span><br><span class="line">digits = '0123456789'</span><br><span class="line">hexdigits = digits + 'abcdef' + 'ABCDEF'</span><br><span class="line">octdigits = '01234567'</span><br><span class="line">punctuation = """!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`&#123;|&#125;~"""</span><br><span class="line">printable = digits + letters + punctuation + whitespace</span><br><span class="line">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 字符串格式化</span></span><br><span class="line"><span class="comment"># 字符串格式化格式为 "hello, world &#123;0&#125; &#123;1&#125;"</span></span><br><span class="line"><span class="comment"># 默认调用 __format()__方法，可以显示使用str()或repr()</span></span><br><span class="line"><span class="comment"># "Harold's a clever &#123;0!s&#125;"        # Calls str() on the argument first</span></span><br><span class="line"><span class="comment"># "Bring out the holy &#123;name!r&#125;"    # Calls repr() on the argument first</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"hello, world &#123;0&#125; &#123;1&#125; !"</span>.format(<span class="string">'first'</span>, <span class="string">'second'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 字符串格式 %s</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"Welcome to %s"</span> % <span class="string">"China"</span></span><br><span class="line"><span class="comment"># 命名参数</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'I love %(cat)s and %(dog)s.'</span> % &#123;<span class="string">'cat'</span>: <span class="string">'BadCat'</span>, <span class="string">'dog'</span>: <span class="string">'BadDog'</span>&#125;</span><br><span class="line"><span class="comment"># out:I love BadCat and BadDog.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 整数格式</span></span><br><span class="line"><span class="string">'''</span><br><span class="line">'b' 二进制整数</span><br><span class="line">'c' Unicode字符</span><br><span class="line">'d' 十进制整数</span><br><span class="line">'o' 八进制整数</span><br><span class="line">'x' 十六进制，小写</span><br><span class="line">'X' 十六进制，大写</span><br><span class="line">'n' 十进制，带分隔符</span><br><span class="line">'''</span></span><br><span class="line">num = <span class="number">1234567890</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"十进制:%d 八进制:%o 十六进制:0x%x 十六进制:0X%X"</span> % (num, num, num, num)</span><br><span class="line"><span class="comment"># out: 十进制:1234567890 八进制:11145401322 十六进制:0x499602d2 十六进制:0X499602D2</span></span><br><span class="line"><span class="comment"># 浮点数格式</span></span><br><span class="line">fnum = <span class="number">987123456.78901234567890123</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'%e'</span> % fnum, <span class="string">'%E'</span> % fnum, <span class="string">'%f'</span> % fnum, <span class="string">'%F'</span> % fnum, <span class="string">'%g'</span> % fnum, <span class="string">'%G'</span> % fnum</span><br><span class="line"><span class="comment"># out: 9.871235e+08 9.871235E+08 987123456.789012 987123456.789012 9.87123e+08 9.87123E+08</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 格式化例子</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;0&#125;, &#123;1&#125;, &#123;2&#125;'</span>.format(<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>)  <span class="comment"># a, b, c</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;&#125;, &#123;&#125;, &#123;&#125;'</span>.format(<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>)  <span class="comment"># a, b, c</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;2&#125;, &#123;1&#125;, &#123;0&#125;'</span>.format(<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>)  <span class="comment"># c, b, a</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;2&#125;, &#123;1&#125;, &#123;0&#125;'</span>.format(*<span class="string">'abc'</span>)  <span class="comment"># 参数解包</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;0&#125;&#123;1&#125;&#123;0&#125;'</span>.format(<span class="string">'hello-'</span>, <span class="string">'world-'</span>)  <span class="comment"># 参数可以重复使用</span></span><br><span class="line"><span class="comment"># out: hello-world-hello-</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 命名参数例子 # out: 经纬度: (37.24N, -115.81W)</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'经纬度: (&#123;0&#125;, &#123;1&#125;)'</span>.format(<span class="string">'37.24N'</span>, <span class="string">'-115.81W'</span>)</span><br><span class="line"><span class="keyword">print</span> <span class="string">'A 经纬度: (&#123;latitude&#125;, &#123;longitude&#125;)'</span>.format(latitude=<span class="string">'37.24N'</span>, longitude=<span class="string">'-115.81W'</span>)</span><br><span class="line">args = (<span class="string">'37.24N'</span>, <span class="string">'-115.81W'</span>)</span><br><span class="line"><span class="keyword">print</span> <span class="string">'B 经纬度: (&#123;&#125;, &#123;&#125;)'</span>.format(*args)</span><br><span class="line">kwargs = &#123;<span class="string">'latitude'</span>: <span class="string">'37.24N'</span>, <span class="string">'longitude'</span>: <span class="string">'-115.81W'</span>&#125;</span><br><span class="line"><span class="keyword">print</span> <span class="string">'C 经纬度: (&#123;latitude&#125;, &#123;longitude&#125;)'</span>.format(**kwargs)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 自定义对象例子</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, x, y)</span>:</span></span><br><span class="line">        self.x, self.y = x, y</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Point(&#123;self.x&#125;,&#123;self.y&#125;)"</span>.format(self=self)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"(x=&#123;self.x&#125;,y=&#123;self.y&#125;)"</span>.format(self=self)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pt = Point(<span class="number">15</span>, <span class="number">238</span>)</span><br><span class="line"><span class="keyword">print</span> <span class="string">'Point is &#123;&#125;'</span>.format(pt)  <span class="comment"># Point is Point(15,238)</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'Point(x=&#123;0.x&#125;, y=&#123;0.y&#125;)'</span>.format(pt)  <span class="comment"># Point(x=15, y=238)</span></span><br><span class="line">two = (<span class="string">'hello'</span>, <span class="string">'world'</span>)</span><br><span class="line"><span class="keyword">print</span> <span class="string">'A=&#123;0[0]&#125;, B=&#123;0[1]&#125;'</span>.format(two)  <span class="comment"># A=hello, B=world</span></span><br><span class="line"><span class="comment"># 使用 repr()和str()的示例</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"repr() shows quotes: &#123;!r&#125;; str() doesn't: &#123;!s&#125;"</span>.format(<span class="string">'test1'</span>, <span class="string">'test2'</span>)</span><br><span class="line"><span class="keyword">print</span> <span class="string">'Point is &#123;0!r&#125; &#123;0!s&#125;'</span>.format(pt)  <span class="comment"># Point is (x=15,y=238) Point(15,238)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 对其方式</span></span><br><span class="line"><span class="comment"># 星号用于加强显示效果，默认是空白</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;:*&lt;30&#125;'</span>.format(<span class="string">'左对齐'</span>)  <span class="comment"># 左对齐*********************</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;:*&gt;30&#125;'</span>.format(<span class="string">'右对齐'</span>)  <span class="comment"># *********************右对齐</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;:*^30&#125;'</span>.format(<span class="string">'居中对其'</span>)  <span class="comment"># *********居中对其*********</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 数字格式处理</span></span><br><span class="line"><span class="comment"># 不带前缀</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"int: &#123;0:d&#125;;  hex: &#123;0:x&#125;;  oct: &#123;0:o&#125;;  bin: &#123;0:b&#125;"</span>.format(<span class="number">2015</span>)</span><br><span class="line"><span class="comment"># out: int: 2015;  hex: 7df;  oct: 3737;  bin: 11111011111</span></span><br><span class="line"><span class="comment"># 带前缀</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"int: &#123;0:d&#125;;  hex: &#123;0:#x&#125;;  oct: &#123;0:#o&#125;;  bin: &#123;0:#b&#125;"</span>.format(<span class="number">2015</span>)</span><br><span class="line"><span class="comment"># int: 2015;  hex: 0x7df;  oct: 0o3737;  bin: 0b11111011111</span></span><br><span class="line"><span class="comment"># 添加分隔符</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;:,&#125;'</span>.format(<span class="number">1234567890</span>)  <span class="comment"># 1,234,567,890</span></span><br><span class="line"><span class="comment"># 日期时间格式化</span></span><br><span class="line">d = datetime.datetime.now()</span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;:%Y-%m-%d %H:%M:%S&#125;'</span>.format(d)  <span class="comment"># 2015-07-04 18:34:28</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 字符串模板</span></span><br><span class="line">s = Template(<span class="string">'$who likes to eat $what'</span>)</span><br><span class="line"><span class="keyword">print</span> s.substitute(who=<span class="string">'john'</span>, what=<span class="string">'fish'</span>)  <span class="comment"># john likes to eat fish</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 字符串函数</span></span><br><span class="line">s = <span class="string">'this is some sample text.'</span></span><br><span class="line"><span class="comment"># 首字母大写</span></span><br><span class="line"><span class="keyword">print</span> string.capitalize(s)  <span class="comment"># This is some sample text.</span></span><br><span class="line"><span class="comment"># 结果等于 s.capitalize()</span></span><br><span class="line"><span class="comment"># 查找字符串</span></span><br><span class="line"><span class="keyword">print</span> s.find(<span class="string">'is'</span>)  <span class="comment"># 2</span></span><br><span class="line"><span class="keyword">print</span> s.find(<span class="string">'hello'</span>)  <span class="comment"># -1</span></span><br><span class="line"><span class="comment"># 分割字符串</span></span><br><span class="line"><span class="keyword">print</span> s.split(<span class="string">' '</span>)  <span class="comment"># ['this', 'is', 'some', 'sample', 'text.']</span></span><br><span class="line"><span class="keyword">print</span> s.split(<span class="string">' '</span>, <span class="number">1</span>)  <span class="comment"># ['this', 'is some sample text.']</span></span><br><span class="line"><span class="keyword">print</span> s.rsplit(<span class="string">' '</span>, <span class="number">1</span>)  <span class="comment"># ['this is some sample', 'text.']</span></span><br><span class="line"><span class="comment"># 合并字符串</span></span><br><span class="line"><span class="keyword">print</span> s.join([<span class="string">'A_'</span>, <span class="string">'B'</span>])  <span class="comment"># A_this is some sample text.B</span></span><br><span class="line"><span class="keyword">print</span> string.join([<span class="string">'there'</span>, <span class="string">'are'</span>, <span class="string">'joined'</span>, <span class="string">'words'</span>], <span class="string">' '</span>)  <span class="comment"># there are joined words</span></span><br><span class="line">s2 = <span class="string">'this\tis\tsome\tsample\ttext'</span></span><br><span class="line"><span class="comment"># 展开TAB</span></span><br><span class="line"><span class="keyword">print</span> s2.expandtabs(<span class="number">4</span>)  <span class="comment"># this    is  some    sample  text</span></span><br><span class="line">s3 = <span class="string">'     hello,     python!    '</span></span><br><span class="line"><span class="comment"># 检查结尾</span></span><br><span class="line"><span class="keyword">print</span> s.endswith(<span class="string">'hello'</span>)  <span class="comment"># out:False</span></span><br><span class="line"><span class="comment"># 去除前后空白</span></span><br><span class="line"><span class="keyword">print</span> s3.strip()  <span class="comment"># hello,     python!</span></span><br><span class="line">s4 = <span class="string">'THIS is SOME text.'</span></span><br><span class="line"><span class="comment"># 交换大小写</span></span><br><span class="line"><span class="keyword">print</span> s4.swapcase()  <span class="comment"># this IS some TEXT.</span></span><br><span class="line"><span class="comment"># 首字母大写</span></span><br><span class="line"><span class="keyword">print</span> s4.capitalize()  <span class="comment"># This is some text.</span></span><br><span class="line"><span class="comment"># 标题模式，单词首字母大写</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'title:'</span>, s4.title()  <span class="comment"># This Is Some Text.</span></span><br><span class="line"><span class="comment"># 全部小写</span></span><br><span class="line"><span class="keyword">print</span> s4.lower()  <span class="comment"># this is some text.</span></span><br><span class="line"><span class="comment"># 全部大写</span></span><br><span class="line"><span class="keyword">print</span> s4.upper()  <span class="comment"># THIS IS SOME TEXT.</span></span><br><span class="line"><span class="comment"># 全是字母和数字</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'12345678abcdefg'</span>.isalnum()  <span class="comment"># out:True</span></span><br><span class="line"><span class="comment"># 全是数字</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'12345'</span>.isdigit()  <span class="comment"># out:True</span></span><br><span class="line"><span class="comment"># 全是字母</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'12345, hello'</span>.isalpha()  <span class="comment"># out:False</span></span><br><span class="line"><span class="comment"># 删除指定字符</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'hello,world,I love cats'</span>.translate(<span class="keyword">None</span>, <span class="string">'o'</span>)  <span class="comment"># out:hell,wrld,I lve cats</span></span><br><span class="line"><span class="comment"># 补齐字符串</span></span><br><span class="line"><span class="keyword">print</span> s4.ljust(<span class="number">30</span>, <span class="string">'_'</span>)  <span class="comment"># THIS is SOME text.____________</span></span><br><span class="line"><span class="keyword">print</span> s4.rjust(<span class="number">30</span>, <span class="string">'_'</span>)  <span class="comment"># ____________THIS is SOME text.</span></span><br><span class="line"><span class="keyword">print</span> s4.center(<span class="number">30</span>, <span class="string">'_'</span>)  <span class="comment"># ______THIS is SOME text.______</span></span><br><span class="line"><span class="keyword">print</span> s4.zfill(<span class="number">30</span>)  <span class="comment"># 000000000000THIS is SOME text.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 替换字符串</span></span><br><span class="line">s5 = <span class="string">'color1 and color2 and color3 scheme files are tested.'</span></span><br><span class="line"><span class="keyword">print</span> s5.replace(<span class="string">'color'</span>, <span class="string">'dark'</span>)</span><br><span class="line"><span class="comment"># out: dark1 and dark2 and dark3 scheme files are tested.</span></span><br><span class="line"><span class="keyword">print</span> s5.replace(<span class="string">'and'</span>, <span class="string">''</span>)</span><br><span class="line"><span class="comment"># out: color1  color2  color3 scheme files are tested.</span></span><br><span class="line"><span class="keyword">print</span> s5.replace(<span class="string">' '</span>, <span class="string">'_'</span>)</span><br><span class="line"><span class="comment"># out: color1_and_color2_and_color3_scheme_files_are_tested.</span></span><br><span class="line"><span class="keyword">print</span> s5.replace(<span class="string">' '</span>, <span class="string">'-'</span>, <span class="number">2</span>)</span><br><span class="line"><span class="comment"># out: color1-and-color2 and color3 scheme files are tested.</span></span><br></pre></td></tr></table></figure>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/07/15/python-image-exif-rename-md/">
                 根据EXIF拍摄时间批量重命名照片
               </a>
@@ -1149,211 +1304,6 @@ mServiceHandler = <span class="keyword">new</span> <span class="type">ServiceHan
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2010/12/12/compile-and-use-libcurl-in-mingw-win32-how-to/">
-                使用MinGW编译libcurl静态库
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2010-12-12
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <a href="/categories/Develop/">Develop</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2010/12/12/compile-and-use-libcurl-in-mingw-win32-how-to/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2010/12/12/compile-and-use-libcurl-in-mingw-win32-how-to/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>libcurl<br>7.21以后的版本在Windows下的编译比较简单，自带了MinGW和VC环境的Makefile文件，首先去Curl官网下载源代码：<br><a href="http://curl.haxx.se/download.html" target="_blank" rel="external">http://curl.haxx.se/download.html</a>，</p>
-<p>任选一个下载即可，推荐这个：<br><a href="http://curl.haxx.se/download/curl-7.21.2.tar.gz" target="_blank" rel="external">curl-7.21.2.tar.gz</a><br>下载完成后解压开，打开命令行进入curl源码目录，(在此之前请先设置好MinGW的环境变量)：  </p>
-<pre><code><span class="tag">cd</span> <span class="tag">curl-7</span><span class="class">.21</span><span class="class">.2</span> 
-</code></pre><p>编译libcurl库文件：  </p>
-<pre><code><span class="built_in">cd</span> lib  
-make <span class="operator">-f</span> Makefile.m32  
-</code></pre><p>等待编译完成即可<br>编译curl可执行文件： </p>
-<pre><code><span class="built_in">cd</span> ../src  
-make <span class="operator">-f</span> Makefile.m32  
-</code></pre><p>一会儿就编译完成了</p>
-<p>编译完成后，我们需要复制include头文件和库文件到一个目录供程序开发用 </p>
-<ol>
-<li>新建curllib目录  </li>
-<li>新建curllib/include目录，将源代码include目录里的curl文件夹复制到curllib/include目录，这些是使用libcurl需要的头文件  </li>
-<li>新建curllib/lib目录，将源代码lib目录里编译好的库文件libcurl.a，libcurldll.a，libcurl.dll复制到curllib目录  </li>
-<li>将MinGW安装目录下lib文件夹里的libwldap32.a和libws2_32.a复制到curllib/lib目录</li>
-</ol>
-<p>至此，curllib就是我们开发中要使用到的libcurl的全部文件，下面新建一个测试程序，假设文件名为curltest.c，代码如下：</p>
-<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="command">\#</span>include <span class="command">\&lt;</span>stdio.h<span class="command">\&gt;</span>  </span><br><span class="line"><span class="command">\#</span>include <span class="command">\&lt;</span>curl/curl.h<span class="command">\&gt;</span></span><br><span class="line"></span><br><span class="line">int main(void)  </span><br><span class="line"><span class="special">&#123;</span>  </span><br><span class="line">CURL <span class="command">\*</span>curl;  </span><br><span class="line">CURLcode res;</span><br><span class="line"></span><br><span class="line">curl = curl<span class="command">\_</span>easy<span class="command">\_</span>init();  </span><br><span class="line">if(curl) <span class="special">&#123;</span>  </span><br><span class="line">curl<span class="command">\_</span>easy<span class="command">\_</span>setopt(curl, CURLOPT<span class="command">\_</span>URL, "www.google.com");  </span><br><span class="line">res = curl<span class="command">\_</span>easy<span class="command">\_</span>perform(curl);</span><br><span class="line"></span><br><span class="line">/<span class="command">\*</span> always cleanup <span class="command">\*</span>/  </span><br><span class="line">curl<span class="command">\_</span>easy<span class="command">\_</span>cleanup(curl);  </span><br><span class="line"><span class="special">&#125;</span>  </span><br><span class="line">return 0;  </span><br><span class="line"><span class="special">&#125;</span></span><br></pre></td></tr></table></figure>
-<p>** 方法一、命令行编译使用licurl的程序</p>
-<p>假设测试代码curltest.c位于e:/project<br>假设curllib文件夹的位置为c:/curllib<br>命令行运行下列命令编译这个测试程序：</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd <span class="symbol">e:</span>/project  </span><br><span class="line">gcc -<span class="constant">I</span>. -<span class="constant">Ic</span><span class="symbol">:/curllib/include</span> -g -<span class="constant">O2</span> -<span class="constant">DCURL</span>\_STATICLIB -c curltest.c  </span><br><span class="line">gcc -s -o curltest.exe curltest.o -<span class="constant">Lc</span><span class="symbol">:/curllib/lib</span> -lcurl -lwldap32</span><br><span class="line">-lws2\_32</span><br></pre></td></tr></table></figure>
-<p>这时可以看到curltest.c目录下生成了一个curltest.exe文件<br>接着在命令行输入：  </p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">curltest</span><span class="class">.exe</span></span><br></pre></td></tr></table></figure>
-<p>如果看到命令行窗口输出一些HTML代码，就表示编译成功</p>
-<p>** 方法二、Code::Blocks中使用libcurl静态库</p>
-<ol>
-<li>新建工程，在工程里添加代码同上的curltest.c文件  </li>
-<li>将上面curllib/include目录下的curl文件夹复制到MinGW安装目录的include目录  </li>
-<li>工程名上右键打开Build Options选项，在Compiler<br>Settings选项卡下的#defines里面输入CURL_STATICLIB，（这表示使用静态库）  </li>
-<li>在Linker Settings选项卡下面的link<br>libraries里添加上面curllib/lib目录里的四个文件：</li>
-</ol>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:curllibliblibcurl<span class="class">.a</span>  </span><br><span class="line">C:curllibliblibcurldll<span class="class">.a</span>  </span><br><span class="line">C:curllibliblibwldap32<span class="class">.a</span>  </span><br><span class="line">C:curllibliblibws2\_32.a</span><br></pre></td></tr></table></figure>
-<p>然后回到工程页面，点击Build即可</p>
-<p>今天为了编译和使用libcurl库折腾了一下午，记下来供需要的人参考，需要注意的是，本文中编译的是不带ssl和zlib支持的libcurl，如果需要编译支持ssl和zlib的curl，还需要先编译openssl，zlib和libssh，编译zlib比较简单，直接使用源码自带的makefile文件即可，编译openssl需要安装MSYS和Perl，还需要修改一些代码，libssh的编译依赖openssl，网上都可以找到方法，也可以看源码的README文件。</p>
-<p>附一篇在C语言中使用libcurl库的文章供参考：<br><a href="http://www.ibm.com/developerworks/cn/opensource/os-curl/" target="_blank" rel="external">使用 cURL 和 libcurl 通过 Internet<br>进行对话</a><br>下面几篇是Curl的文档和教程：<br><a href="http://curl.haxx.se/docs/httpscripting.html" target="_blank" rel="external">Scripting HTTP Requests Using<br>Curl</a><br><a href="http://curl.haxx.se/docs/manpage.html" target="_blank" rel="external">Curl Man Page</a><br><a href="http://curl.haxx.se/docs/manual.html" target="_blank" rel="external">Curl Mannul</a><br><a href="http://curl.haxx.se/libcurl/c/" target="_blank" rel="external">Using The libcurl C Interface</a><br><a href="http://curl.haxx.se/libcurl/c/example.html" target="_blank" rel="external">libcurl - small example<br>snippets</a><br><a href="http://curl.haxx.se/libcurl/c/libcurl-tutorial.html" target="_blank" rel="external">programming with<br>libcurl</a></p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2010/11/22/android-apk-files-decompile-how-to/">
-                Android程序反编译流程
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2010-11-22
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <a href="/categories/Android/">Android</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2010/11/22/android-apk-files-decompile-how-to/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2010/11/22/android-apk-files-decompile-how-to/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>APK是Android<br>Package的简称，是Android平台安装包的标准封装格式，实际上是标准的zip压缩文件，里面包含清单文件，数字签名文件，压缩后的资源文件，以及二进制dex字节码文件，Android程序的反编译包括两部分，三个流程，二部分是资源文件resources.arsc的反编译和字节码文件classes.dex的反编译；三流程是资源文件反编译为人类可读的XML文本格式和图片文件，字节码文件dex反编译为标准的Java压缩格式jar(标准的Java<br>Class文件)，然后将class文件反编译为Java源代码。下面说明各个流程的方法和所需要的工具：</p>
-<p><strong>1. 资源文件的反编译</strong></p>
-<p>资源文件包括resources.arsc和res目录中的XML文件，如果直接打开是乱码，resources.arsc是压缩过的二进制文件，XML也是压缩过的二进制格式的文件，我们要做的是还原他们的本来面目：二进制格式的图片，和文本格式的XML文件。我们使用最方便的工具：Android<br>Apktool，这个工具的作者是XDA的高手，他同时还是Brut版Google<br>Maps的作者。这个工具使用非常方便。</p>
-<p>Android<br>Apktool发布地址：<a href="http://forum.xda-developers.com/showthread.php?t=640592" target="_blank" rel="external">http://forum.xda-developers.com/showthread.php?t=640592</a><br>Android Apktool项目地址：<a href="http://code.google.com/p/android-apktool/" target="_blank" rel="external">http://code.google.com/p/android-apktool/</a></p>
-<p>以Windows系统为例，需要下载这两个文件：  </p>
-<p>写好的bat批处理脚本：<a href="https://android-apktool.googlecode.com/files/apktool-install-windows-r05-ibot.tar.bz2" target="_blank" rel="external">apktool-install-windows-r05-ibot.tar.bz2</a>  </p>
-<p>apktool可执行文件：<a href="https://android-apktool.googlecode.com/files/apktool1.5.2.tar.bz2" target="_blank" rel="external">apktool1.5.2.tar.bz2</a></p>
-<p>将它们解压到同一个文件夹就可以了，使用方法如下，<br>以Android系统自带的Gallery.apk文件为例：</p>
-<ul>
-<li>反编译资源文件，并将字节码反编译为smali文件：命令行输入 apktool.bat<br>d Gallery.apk<br>，当前目录下会生成一个Gallery目录，里面就是反编译好的文件，res目录里为反编译好的资源文件，smali目录里为反编译好的smali字节码文件。由于我们只需要资源文件，所以可以使用下面的命令。</li>
-<li>仅反编译资源文件，命令行输入 apktool.bat d -s Gallery.apk<br>同样会生成Gallery目录，里面的res目录里为反编译好的资源文件，但是classes.dex没有反编译为smali文件。</li>
-</ul>
-<p><strong>2. 二进制字节码文件的反编译</strong></p>
-<p>解压apk文件可以发现里面的classes.dex，这就是二进制字节码文件，我们要把它反编译为标准的Java<br>Class文件，需要的工具是dex2jar，该工具是国人开发的，目前还在不断更新中。<br>dex2jar项目地址： <a href="http://code.google.com/p/dex2jar/" target="_blank" rel="external">http://code.google.com/p/dex2jar/</a><br>dex2jar下载地址：<br><a href="https://dex2jar.googlecode.com/files/dex2jar-0.0.9.15.zip" target="_blank" rel="external">dex2jar-0.0.9.15.zip</a></p>
-<p>使用方法非常简单，还是以上面的Gallery程序为例，取出里面的classes.dex文件后，命令行输入<br>dex2jar.bat classes.dex<br>就会在同级目录下发现反编译好的jar文件classes.dex.dex2jar.jar，下面的步骤就是将Jar文件反编译为Java源文件了，需要是的工具是JD-GUI，或者DJ<br>Java Decompiler。<br>JD-GUI是著名的Java反编译工具JAD的GUI版本，下载地址：<br>    <a href="http://java.decompiler.free.fr/?q=jdgui" target="_blank" rel="external">http://java.decompiler.free.fr/?q=jdgui</a><br>此程序还提供一个Eclipse插件，使用方法，直接用JD-GUI打开刚才反编译好的Jar文件就可以看到Java源代码了，如果原始程序没有经过混淆，那么你会发现代码非常清晰，很容易看懂。</p>
-<p><strong>3. 使用Logcat查看代码的功能</strong></p>
-<p>反编译出来后一般还有很多代码对应的功能不容易弄懂，此时可以打开程序，对照Logcat里面的调试信息，很容易看到代码对应的功能，至于代码里的资源文件ID，由于都是数字，需要到R.java里面去查找对应的资源文件名称。这是一种很好的学习的方法，但也可能被用作非法用途。</p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -1392,7 +1342,7 @@ make <span class="operator">-f</span> Makefile.m32
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-count">19</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
