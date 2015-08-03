@@ -1,0 +1,661 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="零碎的笔记" />
+
+
+
+  <meta name="keywords" content="EventBus, Android, Java,HowTo," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: 'UA-49960399-2'
+    },
+    sidebar: 'hide'
+  };
+</script>
+
+
+
+
+  <title> 跟我一起写EventBus（一） // Xiaoke's Blog </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Xiaoke's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              跟我一起写EventBus（一）
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-08-03
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Android-Java/">Android, Java</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/03/how-to-write-an-eventbus-part1/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/03/how-to-write-an-eventbus-part1/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h2 id="项目链接">项目链接</h2><ul>
+<li><a href="https://github.com/mcxiaoke/xBus" target="_blank" rel="external"><code>xBus</code>项目GitHub地址</a></li>
+<li><a href="https://github.com/mcxiaoke/xBus/blob/master/docs/how-to-write-an-eventbus-part1.md" target="_blank" rel="external">跟我一起写<code>EventBus</code>（一）</a></li>
+</ul>
+<h2 id="什么是EventBus">什么是<code>EventBus</code></h2><p>先介绍一下概念，<code>EventBus</code>直译过来就是<code>事件总线</code>，它使用发布订阅模式支持组件之间的通信，不需要显式地注册回调，比观察者模式更灵活，可用于替换Java中传统的事件监听模式，<code>EventBus</code>的作用就是解耦，它不是通用的发布订阅系统，也不能用于进程间通信。可用于Android的<code>EventBus</code>库主要有这几个：Google出品的<code>Guava</code>，<code>Guava</code>是一个庞大的库，<code>EventBus</code>只是它附带的一个小功能，因此实际项目中使用并不多。用的最多的是<a href="https://github.com/greenrobot/EventBus" target="_blank" rel="external"><code>greenrobot/EventBus</code></a>，这个库的优点是接口简洁，集成方便，但是限定了方法名，不支持注解。另一个库<a href="https://github.com/square/otto" target="_blank" rel="external"><code>square/otto</code></a>修改自<code>Guava</code>，用的人也不少。</p>
+<p>以 <code>greenrobot/EventBus</code> 为例，我们看一下<code>EventBus</code>模式的典型用法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 注册EventBus，接受事件</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span></span>&#123;</span><br><span class="line">       EventBus.getDefault().register(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span></span>&#123;</span><br><span class="line">       EventBus.getDefault().unregister(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(SomeEvent1 event)</span></span>&#123;</span><br><span class="line">        <span class="comment">// handle event</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 处理任务，发送事件</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomeThing</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// do your work</span></span><br><span class="line">        <span class="comment">// send event</span></span><br><span class="line">        EventBus.getDefault().post(<span class="keyword">new</span> SomeEvent1());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="接口定义">接口定义</h2><p>我们的目标是从零开始自己写一个<code>EventBus</code>，参考上面的示例，我们首先定义接口，假设我们的接口叫<code>IBus</code>，实现类叫<code>Bus</code>，它最少需要三个方法。为了灵活和简洁，暂时不考虑性能，我们采用Annotation的方式指定事件接收者。</p>
+<p>接口定义如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IBus</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// register event target</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">register</span><span class="params">(Object target)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// unregister event target</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">unregister</span><span class="params">(Object target)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// post event</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">post</span><span class="params">(Object event)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最简单的用法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BusDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SomeEvent</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">new</span> BusDemo().show();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 注册EventBus，发送事件</span></span><br><span class="line">    <span class="comment">// 这里为了演示，全部放在一个地方</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Bus.getDefault().register(<span class="keyword">this</span>);</span><br><span class="line">        Bus.getDefault().post(<span class="keyword">new</span> SomeEvent());</span><br><span class="line">        Bus.getDefault().unregister(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 必须使用这个Annotation</span></span><br><span class="line">    <span class="comment">// 必须是接受一个参数的public方法，没有其它限制</span></span><br><span class="line">    <span class="annotation">@BusReceiver</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(SomeEvent event)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"onReceive() event="</span> + event);</span><br><span class="line">        <span class="comment">// handle your event here...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="接口分析">接口分析</h2><p>我们定义的 <code>IBus</code> 接口有三个方法 <code>register(target)</code>， <code>unregister(target)</code>， <code>post(event)</code>， 我们的事件接收器使用 <code>Annotation</code> 的方式指定，下面逐一考察这些问题：</p>
+<ol>
+<li>按照接口定义，<code>register(target)</code>方法用于注册事件接收器的目标对象，我们需要保存这个对象，同时还需要查找这个对象中存在的事件接收器方法，上面说了，这些事件接受器是使用了<code>@BusReceiver</code>注解的<code>public</code>方法，查找出这些方法之后需要保存这些方法，后续<code>post(event)</code>发送事件的时候需要用到。</li>
+<li><code>unregister(target)</code>方法用于取消注册目标对象，调用这个方法之后，不能再给这个对象发送任何事件，也就是要从保存的事件目标对象集合里移除这个对象和对应的事件接收器方法集合，这要求我们能找到这个对象以及这个对象中的事件接受器对象集合。</li>
+<li><code>post(event)</code>方法用于发送事件给目标对象，也就是调用注册了这个事件接收器的方法，这要求我们可以通过事件对象或时间对象类型找到对应的目标对象(<code>target</code>)和事件接收器(‘BusReceiver’)方法。</li>
+<li>事件接收器通过<code>@BusReceiver</code>这个注解指定，因此我们需要在<code>register(target)</code>的时候目标对象中所有使用了这个注解的方法，并排除非<code>public</code>的方法，<code>static</code>方法也需要排除，没有参数或参数超过一个的也要排除。</li>
+</ol>
+<h2 id="开始实现">开始实现</h2><h3 id="查找使用@BusReceiver的方法">查找使用<code>@BusReceiver</code>的方法</h3><p>首先我们要定义<code>BusReceiver</code>注解，它的定义很简单，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Target</span>(ElementType.METHOD) <span class="comment">// 表示这个注解适用于方法</span></span><br><span class="line"><span class="annotation">@Retention</span>(RetentionPolicy.RUNTIME) <span class="comment">//表示这个注解需要保留到运行时</span></span><br><span class="line"><span class="keyword">public</span> <span class="annotation">@interface</span> BusReceiver &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们定义一个通用一点的方法叫<code>findAnnotatedMethods(class,annotation)</code>，用于查找给定的<code>class</code>里面使用了<code>annotation</code>的方法，为了简化问题，我们先忽略从父类继承的方法，只查找指定类的方法，这个方法是个通用的工具方法，可以放在一个单独的类中，定义为静态方法，假设这个类为<code>Helper</code>，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Method&gt; <span class="title">findAnnotatedMethods</span><span class="params">(<span class="keyword">final</span> Class&lt;?&gt; type,</span><br><span class="line">                                                    <span class="keyword">final</span> Class&lt;? extends Annotation&gt; annotation)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> List&lt;Method&gt; methods = <span class="keyword">new</span> ArrayList&lt;Method&gt;();</span><br><span class="line"><span class="comment">//        Class&lt;?&gt; clazz = type;</span></span><br><span class="line">        <span class="comment">// for now ignore super class, handle current class only</span></span><br><span class="line">        Method[] ms = type.getDeclaredMethods();</span><br><span class="line">        <span class="keyword">for</span> (Method method : ms) &#123;</span><br><span class="line">            methods.add(method);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> methods;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>这是最简单的查找使用了某个特定注解的方法，按照我们接口的定义，事件接收器方法需要满足这几个条件：</p>
+<ul>
+<li>使用了<code>@BusReceiver</code>注解</li>
+<li>是<code>public</code>方法，并且不是<code>static</code>方法</li>
+<li>参数只能是一个，不能没有也不能是多个</li>
+</ul>
+<p>按照这个条件加上过滤，<code>findAnnotatedMethods</code>方法最终是这样的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Method&gt; <span class="title">findAnnotatedMethods</span><span class="params">(<span class="keyword">final</span> Class&lt;?&gt; type,</span><br><span class="line">                                                    <span class="keyword">final</span> Class&lt;? extends Annotation&gt; annotation)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> List&lt;Method&gt; methods = <span class="keyword">new</span> ArrayList&lt;Method&gt;();</span><br><span class="line"><span class="comment">//        Class&lt;?&gt; clazz = type;</span></span><br><span class="line">        <span class="comment">// for now ignore super class, handle current class only</span></span><br><span class="line">        Method[] ms = type.getDeclaredMethods();</span><br><span class="line">        <span class="keyword">for</span> (Method method : ms) &#123;</span><br><span class="line">            <span class="comment">// must not static</span></span><br><span class="line">            <span class="keyword">if</span> (Modifier.isStatic(method.getModifiers())) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// must be public</span></span><br><span class="line">            <span class="keyword">if</span> (!Modifier.isPublic(method.getModifiers())) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// must has only one parameter</span></span><br><span class="line">            <span class="keyword">if</span> (method.getParameterTypes().length != <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// must has annotation</span></span><br><span class="line">            <span class="keyword">if</span> (!method.isAnnotationPresent(annotation)) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            methods.add(method);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> methods;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>因为判断<code>Method</code>的修饰符和参数列表长度比较快， 我们放在前面，<code>method.isAnnotationPresent</code>这个方法比较慢，放在最后。</p>
+<h3 id="register(target)的实现，第一步"><code>register(target)</code>的实现，第一步</h3><p>有了<code>findAnnotatedMethods</code>方法，<code>register(target)</code>的实现就简单多了，这个方法需要找出所有符合条件的事件接收器方法，然后保存起来，由于后面我们要根据对象查找方法，我们将<code>target:method</code>关系保存到一个<code>Map</code>中，假设我们的<code>IBus</code>接口的实现类叫<code>Bus</code>，在<code>Bus</code>类中增加一个成员变量保存它们：</p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Map&lt;Object, List&lt;<span class="function"><span class="keyword">Method</span>&gt;&gt; <span class="title">mMethodMap</span> = <span class="title">new</span> <span class="title">HashMap</span>&lt;<span class="title">Object</span>, <span class="title">List</span>&lt;<span class="title">Method</span>&gt;&gt;<span class="params">()</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> void <span class="keyword">register</span>(<span class="keyword">final</span> Object target) <span class="comment">&#123;</span><br><span class="line">    List&lt;Method&gt; methods = Helper.findAnnotatedMethods(target.getClass(), BusReceiver.class);</span><br><span class="line">    if (methods == null || methods.isEmpty()) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span></span><br><span class="line">    mMethodMap.put(target, methods);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="unregister(target)的实现，第一步"><code>unregister(target)</code>的实现，第一步</h3><p>有了上面保存的<code>mMethodMap</code>数据，取消注册目标就是移除目标对象注册过的所有事件接收器方法，可以这样写：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">unregister</span><span class="params">(<span class="keyword">final</span> Object target)</span> </span>&#123;</span><br><span class="line">    mMethodMap.remove(target);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="post(event)的实现"><code>post(event)</code>的实现</h3><p><code>xBus</code>的使用者在完成某项任务之后调用<code>post(event)</code>方法发送事件，这个方法会遍历所有注册过的<code>target</code>里包含的，接受这个事件的事件接收器方法，因此需要知道怎么从事件对象找到事件接收器，由于可能有多个<code>target</code>都注册了这个事件的接收器，因此我们需要遍历所有的目标对象，找到符合条件的方法，然后调用这些方法。怎么样才算符合条件呢，首先要符合<code>findAnnotatedMethods</code>那里提到的条件：使用<code>@BusReceiver</code>注解，是<code>publici</code>且非<code>static</code>方法，有且只有一个参数，针对某个事件<code>event</code>，还需要参数类型是一致的，举例说明：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对类型为`SomeEvent`的事件`event`，只能发送给如下形式的事件接收器：</span></span><br><span class="line"><span class="comment">// 这里方法名字没有要求，但是注解和方法参数签名不能变</span></span><br><span class="line"><span class="annotation">@BusReceier</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">anyMethodName</span><span class="params">(SomeEvent event)</span></span>&#123;</span><br><span class="line"><span class="comment">// handle event</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>能想到的最直接的查找思路就是遍历<code>mMethods</code>列表，逐个对比，找出符合要求的方法，然后调用对应的方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">post</span><span class="params">(Object event)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> Class&lt;?&gt; eventClass = event.getClass();</span><br><span class="line">    <span class="keyword">for</span> (Map.Entry&lt;Object, List&lt;Method&gt;&gt; entry : mMethodMap.entrySet()) &#123;</span><br><span class="line">        <span class="keyword">final</span> Object target = entry.getKey();</span><br><span class="line">        <span class="keyword">final</span> List&lt;Method&gt; methods = entry.getValue();</span><br><span class="line">        <span class="keyword">if</span> (methods == <span class="keyword">null</span> || methods.isEmpty()) &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (Method method : methods) &#123;</span><br><span class="line">        <span class="comment">// 如果事件类型相符，就调用对应的方法发送事件</span></span><br><span class="line">        <span class="comment">// 这里的类型是要求精确匹配的，没有考虑继承</span></span><br><span class="line">            <span class="keyword">if</span> (eventClass.equals(method.getParameterTypes()[<span class="number">0</span>])) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    method.invoke(target, event);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InvocationTargetException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="测试一下">测试一下</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BusDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> BusDemo demo = <span class="keyword">new</span> BusDemo();</span><br><span class="line">        Bus bus = Bus.getDefault();</span><br><span class="line">        bus.register(demo);</span><br><span class="line">        bus.post(<span class="keyword">new</span> Object());</span><br><span class="line">        bus.post(<span class="string">"SomeEvent"</span>);</span><br><span class="line">        bus.post(<span class="number">12345</span>);</span><br><span class="line">        bus.post(<span class="keyword">new</span> RuntimeException(<span class="string">"Error"</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 没有发送这个事件</span></span><br><span class="line">    <span class="annotation">@BusReceiver</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceiveRunnableNotPost</span><span class="params">(Runnable event)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"onReceiveRunnableNotPost() event="</span> + event);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@BusReceiver</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onObjectEvent</span><span class="params">(Object event)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"onObjectReceive() event="</span> + event);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 发送的事件是`RuntimeException`，不是精确匹配`Exception`</span></span><br><span class="line">    <span class="annotation">@BusReceiver</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onExceptionEvent</span><span class="params">(Exception event)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"onExceptionEvent() event="</span> + event);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@BusReceiver</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStringReceive</span><span class="params">(String event)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"onStringReceive() event="</span> + event);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@BusReceiver</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onInteger</span><span class="params">(Integer event)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"onInteger() event="</span> + event);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="完整代码">完整代码</h2><ul>
+<li>完整的代码见 <a href="https://github.com/mcxiaoke/xBus/tree/tutorial-part1/src/main/com/mcxiaoke/bus" target="_blank" rel="external">tutorial-part1/src/main</a></li>
+<li>详细的示例见 <a href="https://github.com/mcxiaoke/xBus/tree/tutorial-part1/src/demo/com/mcxiaoke/bus/demo" target="_blank" rel="external">tutorial-part1/src/demo</a></li>
+<li>代码打包下载 <a href="https://github.com/mcxiaoke/xBus/archive/tutorial-part1.zip" target="_blank" rel="external">archive/tutorial-part1.zip</a></li>
+</ul>
+<h2 id="进一步的问题">进一步的问题</h2><p>这个粗糙的版本只是实现了一个最基本的<code>EventBus</code>的功能，如果想把它用在实际的项目中，还需要考虑很多问题，比如：</p>
+<ol>
+<li><code>findAnnotatedMethods</code>方法没有考虑效率问题，如果某个<code>target</code>中有成千上万个方法，这个方法可能比较慢，是需要考虑缓存或其它的优化方法。</li>
+<li><code>post(event)</code>方法需要遍历保存所有目标对象的所有方法，这个在方法数量很大时效率同样存在问题，可以改进一下遍历过程，或者可以加缓存，不用每次都遍历。</li>
+<li><code>Bus</code>类直接保存了目标对象<code>target</code>的强引用，如果使用者忘记调用<code>unregister(target)</code>方法取消注册，可能造成内存泄露，任何改进。</li>
+<li><code>Bus</code>的实现没有考虑在多个线程中使用的问题，没有添加任何同步代码，可能会造成内部数据的不同步，或者发生错误。</li>
+<li><code>Bus</code>的实现不支持外部配置，限定了事件接收器方法只能使用<code>@BusReceiver</code>，且只能是<code>public</code>的，只能带一个参数，能不能支持使用者自定义这些行为。</li>
+<li><code>Bus</code>目前的版本不支持继承，既不支持在基类中注册，也不支持事件接收器方法中参数类型的继承，如何支持。</li>
+<li>当前的事件接收器不支持泛型参数，不支持集合类型，如果支持，还可以考虑，如何支持多个事件参数和可变参数类型的事件。</li>
+<li>当前的<code>post(event)</code>方法是在调用者线程执行，在很多情况下，使用者可能需要任务执行的线程和事件接收器的线程是分开的，比如在某个后台线程中执行异步任务，在主线程中接收事件更新界面，这个需要支持用户自定义。</li>
+<li>目前的<code>Bus</code>实现没有任何异常处理的代码，一个健壮的程序不能缺少完善的异常处理。</li>
+</ol>
+<p>这些问题都是一个完整的<code>EventBus</code>实现需要考虑的问题，教程的后续部分将逐步实现这些功能，解决存在的问题。</p>
+<h2 id="相关阅读">相关阅读</h2><h4 id="什么是EventBus-1">什么是EventBus</h4><p><a href="https://code.google.com/p/guava-libraries/wiki/EventBusExplained" target="_blank" rel="external">https://code.google.com/p/guava-libraries/wiki/EventBusExplained</a><br><a href="http://doc.akka.io/docs/akka/snapshot/java/event-bus.html" target="_blank" rel="external">http://doc.akka.io/docs/akka/snapshot/java/event-bus.html</a>  </p>
+<h4 id="EventBus的实现">EventBus的实现</h4><p><a href="http://javarticles.com/2015/04/guava-eventbus-examples.html" target="_blank" rel="external">http://javarticles.com/2015/04/guava-eventbus-examples.html</a><br><a href="http://timnew.me/blog/2014/12/06/typical-eventbus-design-patterns/" target="_blank" rel="external">http://timnew.me/blog/2014/12/06/typical-eventbus-design-patterns/</a><br><a href="https://code.google.com/p/simpleeventbus/" target="_blank" rel="external">https://code.google.com/p/simpleeventbus/</a><br><a href="https://github.com/greenrobot/EventBus/blob/master/HOWTO.md" target="_blank" rel="external">https://github.com/greenrobot/EventBus/blob/master/HOWTO.md</a>  </p>
+<h4 id="EventBus的使用">EventBus的使用</h4><p><a href="http://www.cnblogs.com/peida/p/eventbus.html" target="_blank" rel="external">http://www.cnblogs.com/peida/p/eventbus.html</a><br><a href="http://blog.cainwong.com/using-an-eventbus-in-android-pt-1-why-an-eventbus/" target="_blank" rel="external">http://blog.cainwong.com/using-an-eventbus-in-android-pt-1-why-an-eventbus/</a><br><a href="http://blog.cainwong.com/using-an-eventbus-in-android-pt-2-sticking-your-config/" target="_blank" rel="external">http://blog.cainwong.com/using-an-eventbus-in-android-pt-2-sticking-your-config/</a><br><a href="http://blog.cainwong.com/using-an-eventbus-in-android-pt-3-threading/" target="_blank" rel="external">http://blog.cainwong.com/using-an-eventbus-in-android-pt-3-threading/</a>  </p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/EventBus-Android-Java-HowTo/"> #EventBus, Android, Java,HowTo </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/15/python-module-date-time-notes/">Python标准库笔记之datetime</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2015/08/03/how-to-write-an-eventbus-part1/"
+               data-title="跟我一起写EventBus（一）" data-url="http://blog.mcxiaoke.com/2015/08/03/how-to-write-an-eventbus-part1/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="mcxiaoke" />
+          <p class="site-author-name">mcxiaoke</p>
+        </div>
+        <p class="site-description motion-element">零碎的笔记</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/mcxiaoke" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.douban.com/people/doiv" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://mcxiaoke.com/" target="_blank">Home</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">Links</p>
+            
+              <span class="links-of-author-item">
+              <a href="http://moment.douban.com/app/" target="_blank">豆瓣一刻</a>
+              </span>
+            
+          
+        </div>
+        
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#项目链接"><span class="nav-number">1.</span> <span class="nav-text">项目链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是EventBus"><span class="nav-number">2.</span> <span class="nav-text">什么是EventBus</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接口定义"><span class="nav-number">3.</span> <span class="nav-text">接口定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接口分析"><span class="nav-number">4.</span> <span class="nav-text">接口分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始实现"><span class="nav-number">5.</span> <span class="nav-text">开始实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查找使用@BusReceiver的方法"><span class="nav-number">5.1.</span> <span class="nav-text">查找使用@BusReceiver的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#register(target)的实现，第一步"><span class="nav-number">5.2.</span> <span class="nav-text">register(target)的实现，第一步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unregister(target)的实现，第一步"><span class="nav-number">5.3.</span> <span class="nav-text">unregister(target)的实现，第一步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#post(event)的实现"><span class="nav-number">5.4.</span> <span class="nav-text">post(event)的实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试一下"><span class="nav-number">6.</span> <span class="nav-text">测试一下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整代码"><span class="nav-number">7.</span> <span class="nav-text">完整代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进一步的问题"><span class="nav-number">8.</span> <span class="nav-text">进一步的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关阅读"><span class="nav-number">9.</span> <span class="nav-text">相关阅读</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是EventBus-1"><span class="nav-number">9.0.1.</span> <span class="nav-text">什么是EventBus</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#EventBus的实现"><span class="nav-number">9.0.2.</span> <span class="nav-text">EventBus的实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#EventBus的使用"><span class="nav-number">9.0.3.</span> <span class="nav-text">EventBus的使用</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2007 - 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">mcxiaoke</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"mcxiaoke"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/js/analytics_google-analytics.js?v=0.4.3"></script>
+
+
+</body>
+</html>
