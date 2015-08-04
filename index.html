@@ -152,6 +152,124 @@
           
           
             
+              <a class="post-title-link" href="/2015/08/04/how-to-write-an-eventbus-part2/">
+                跟我一起写EventBus（二）
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-08-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Android-Java/">Android, Java</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/04/how-to-write-an-eventbus-part2/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/04/how-to-write-an-eventbus-part2/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="项目链接">项目链接</h2><ul>
+<li><a href="https://github.com/mcxiaoke/xBus" target="_blank" rel="external"><code>xBus</code> 项目GitHub地址</a></li>
+</ul>
+<h2 id="概述">概述</h2><p>在 <a href="/2015/08/03/how-to-write-an-eventbus-part1/">跟我一起写EventBus（一）</a> 里我们实现了一个非常粗糙的<code>EventBus</code>，在这一节里面我们要给这个<code>EventBus</code>添加以下两个功能：</p>
+<ul>
+<li>支持在基类中调用 <code>register(target)</code> 注册，调用 <code>unregister(target)</code> 取消注册</li>
+<li>发送事件时， <code>post(event)</code> 支持匹配基类的事件接收器</li>
+</ul>
+<h2 id="基类注册">基类注册</h2><p>支持 <code>register</code> 和 <code>unregister</code> 在基类中使用，用法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseClass</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Bus.getDefault().register(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Bus.getDefault().unregister(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 子类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SubClass</span> <span class="keyword">extends</span> <span class="title">BaseClass</span> </span>&#123;</span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onDestroy();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="事件类型">事件类型</h2><p><code>post(event)</code> 中的 <code>event</code> 可以是事件接收器的参数 <code>eventType</code> 的实现类或子类，用法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 运行这个Demo，控制台的输出是：</span><br><span class="line"> * onCharSequenceEvent() event=A StringBuilder</span><br><span class="line"> * onObjectEvent() event=A StringBuilder</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EventDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">new</span> EventDemo().run();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Bus.getDefault().register(<span class="keyword">this</span>);</span><br><span class="line">        Bus.getDefault().post(<span class="keyword">new</span> StringBuilder(<span class="string">"A StringBuilder"</span>));</span><br><span class="line">        Bus.getDefault().unregister(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="annotation">@BusReceiver</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStringEvent</span><span class="params">(String event)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 不会执行，因为event是StringBuilder，event instanceof String == false</span></span><br><span class="line">        System.out.println(<span class="string">"onStringEvent() event="</span> + event);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="annotation">@BusReceiver</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onExceptionEvent</span><span class="params">(Exception event)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 不会执行，因为event是StringBuilder，event instanceof Exception == false</span></span><br><span class="line">        System.out.println(<span class="string">"onExceptionEvent() event="</span> + event);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="annotation">@BusReceiver</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCharSequenceEvent</span><span class="params">(CharSequence event)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 会执行，因为event是StringBuilder，event instanceof CharSequence == true</span></span><br><span class="line">        System.out.println(<span class="string">"onCharSequenceEvent() event="</span> + event);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="annotation">@BusReceiver</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onObjectEvent</span><span class="params">(Object event)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 会执行，因为event是StringBuilder，event instanceof Object == true</span></span><br><span class="line">        System.out.println(<span class="string">"onObjectEvent() event="</span> + event);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="功能实现">功能实现</h2><p>下面我们来看看如何实现这两个功能</p>
+<h3 id="支持在基类中注册">支持在基类中注册</h3><p>首先，注册和取消注册这两个方法默认支持在基类中使用，因为实际运行的程序中并不存在基类的实例，即使你在基类中调用 <code>register(target)</code> ，这个 <code>target</code> 也是实际运行的子类对象，所以基类中注册指示集中了代码，并没有改变运行时的行为。</p>
+<p>但是，之前版本的 <code>EventBus</code> 在查找事件接收器方法时只查找了当前类中的方法，忽略了父类和继承链上的方法，因此需要修改先前版本的 <code>findAnnotatedMethods</code> 方法，最简单的思路就是一个 <code>while</code> 循环，递归查找当前类和父类的方法，然后过滤出符合条件的事件接收器方法，我们把检查方法是否符合条件的代码先提到一个单独的方法，叫 <code>isAnnotatedMethod</code> ，然后 <code>findAnnotatedMethods</code> 方法实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Set&lt;Method&gt; <span class="title">findAnnotatedMethods</span><span class="params">(<span class="keyword">final</span> Class&lt;?&gt; type,</span><br><span class="line">                                               <span class="keyword">final</span> Class&lt;? extends Annotation&gt; annotation)</span> </span>&#123;</span><br><span class="line">    Class&lt;?&gt; clazz = type;</span><br><span class="line">    <span class="keyword">final</span> Set&lt;Method&gt; methods = <span class="keyword">new</span> HashSet&lt;Method&gt;();</span><br><span class="line">    <span class="comment">// 逐级查找父类的方法，遇到Object类时停止</span></span><br><span class="line">    <span class="keyword">while</span> (clazz!=Object.class) &#123;</span><br><span class="line">        <span class="keyword">final</span> Method[] allMethods = clazz.getDeclaredMethods();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">final</span> Method method : allMethods) &#123;</span><br><span class="line">            <span class="keyword">if</span> (isAnnotatedMethod(method, annotation)) &#123;</span><br><span class="line">                methods.add(method);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// search more methods in super class</span></span><br><span class="line">        clazz = clazz.getSuperclass();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> methods;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，和之前版本的差别不大，逻辑几乎一样，就是增加了递归父类查找。这里可以做一点优化，实际查找父类时不需要查找JDK自带的类，针对Android系统，也不需要查找系统框架中的类，因此增加了一个优化的判断方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">shouldSkipClass</span><span class="params">(<span class="keyword">final</span> Class&lt;?&gt; clazz)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> String clsName = clazz.getName();</span><br><span class="line">    <span class="keyword">return</span> Object.class.equals(clazz)</span><br><span class="line">            || clsName.startsWith(<span class="string">"java."</span>)</span><br><span class="line">            || clsName.startsWith(<span class="string">"javax."</span>)</span><br><span class="line">            || clsName.startsWith(<span class="string">"android."</span>)</span><br><span class="line">            || clsName.startsWith(<span class="string">"com.android."</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的 <code>while (clazz!=Object.class)</code> 改成 <code>!shouldSkipClass(clazz)</code> ，其它部分不变，这样修改之后，可以大幅提高父类查找的效率，减少很多不必要的遍历。</p>
+<p>下面是提取出来的 <code>isAnnotatedMethod</code> 方法，用于判断某个方法是否满足事件接收器的要求：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isAnnotatedMethod</span><span class="params">(<span class="keyword">final</span> Method method,</span><br><span class="line">                                         <span class="keyword">final</span> Class&lt;? extends Annotation&gt; annotation)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 是否使用了@BusReceiver的注解，这个放在最上面，一点效率优化</span></span><br><span class="line">    <span class="keyword">if</span> (!method.isAnnotationPresent(annotation)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 过滤掉非public的方法</span></span><br><span class="line">    <span class="keyword">if</span> (!Modifier.isPublic(method.getModifiers())) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 过滤掉`static`的方法</span></span><br><span class="line">    <span class="keyword">if</span> (Modifier.isStatic(method.getModifiers())) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 过滤掉volatile的方法，这里是修复Java编译器自动添加bridge方法造成的方法重复的问题，具体细节比较复杂，这里不提了</span></span><br><span class="line">    <span class="comment">// 这里实际过滤掉的是BRIDGE修饰符修饰的方法，观察Modifier类中的常量定义可以发现，BRIDGE和VOLATILE的值都是0x00000040，但是不存在一个叫Modifier.isBridge的方法，所以用Modifier.isVolatile替代，效果相同</span></span><br><span class="line">    <span class="comment">// Java代码中不允许使用volatile修饰方法，但是编译器不受此限制。还需要提一下的是，Method类中的equals方法没有使用修饰符比较。</span></span><br><span class="line">    <span class="comment">// fix getDeclaredMethods <span class="doctag"><span class="keyword">bug</span></span>, if method in base class,</span></span><br><span class="line">    <span class="comment">// it returns duplicate method,</span></span><br><span class="line">    <span class="comment">// one is normal, the other is the same but with volatile modifier</span></span><br><span class="line">    <span class="keyword">if</span> (Modifier.isVolatile(method.getModifiers())) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// must has only one parameter</span></span><br><span class="line">    <span class="keyword">if</span> (method.getParameterTypes().length != <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="事件类型的匹配">事件类型的匹配</h3><p>在第一节中 <code>EventBus</code> 的实现只支持事件类型对象的精确匹配，那个版本的 <code>post(event)</code> 方法中对事件类型的判断是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (eventClass.equals(method.getParameterTypes()[<span class="number">0</span>]))</span><br></pre></td></tr></table></figure>
+<p>我们修改为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Class&lt;?&gt; parameterClass = method.getParameterTypes()[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">if</span> (parameterClass.isAssignableFrom(eventClass)) &#123;</span><br><span class="line"><span class="comment">// post event to receiver</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里解释一下，对于 <code>objectA.isAssignableFrom(classB)</code> ，当 <code>objectA</code> 是 <code>classB</code> 的实现类（如果 <code>classB</code> 是一个接口）或其子类时返回 <code>true</code> ，这里我们判断如果事件类是事件接收器的参数类的实现类或子类就可以向它发送事件。</p>
+<h2 id="一点优化">一点优化</h2><p>第一版 <code>EventBus</code> 我们使用 <code>List&lt;Method&gt;</code> 保存某个对象的方法列表，实际上我们要求这个列表不能有重复的方法存在，所以可以改用<code>Set</code>实现，几处修改如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// findAnnotatedMethods 方法返回一个 Set&lt;Method&gt;</span></span><br><span class="line"><span class="keyword">final</span> Set&lt;Method&gt; methods = <span class="keyword">new</span> HashSet&lt;Method&gt;();</span><br><span class="line">        <span class="keyword">while</span> (!shouldSkipClass(clazz)) &#123;...&#125;</span><br><span class="line">        </span><br><span class="line"><span class="comment">// Bus类中的mMethodMap类型修改为 Map&lt;Object, Set&lt;Method&gt;&gt;</span></span><br><span class="line"><span class="keyword">private</span> Map&lt;Object, Set&lt;Method&gt;&gt; mMethodMap = <span class="keyword">new</span> WeakHashMap&lt;Object, Set&lt;Method&gt;&gt;();</span><br></pre></td></tr></table></figure>
+<h2 id="完整代码">完整代码</h2><ul>
+<li>完整的代码见 <a href="https://github.com/mcxiaoke/xBus/tree/tutorial-part2/src/main/com/mcxiaoke/bus" target="_blank" rel="external">tutorial-part2-code</a></li>
+<li>代码打包下载 <a href="https://github.com/mcxiaoke/xBus/archive/tutorial-part2.zip" target="_blank" rel="external">tutorial-part2-zip</a></li>
+</ul>
+<h2 id="进一步的问题">进一步的问题</h2><p>这个版本增加了对继承的支持，放宽了事件接收器参数匹配的规则，还完善了一些细节，做了一些简单的优化，离实用更进一步了，后面还有不少问题需要解决，如下：</p>
+<ol>
+<li><code>post(event)</code> 方法需要遍历保存所有目标对象的所有方法，这个在方法数量很大时效率同样存在问题，可以改进一下遍历过程，或者可以加缓存，不用每次都遍历。</li>
+<li><code>Bus</code> 类直接保存了目标对象 <code>target</code> 的强引用，如果使用者忘记调用 <code>unregister(target)</code> 方法取消注册，可能造成内存泄露，任何改进。</li>
+<li><code>Bus</code> 的实现没有考虑在多个线程中使用的问题，没有添加任何同步代码，可能会造成内部数据的不同步，或者发生错误。</li>
+<li><code>Bus</code> 的实现不支持外部配置，限定了事件接收器方法只能使用 <code>@BusReceiver</code> ，且只能是<code>public</code>的，只能带一个参数，能不能支持使用者自定义这些行为。</li>
+<li>当前的事件接收器不支持泛型参数，不支持集合类型，如果支持，还可以考虑，如何支持多个事件参数和可变参数类型的事件。</li>
+<li>当前的 <code>post(event)</code> 方法是在调用者线程执行，在很多情况下，使用者可能需要任务执行的线程和事件接收器的线程是分开的，比如在某个后台线程中执行异步任务，在主线程中接收事件更新界面，这个需要支持用户自定义。</li>
+<li>目前的<code>Bus</code>实现没有任何异常处理的代码，一个健壮的程序不能缺少完善的异常处理。</li>
+</ol>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/08/03/how-to-write-an-eventbus-part1/">
                 跟我一起写EventBus（一）
               </a>
@@ -199,44 +317,43 @@
       
         
           <h2 id="项目链接">项目链接</h2><ul>
-<li><a href="https://github.com/mcxiaoke/xBus" target="_blank" rel="external"><code>xBus</code>项目GitHub地址</a></li>
-<li><a href="https://github.com/mcxiaoke/xBus/blob/master/docs/how-to-write-an-eventbus-part1.md" target="_blank" rel="external">跟我一起写<code>EventBus</code>（一）</a></li>
+<li><a href="https://github.com/mcxiaoke/xBus" target="_blank" rel="external"><code>xBus</code> 项目GitHub地址</a></li>
 </ul>
-<h2 id="什么是EventBus">什么是<code>EventBus</code></h2><p>先介绍一下概念，<code>EventBus</code>直译过来就是<code>事件总线</code>，它使用发布订阅模式支持组件之间的通信，不需要显式地注册回调，比观察者模式更灵活，可用于替换Java中传统的事件监听模式，<code>EventBus</code>的作用就是解耦，它不是通用的发布订阅系统，也不能用于进程间通信。可用于Android的<code>EventBus</code>库主要有这几个：Google出品的<code>Guava</code>，<code>Guava</code>是一个庞大的库，<code>EventBus</code>只是它附带的一个小功能，因此实际项目中使用并不多。用的最多的是<a href="https://github.com/greenrobot/EventBus" target="_blank" rel="external"><code>greenrobot/EventBus</code></a>，这个库的优点是接口简洁，集成方便，但是限定了方法名，不支持注解。另一个库<a href="https://github.com/square/otto" target="_blank" rel="external"><code>square/otto</code></a>修改自<code>Guava</code>，用的人也不少。</p>
-<p>以 <code>greenrobot/EventBus</code> 为例，我们看一下<code>EventBus</code>模式的典型用法：</p>
+<h2 id="什么是EventBus">什么是<code>EventBus</code></h2><p>先介绍一下概念， <code>EventBus</code> 直译过来就是<code>事件总线</code>，它使用发布订阅模式支持组件之间的通信，不需要显式地注册回调，比观察者模式更灵活，可用于替换Java中传统的事件监听模式，<code>EventBus</code>的作用就是解耦，它不是通用的发布订阅系统，也不能用于进程间通信。可用于Android的<code>EventBus</code>库主要有这几个：Google出品的<code>Guava</code>，<code>Guava</code>是一个庞大的库，<code>EventBus</code> 只是它附带的一个小功能，因此实际项目中使用并不多。用的最多的是<a href="https://github.com/greenrobot/EventBus" target="_blank" rel="external"><code>greenrobot/EventBus</code></a>，这个库的优点是接口简洁，集成方便，但是限定了方法名，不支持注解。另一个库<a href="https://github.com/square/otto" target="_blank" rel="external"><code>square/otto</code></a>修改自 <code>Guava</code> ，用的人也不少。</p>
+<p>以 <code>greenrobot/EventBus</code> 为例，我们看一下 <code>EventBus</code> 模式的典型用法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 注册EventBus，接受事件</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span></span>&#123;</span><br><span class="line">       EventBus.getDefault().register(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span></span>&#123;</span><br><span class="line">       EventBus.getDefault().unregister(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(SomeEvent1 event)</span></span>&#123;</span><br><span class="line">        <span class="comment">// handle event</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 处理任务，发送事件</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomeThing</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// do your work</span></span><br><span class="line">        <span class="comment">// send event</span></span><br><span class="line">        EventBus.getDefault().post(<span class="keyword">new</span> SomeEvent1());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="接口定义">接口定义</h2><p>我们的目标是从零开始自己写一个<code>EventBus</code>，参考上面的示例，我们首先定义接口，假设我们的接口叫<code>IBus</code>，实现类叫<code>Bus</code>，它最少需要三个方法。为了灵活和简洁，暂时不考虑性能，我们采用Annotation的方式指定事件接收者。</p>
+<h2 id="接口定义">接口定义</h2><p>我们的目标是从零开始自己写一个 <code>EventBus</code> ，参考上面的示例，首先定义接口，假设接口叫 <code>IBus</code> ，实现类叫 <code>Bus</code> ，它最少需要三个方法。为了灵活和简洁，暂时不考虑性能，我们采用 <code>Annotation</code> 的方式指定事件接收者。</p>
 <p>接口定义如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IBus</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// register event target</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">register</span><span class="params">(Object target)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// unregister event target</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">unregister</span><span class="params">(Object target)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// post event</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">post</span><span class="params">(Object event)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>最简单的用法如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BusDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SomeEvent</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">new</span> BusDemo().show();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 注册EventBus，发送事件</span></span><br><span class="line">    <span class="comment">// 这里为了演示，全部放在一个地方</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Bus.getDefault().register(<span class="keyword">this</span>);</span><br><span class="line">        Bus.getDefault().post(<span class="keyword">new</span> SomeEvent());</span><br><span class="line">        Bus.getDefault().unregister(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 必须使用这个Annotation</span></span><br><span class="line">    <span class="comment">// 必须是接受一个参数的public方法，没有其它限制</span></span><br><span class="line">    <span class="annotation">@BusReceiver</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(SomeEvent event)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"onReceive() event="</span> + event);</span><br><span class="line">        <span class="comment">// handle your event here...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="接口分析">接口分析</h2><p>我们定义的 <code>IBus</code> 接口有三个方法 <code>register(target)</code>， <code>unregister(target)</code>， <code>post(event)</code>， 我们的事件接收器使用 <code>Annotation</code> 的方式指定，下面逐一考察这些问题：</p>
+<h2 id="接口分析">接口分析</h2><p>上面定义的 <code>IBus</code> 接口有三个方法 <code>register(target)</code> ， <code>unregister(target)</code> ， <code>post(event)</code> ，事件接收器使用<code>Annotation</code>的方式指定，下面逐一考察这些问题：</p>
 <ol>
-<li>按照接口定义，<code>register(target)</code>方法用于注册事件接收器的目标对象，我们需要保存这个对象，同时还需要查找这个对象中存在的事件接收器方法，上面说了，这些事件接受器是使用了<code>@BusReceiver</code>注解的<code>public</code>方法，查找出这些方法之后需要保存这些方法，后续<code>post(event)</code>发送事件的时候需要用到。</li>
-<li><code>unregister(target)</code>方法用于取消注册目标对象，调用这个方法之后，不能再给这个对象发送任何事件，也就是要从保存的事件目标对象集合里移除这个对象和对应的事件接收器方法集合，这要求我们能找到这个对象以及这个对象中的事件接受器对象集合。</li>
-<li><code>post(event)</code>方法用于发送事件给目标对象，也就是调用注册了这个事件接收器的方法，这要求我们可以通过事件对象或时间对象类型找到对应的目标对象(<code>target</code>)和事件接收器(‘BusReceiver’)方法。</li>
-<li>事件接收器通过<code>@BusReceiver</code>这个注解指定，因此我们需要在<code>register(target)</code>的时候目标对象中所有使用了这个注解的方法，并排除非<code>public</code>的方法，<code>static</code>方法也需要排除，没有参数或参数超过一个的也要排除。</li>
+<li>按照接口定义， <code>register(target)</code> 方法用于注册事件接收器的目标对象，我们需要保存这个对象，同时还需要查找这个对象中存在的事件接收器方法，上面说了，这些事件接受器是使用了 <code>@BusReceiver</code> 注解的 <code>public</code> 方法，查找出这些方法之后需要保存这些方法，后续 <code>post(event)</code> 发送事件的时候需要用到。</li>
+<li><code>unregister(target)</code> 方法用于取消注册目标对象，调用这个方法之后，不能再给这个对象发送任何事件，也就是要从保存的事件目标对象集合里移除这个对象和对应的事件接收器方法集合，这要求我们能找到这个对象以及这个对象中的事件接受器对象集合。</li>
+<li><code>post(event)</code> 方法用于发送事件给目标对象，也就是调用注册了这个事件接收器的方法，这要求我们可以通过事件对象或时间对象类型找到对应的目标对象( <code>target</code> )和事件接收器( ‘@BusReceiver’ )方法。</li>
+<li>事件接收器通过 <code>@BusReceiver</code> 这个注解指定，因此我们需要在 <code>register(target)</code> 的时候目标对象中所有使用了这个注解的方法，并排除非 <code>public</code> 的方法， <code>static</code> 方法也需要排除，没有参数或参数超过一个的也要排除。</li>
 </ol>
-<h2 id="开始实现">开始实现</h2><h3 id="查找使用@BusReceiver的方法">查找使用<code>@BusReceiver</code>的方法</h3><p>首先我们要定义<code>BusReceiver</code>注解，它的定义很简单，如下：</p>
+<h2 id="开始实现">开始实现</h2><h3 id="查找使用_@BusReceiver_的方法">查找使用 <code>@BusReceiver</code> 的方法</h3><p>首先我们要定义 <code>BusReceiver</code> 注解，它的定义很简单，如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Target</span>(ElementType.METHOD) <span class="comment">// 表示这个注解适用于方法</span></span><br><span class="line"><span class="annotation">@Retention</span>(RetentionPolicy.RUNTIME) <span class="comment">//表示这个注解需要保留到运行时</span></span><br><span class="line"><span class="keyword">public</span> <span class="annotation">@interface</span> BusReceiver &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>我们定义一个通用一点的方法叫<code>findAnnotatedMethods(class,annotation)</code>，用于查找给定的<code>class</code>里面使用了<code>annotation</code>的方法，为了简化问题，我们先忽略从父类继承的方法，只查找指定类的方法，这个方法是个通用的工具方法，可以放在一个单独的类中，定义为静态方法，假设这个类为<code>Helper</code>，如下：</p>
+<p>我们定义一个通用一点的方法叫 <code>findAnnotatedMethods(class,annotation)</code> ，用于查找给定的<code>class</code>里面使用了 <code>Annotation</code> 的方法，为了简化问题，我们先忽略从父类继承的方法，只查找指定类的方法，这个方法是个通用的工具方法，可以放在一个单独的类中，定义为静态方法，假设这个类为<code>Helper</code>，如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Method&gt; <span class="title">findAnnotatedMethods</span><span class="params">(<span class="keyword">final</span> Class&lt;?&gt; type,</span><br><span class="line">                                                    <span class="keyword">final</span> Class&lt;? extends Annotation&gt; annotation)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> List&lt;Method&gt; methods = <span class="keyword">new</span> ArrayList&lt;Method&gt;();</span><br><span class="line"><span class="comment">//        Class&lt;?&gt; clazz = type;</span></span><br><span class="line">        <span class="comment">// for now ignore super class, handle current class only</span></span><br><span class="line">        Method[] ms = type.getDeclaredMethods();</span><br><span class="line">        <span class="keyword">for</span> (Method method : ms) &#123;</span><br><span class="line">            methods.add(method);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> methods;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>这是最简单的查找使用了某个特定注解的方法，按照我们接口的定义，事件接收器方法需要满足这几个条件：</p>
 <ul>
-<li>使用了<code>@BusReceiver</code>注解</li>
-<li>是<code>public</code>方法，并且不是<code>static</code>方法</li>
+<li>使用了 <code>@BusReceiver</code> 注解</li>
+<li>是 <code>public</code> 方法，并且不是 <code>static</code> 方法</li>
 <li>参数只能是一个，不能没有也不能是多个</li>
 </ul>
-<p>按照这个条件加上过滤，<code>findAnnotatedMethods</code>方法最终是这样的：</p>
+<p>按照这个条件加上过滤， <code>findAnnotatedMethods</code> 方法最终是这样的：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Method&gt; <span class="title">findAnnotatedMethods</span><span class="params">(<span class="keyword">final</span> Class&lt;?&gt; type,</span><br><span class="line">                                                    <span class="keyword">final</span> Class&lt;? extends Annotation&gt; annotation)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> List&lt;Method&gt; methods = <span class="keyword">new</span> ArrayList&lt;Method&gt;();</span><br><span class="line"><span class="comment">//        Class&lt;?&gt; clazz = type;</span></span><br><span class="line">        <span class="comment">// for now ignore super class, handle current class only</span></span><br><span class="line">        Method[] ms = type.getDeclaredMethods();</span><br><span class="line">        <span class="keyword">for</span> (Method method : ms) &#123;</span><br><span class="line">            <span class="comment">// must not static</span></span><br><span class="line">            <span class="keyword">if</span> (Modifier.isStatic(method.getModifiers())) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// must be public</span></span><br><span class="line">            <span class="keyword">if</span> (!Modifier.isPublic(method.getModifiers())) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// must has only one parameter</span></span><br><span class="line">            <span class="keyword">if</span> (method.getParameterTypes().length != <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// must has annotation</span></span><br><span class="line">            <span class="keyword">if</span> (!method.isAnnotationPresent(annotation)) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            methods.add(method);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> methods;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>因为判断<code>Method</code>的修饰符和参数列表长度比较快， 我们放在前面，<code>method.isAnnotationPresent</code>这个方法比较慢，放在最后。</p>
-<h3 id="register(target)的实现"><code>register(target)</code>的实现</h3><p>有了<code>findAnnotatedMethods</code>方法，<code>register(target)</code>的实现就简单多了，这个方法需要找出所有符合条件的事件接收器方法，然后保存起来，由于后面我们要根据对象查找方法，我们将<code>target:method</code>关系保存到一个<code>Map</code>中，假设我们的<code>IBus</code>接口的实现类叫<code>Bus</code>，在<code>Bus</code>类中增加一个成员变量保存它们：</p>
+<p>因为判断 <code>Method</code> 的修饰符和参数列表长度比较快， 我们放在前面， <code>method.isAnnotationPresent</code> 这个方法比较慢，放在最后。</p>
+<h3 id="register(target)_的实现"><code>register(target)</code> 的实现</h3><p>有了 <code>findAnnotatedMethods</code> 方法， <code>register(target)</code> 的实现就简单多了，这个方法需要找出所有符合条件的事件接收器方法，然后保存起来，由于后面我们要根据对象查找方法，我们将 <code>target:method</code> 关系保存到一个<code>Map</code>中，假设我们的<code>IBus</code>接口的实现类叫<code>Bus</code>，在<code>Bus</code>类中增加一个成员变量保存它们：</p>
 <figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Map&lt;Object, List&lt;<span class="function"><span class="keyword">Method</span>&gt;&gt; <span class="title">mMethodMap</span> = <span class="title">new</span> <span class="title">HashMap</span>&lt;<span class="title">Object</span>, <span class="title">List</span>&lt;<span class="title">Method</span>&gt;&gt;<span class="params">()</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> void <span class="keyword">register</span>(<span class="keyword">final</span> Object target) <span class="comment">&#123;</span><br><span class="line">    List&lt;Method&gt; methods = Helper.findAnnotatedMethods(target.getClass(), BusReceiver.class);</span><br><span class="line">    if (methods == null || methods.isEmpty()) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span></span><br><span class="line">    mMethodMap.put(target, methods);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="unregister(target)的实现"><code>unregister(target)</code>的实现</h3><p>有了上面保存的<code>mMethodMap</code>数据，取消注册目标就是移除目标对象注册过的所有事件接收器方法，可以这样写：</p>
+<h3 id="unregister(target)_的实现"><code>unregister(target)</code> 的实现</h3><p>有了上面保存的 <code>mMethodMap</code> 数据，取消注册目标就是移除目标对象注册过的所有事件接收器方法，可以这样写：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">unregister</span><span class="params">(<span class="keyword">final</span> Object target)</span> </span>&#123;</span><br><span class="line">    mMethodMap.remove(target);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="post(event)的实现"><code>post(event)</code>的实现</h3><p><code>xBus</code>的使用者在完成某项任务之后调用<code>post(event)</code>方法发送事件，这个方法会遍历所有注册过的<code>target</code>里包含的，接受这个事件的事件接收器方法，因此需要知道怎么从事件对象找到事件接收器，由于可能有多个<code>target</code>都注册了这个事件的接收器，因此我们需要遍历所有的目标对象，找到符合条件的方法，然后调用这些方法。怎么样才算符合条件呢，首先要符合<code>findAnnotatedMethods</code>那里提到的条件：使用<code>@BusReceiver</code>注解，是<code>publici</code>且非<code>static</code>方法，有且只有一个参数，针对某个事件<code>event</code>，还需要参数类型是一致的，举例说明：</p>
+<h3 id="post(event)_的实现"><code>post(event)</code> 的实现</h3><p><code>xBus</code>的使用者在完成某项任务之后调用 <code>post(event)</code> 方法发送事件，这个方法会遍历所有注册过的<code>target</code>里包含的，接受这个事件的事件接收器方法，因此需要知道怎么从事件对象找到事件接收器，由于可能有多个<code>target</code>都注册了这个事件的接收器，因此我们需要遍历所有的目标对象，找到符合条件的方法，然后调用这些方法。怎么样才算符合条件呢，首先要符合 <code>findAnnotatedMethods</code> 那里提到的条件：使用 <code>@BusReceiver</code> 注解，是 <code>publici</code> 且非 <code>static</code> 方法，有且只有一个参数，针对某个事件 <code>event</code> ，还需要参数类型是一致的，举例说明：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对类型为`SomeEvent`的事件`event`，只能发送给如下形式的事件接收器：</span></span><br><span class="line"><span class="comment">// 这里方法名字没有要求，但是注解和方法参数签名不能变</span></span><br><span class="line"><span class="annotation">@BusReceier</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">anyMethodName</span><span class="params">(SomeEvent event)</span></span>&#123;</span><br><span class="line"><span class="comment">// handle event</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>能想到的最直接的查找思路就是遍历<code>mMethods</code>列表，逐个对比，找出符合要求的方法，然后调用对应的方法：</p>
+<p>能想到的最直接的查找思路就是遍历 <code>mMethods</code> 列表，逐个对比，找出符合要求的方法，然后调用对应的方法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">post</span><span class="params">(Object event)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> Class&lt;?&gt; eventClass = event.getClass();</span><br><span class="line">    <span class="keyword">for</span> (Map.Entry&lt;Object, List&lt;Method&gt;&gt; entry : mMethodMap.entrySet()) &#123;</span><br><span class="line">        <span class="keyword">final</span> Object target = entry.getKey();</span><br><span class="line">        <span class="keyword">final</span> List&lt;Method&gt; methods = entry.getValue();</span><br><span class="line">        <span class="keyword">if</span> (methods == <span class="keyword">null</span> || methods.isEmpty()) &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (Method method : methods) &#123;</span><br><span class="line">        <span class="comment">// 如果事件类型相符，就调用对应的方法发送事件</span></span><br><span class="line">        <span class="comment">// 这里的类型是要求精确匹配的，没有考虑继承</span></span><br><span class="line">            <span class="keyword">if</span> (eventClass.equals(method.getParameterTypes()[<span class="number">0</span>])) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    method.invoke(target, event);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InvocationTargetException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="测试一下">测试一下</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BusDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> BusDemo demo = <span class="keyword">new</span> BusDemo();</span><br><span class="line">        Bus bus = Bus.getDefault();</span><br><span class="line">        bus.register(demo);</span><br><span class="line">        bus.post(<span class="keyword">new</span> Object());</span><br><span class="line">        bus.post(<span class="string">"SomeEvent"</span>);</span><br><span class="line">        bus.post(<span class="number">12345</span>);</span><br><span class="line">        bus.post(<span class="keyword">new</span> RuntimeException(<span class="string">"Error"</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 没有发送这个事件</span></span><br><span class="line">    <span class="annotation">@BusReceiver</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceiveRunnableNotPost</span><span class="params">(Runnable event)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"onReceiveRunnableNotPost() event="</span> + event);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@BusReceiver</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onObjectEvent</span><span class="params">(Object event)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"onObjectReceive() event="</span> + event);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 发送的事件是`RuntimeException`，不是精确匹配`Exception`</span></span><br><span class="line">    <span class="annotation">@BusReceiver</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onExceptionEvent</span><span class="params">(Exception event)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"onExceptionEvent() event="</span> + event);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@BusReceiver</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStringReceive</span><span class="params">(String event)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"onStringReceive() event="</span> + event);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@BusReceiver</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onInteger</span><span class="params">(Integer event)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"onInteger() event="</span> + event);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="完整代码">完整代码</h2><ul>
@@ -246,17 +363,17 @@
 </ul>
 <h2 id="进一步的问题">进一步的问题</h2><p>这个粗糙的版本只是实现了一个最基本的<code>EventBus</code>的功能，如果想把它用在实际的项目中，还需要考虑很多问题，比如：</p>
 <ol>
-<li><code>findAnnotatedMethods</code>方法没有考虑效率问题，如果某个<code>target</code>中有成千上万个方法，这个方法可能比较慢，是需要考虑缓存或其它的优化方法。</li>
+<li><code>findAnnotatedMethods</code> 方法没有考虑效率问题，如果某个<code>target</code>中有成千上万个方法，这个方法可能比较慢，是需要考虑缓存或其它的优化方法。</li>
 <li><code>post(event)</code>方法需要遍历保存所有目标对象的所有方法，这个在方法数量很大时效率同样存在问题，可以改进一下遍历过程，或者可以加缓存，不用每次都遍历。</li>
-<li><code>Bus</code>类直接保存了目标对象<code>target</code>的强引用，如果使用者忘记调用<code>unregister(target)</code>方法取消注册，可能造成内存泄露，任何改进。</li>
+<li><code>Bus</code>类直接保存了目标对象<code>target</code>的强引用，如果使用者忘记调用 <code>unregister(target)</code> 方法取消注册，可能造成内存泄露，任何改进。</li>
 <li><code>Bus</code>的实现没有考虑在多个线程中使用的问题，没有添加任何同步代码，可能会造成内部数据的不同步，或者发生错误。</li>
-<li><code>Bus</code>的实现不支持外部配置，限定了事件接收器方法只能使用<code>@BusReceiver</code>，且只能是<code>public</code>的，只能带一个参数，能不能支持使用者自定义这些行为。</li>
+<li><code>Bus</code>的实现不支持外部配置，限定了事件接收器方法只能使用 <code>@BusReceiver</code> ，且只能是<code>public</code>的，只能带一个参数，能不能支持使用者自定义这些行为。</li>
 <li><code>Bus</code>目前的版本不支持继承，既不支持在基类中注册，也不支持事件接收器方法中参数类型的继承，如何支持。</li>
 <li>当前的事件接收器不支持泛型参数，不支持集合类型，如果支持，还可以考虑，如何支持多个事件参数和可变参数类型的事件。</li>
 <li>当前的<code>post(event)</code>方法是在调用者线程执行，在很多情况下，使用者可能需要任务执行的线程和事件接收器的线程是分开的，比如在某个后台线程中执行异步任务，在主线程中接收事件更新界面，这个需要支持用户自定义。</li>
 <li>目前的<code>Bus</code>实现没有任何异常处理的代码，一个健壮的程序不能缺少完善的异常处理。</li>
 </ol>
-<p>这些问题都是一个完整的<code>EventBus</code>实现需要考虑的问题，教程的后续部分将逐步实现这些功能，解决存在的问题。</p>
+<p>这些问题都是一个完整的 <code>EventBus</code> 实现需要考虑的问题，教程的后续部分将逐步实现这些功能，解决存在的问题。</p>
 <h2 id="相关阅读">相关阅读</h2><h4 id="什么是EventBus-1">什么是EventBus</h4><p><a href="https://code.google.com/p/guava-libraries/wiki/EventBusExplained" target="_blank" rel="external">https://code.google.com/p/guava-libraries/wiki/EventBusExplained</a><br><a href="http://doc.akka.io/docs/akka/snapshot/java/event-bus.html" target="_blank" rel="external">http://doc.akka.io/docs/akka/snapshot/java/event-bus.html</a>  </p>
 <h4 id="EventBus的实现">EventBus的实现</h4><p><a href="http://javarticles.com/2015/04/guava-eventbus-examples.html" target="_blank" rel="external">http://javarticles.com/2015/04/guava-eventbus-examples.html</a><br><a href="http://timnew.me/blog/2014/12/06/typical-eventbus-design-patterns/" target="_blank" rel="external">http://timnew.me/blog/2014/12/06/typical-eventbus-design-patterns/</a><br><a href="https://code.google.com/p/simpleeventbus/" target="_blank" rel="external">https://code.google.com/p/simpleeventbus/</a><br><a href="https://github.com/greenrobot/EventBus/blob/master/HOWTO.md" target="_blank" rel="external">https://github.com/greenrobot/EventBus/blob/master/HOWTO.md</a>  </p>
 <h4 id="EventBus的使用">EventBus的使用</h4><p><a href="http://www.cnblogs.com/peida/p/eventbus.html" target="_blank" rel="external">http://www.cnblogs.com/peida/p/eventbus.html</a><br><a href="http://blog.cainwong.com/using-an-eventbus-in-android-pt-1-why-an-eventbus/" target="_blank" rel="external">http://blog.cainwong.com/using-an-eventbus-in-android-pt-1-why-an-eventbus/</a><br><a href="http://blog.cainwong.com/using-an-eventbus-in-android-pt-2-sticking-your-config/" target="_blank" rel="external">http://blog.cainwong.com/using-an-eventbus-in-android-pt-2-sticking-your-config/</a><br><a href="http://blog.cainwong.com/using-an-eventbus-in-android-pt-3-threading/" target="_blank" rel="external">http://blog.cainwong.com/using-an-eventbus-in-android-pt-3-threading/</a>  </p>
@@ -1141,124 +1258,11 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2011/02/26/android-dev-notes-01/">
-                Android开发杂记（一）
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2011-02-26
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <a href="/categories/Android/">Android</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2011/02/26/android-dev-notes-01/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2011/02/26/android-dev-notes-01/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>这些是这半年做Android开发的小部分技巧记录，摘录自我的Tweets，大部分没有发在Twitter上的以后想起来了再记一下</p>
-<ul>
-<li><p>android:layout_alignLeft 指该控件距离边父控件的边距，android:paddingLeft 指该控件内部内容，如文本距离该控件的边距.当按钮分别设置以上两个属性时，效果不一样的 android:paddingLeft=”30px”，按钮上设置的内容（例如图片）离按钮左边边界30个像素 android:layout_marginLeft=”30px”，整个按钮离左边设置的内容30个像素</p>
-</li>
-<li><p>Activity中添加 <code>android:windowSoftInputMode=”adjustPan”</code> 就可以自适应键盘的显示与隐藏</p>
-</li>
-</ul>
-<ol>
-<li>android:listSelector的值可以是一个Drawable，也可以是一个颜色值</li>
-</ol>
-<ul>
-<li><p>ListView的默认背景色是#FF191919，如果不做修改，而且设置了背景图片的话，那么拖动时就会出现黑色背景，解决办法是设置 <code>android:cacheColorHint</code><br>为#00000000</p>
-</li>
-<li><p>Android截屏代码： <code>view.setDrawingCacheEnabled(true);Bitmap bp =
-view.getDrawingCache();</code></p>
-</li>
-<li><p>当ListView中要显示的数据集合发生变化时，如集合中增删数据，这时需要刷新UI以响应数据变化，可调用adapter的notifyDataSetChanged();方法来刷新界面</p>
-</li>
-<li><p>FrameLayout是最简单的一个布局对象。在它里面的的所有显示对象都将固定在屏幕的左上角，不能指定位置，但允许有多个显示对象，只是后一个会直接覆盖在前一个之上显示，会把前面的组件部分或全部挡住</p>
-</li>
-<li><p>View类默认提供的是一个100*100大小的空白空间，自定义View必须重写OnDraw()和onMeasure()方法，否则父控件无法得知你自定义的View的尺寸</p>
-</li>
-<li><p>解决SeekBar下边显示不全的办法：将是layout_height为warp_content，再设置适当的minHeight和maxHeight值</p>
-</li>
-<li><p>View设置背景透明的方法：<code>View v = findViewById(R.id.content);</code> //找到你要设透明背景的layout 的id 然后 <code>v.getBackground().setAlpha(100);</code> //0~255透明度值</p>
-</li>
-<li><p>由于触摸模式和普通模式切换的存在，在程序中不能依赖焦点和选中状态，因为某一时刻不一定存在焦点和/或选中状态</p>
-</li>
-<li><p>设置WebView的缩放需要设置一下 <code>browser.getSettings().setUseWideViewPort(true);</code></p>
-</li>
-<li><p>去掉标题栏titleBar的方法：<code>requestWindowFeature(Window.FEATURE_NO_TITLE);</code></p>
-</li>
-<li><p>全屏背景透明的设置方法：  <code>Activity：android:theme=&quot;@android:style/Theme.Translucent.NoTitleBar.Fullscreen&quot;</code></p>
-</li>
-<li><p>建议所有Android开发者升级ADT到最近的9.0，这个版本修复了以前Eclipse的logcat日志输出中不支持中文的BUG(Issue<br>1590)，现在采用UTF8编码，支持所有Unicode字符了</p>
-</li>
-</ul>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
   <div class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
   </div>
 
 
@@ -1292,7 +1296,7 @@ view.getDrawingCache();</code></p>
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-count">21</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1306,7 +1310,7 @@ view.getDrawingCache();</code></p>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-count">27</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

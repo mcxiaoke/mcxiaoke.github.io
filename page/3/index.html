@@ -24,7 +24,7 @@
 
 
 
-  <meta name="keywords" content="MinGW,QT,Windows," />
+  <meta name="keywords" content="Hexo,next" />
 
 
 
@@ -47,7 +47,7 @@
 
 
 
-  <title> Windows下编译QT 4.6.2 // Xiaoke's Blog </title>
+  <title> Xiaoke's Blog </title>
 </head>
 
 <body>
@@ -61,7 +61,9 @@
   </div>
 <![endif]-->
 
-  <div class="container one-column page-post-detail">
+  <div class="container one-column 
+   page-home 
+">
     <div class="headband"></div>
 
     <div id="header" class="header">
@@ -137,9 +139,9 @@
       <div class="main-inner">
         <div id="content" class="content">
           
-
   <div id="posts" class="posts-expand">
     
+      
 
   <div class="post post-type-normal ">
     <div class="post-header">
@@ -150,7 +152,9 @@
           
           
             
-              Windows下编译QT 4.6.2
+              <a class="post-title-link" href="/2010/05/13/compile-qt-use462-vs-or-mingw/">
+                Windows下编译QT 4.6.2
+              </a>
             
           
         </h1>
@@ -193,7 +197,8 @@
       
 
       
-        <h3 id="编译准备">编译准备</h3><p>下载NOKIA网站上的QT SDK，解压或安装到相关目录。<br>本文以QT<br>4.6.2为例，下载地址：<br><a href="http://get.qt.nokia.com/qt/source/qt-win-opensource-4.6.2-vs2008.exe" target="_blank" rel="external">http://get.qt.nokia.com/qt/source/qt-win-opensource-4.6.2-vs2008.exe</a></p>
+        
+          <h3 id="编译准备">编译准备</h3><p>下载NOKIA网站上的QT SDK，解压或安装到相关目录。<br>本文以QT<br>4.6.2为例，下载地址：<br><a href="http://get.qt.nokia.com/qt/source/qt-win-opensource-4.6.2-vs2008.exe" target="_blank" rel="external">http://get.qt.nokia.com/qt/source/qt-win-opensource-4.6.2-vs2008.exe</a></p>
 <p>或者直接下载源码：<br><a href="http://get.qt.nokia.com/qt/source/qt-everywhere-opensource-src-4.6.2.zip" target="_blank" rel="external">http://get.qt.nokia.com/qt/source/qt-everywhere-opensource-src-4.6.2.zip</a></p>
 <p>下载后安装好的目录结构为（假设安装到D:QT）：  </p>
 <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">├─share  </span><br><span class="line">├─lib  </span><br><span class="line">├─<span class="keyword">bin </span> </span><br><span class="line">├─mingw  </span><br><span class="line">└─qt  </span><br><span class="line">    ├─translations（QT语言文件目录）  </span><br><span class="line">    ├─tools（QT相关工具源码目录）  </span><br><span class="line">    ├─src（源代码目录）  </span><br><span class="line">    ├─qmake（qmake源代码目录）  </span><br><span class="line">    ├─plugins（图形，数据库等插件目录）  </span><br><span class="line">    ├─mkspecs（平台配置文件）  </span><br><span class="line">    ├─lib（库文件）  </span><br><span class="line">    ├─<span class="preprocessor">include</span>（头文件）  </span><br><span class="line">    ├─examples（示例程序）  </span><br><span class="line">    ├─doc（文档）  </span><br><span class="line">    ├─demos（演示程序）  </span><br><span class="line">    ├─config.tests  </span><br><span class="line">    ├─<span class="keyword">bin（命令行工具） </span> </span><br><span class="line">    └─qtc-debugging-helper</span><br></pre></td></tr></table></figure>
@@ -231,56 +236,29 @@
 <figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">qt-sql-sqlite <span class="constant">SQLite</span>驱动支持  </span><br><span class="line"></span>-<span class="ruby">plugin-sql-sqlite  <span class="constant">SQLite</span>链接插件支持  </span><br><span class="line"></span>-<span class="ruby">no-qt3support  不编译<span class="constant">Qt3</span>兼容库  </span><br><span class="line"></span>-<span class="ruby">qt-zlib zlib库  </span><br><span class="line"></span>-<span class="ruby">qt-gif -qt-libpng -qt-libmng -qt-libtiff -qt-libjpeg 图形格式插件库  </span><br><span class="line"></span>-<span class="ruby">no-webkit 不编译webkit，此选项可极大加快编译速度，需要使用<span class="constant">WebKit</span>的可以删除此选项  </span><br><span class="line"></span>-<span class="ruby">qt-style-windowsxp -qt-style-windowsvista 支持<span class="constant">XP</span>和<span class="constant">Vista</span>主题样式</span></span><br></pre></td></tr></table></figure>
 <p>注意：使用静态编译的程序通常较大，建议发布前使用UPX压缩，一般可以减少至少50%的大小。</p>
 
+        
       
     </div>
 
     <div class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/MinGW/"> #MinGW </a>
-          
-            <a href="/tags/QT/"> #QT </a>
-          
-            <a href="/tags/Windows/"> #Windows </a>
-          
-        </div>
+
       
 
       
-        <div class="post-nav">
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2010/10/09/android-handler/">Android Handler使用笔记</a>
-            
-          </div>
-
-          <div class="post-nav-next post-nav-item">
-            
-          </div>
-        </div>
       
-
-      
+        <div class="post-eof"></div>
       
     </div>
   </div>
 
 
-
-    <div class="post-spread">
-      
-    </div>
-
     
-      <div class="comments" id="comments">
-        
-          <div class="ds-thread" data-thread-key="2010/05/13/compile-qt-use462-vs-or-mingw/"
-               data-title="Windows下编译QT 4.6.2" data-url="http://blog.mcxiaoke.com/2010/05/13/compile-qt-use462-vs-or-mingw/">
-          </div>
-        
-      </div>
-    
+  </div>
+
+  
+  <div class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
   </div>
 
 
@@ -303,15 +281,6 @@
   <div id="sidebar" class="sidebar">
     <div class="sidebar-inner">
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
       
 
       <div class="site-overview">
@@ -387,17 +356,6 @@
       </div>
 
       
-        <div class="post-toc-wrap sidebar-panel-active">
-          <div class="post-toc-indicator-top post-toc-indicator"></div>
-          <div class="post-toc">
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#编译准备"><span class="nav-number">1.</span> <span class="nav-text">编译准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VS2005动态编译"><span class="nav-number">2.</span> <span class="nav-text">VS2005动态编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VS2005静态编译"><span class="nav-number"></span> <span class="nav-text">VS2005静态编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MinGW静态编译"><span class="nav-number"></span> <span class="nav-text">MinGW静态编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译事项说明"><span class="nav-number"></span> <span class="nav-text">编译事项说明</span></a></div>
-            
-          </div>
-          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
-        </div>
-      
 
     </div>
   </div>
@@ -459,145 +417,6 @@
   <script type="text/javascript" src="/js/search-toggle.js"></script>
 
   
-  
-<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
-
-
-<script type="text/javascript" id="sidebar.toc.highlight">
-  $(document).ready(function () {
-    var tocSelector = '.post-toc';
-    var $tocSelector = $(tocSelector);
-    var activeCurrentSelector = '.active-current';
-
-    $tocSelector
-      .on('activate.bs.scrollspy', function () {
-        var $currentActiveElement = $(tocSelector + ' .active').last();
-
-        removeCurrentActiveClass();
-        $currentActiveElement.addClass('active-current');
-
-        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
-      })
-      .on('clear.bs.scrollspy', function () {
-        removeCurrentActiveClass();
-      });
-
-    function removeCurrentActiveClass () {
-      $(tocSelector + ' ' + activeCurrentSelector)
-        .removeClass(activeCurrentSelector.substring(1));
-    }
-
-    function processTOC () {
-      getTOCMaxHeight();
-      toggleTOCOverflowIndicators();
-    }
-
-    function getTOCMaxHeight () {
-      var $sidebarInner = $('.sidebar-inner');
-      var height = $('.sidebar').height() -
-                   $tocSelector.position().top -
-                   $('.post-toc-indicator-bottom').height();
-
-      $tocSelector.css('height', height);
-
-      return height;
-    }
-
-    function toggleTOCOverflowIndicators () {
-      tocOverflowIndicator(
-        '.post-toc-indicator-top',
-        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
-      );
-
-      tocOverflowIndicator(
-        '.post-toc-indicator-bottom',
-        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
-      )
-    }
-
-    $(document).on('sidebar.didShow', function () {
-      processTOC();
-    });
-
-    $('body').scrollspy({ target: tocSelector });
-    $(window).on('resize', function () {
-      if ( $('.sidebar').hasClass('sidebar-active') ) {
-        processTOC();
-      }
-    });
-
-    onScroll($tocSelector);
-
-    function onScroll (element) {
-      element.on('mousewheel DOMMouseScroll', function (event) {
-          var oe = event.originalEvent;
-          var delta = oe.wheelDelta || -oe.detail;
-          var self = this;
-
-          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
-          event.preventDefault();
-
-          toggleTOCOverflowIndicators();
-      });
-    }
-
-    function tocOverflowIndicator (indicator, action) {
-      $(indicator).velocity('stop').velocity({
-        opacity: action === 'show' ? 0.4 : 0
-      }, { duration: 100 });
-    }
-
-  });
-</script>
-
-
-  <script type="text/javascript" id="sidebar.nav">
-    $(document).ready(function () {
-      var html = $('html');
-
-      $('.sidebar-nav li').on('click', function () {
-        var item = $(this);
-        var activeTabClassName = 'sidebar-nav-active';
-        var activePanelClassName = 'sidebar-panel-active';
-        if (item.hasClass(activeTabClassName)) {
-          return;
-        }
-
-        var currentTarget = $('.' + activePanelClassName);
-        var target = $('.' + item.data('target'));
-
-        currentTarget.velocity('transition.slideUpOut', 200, function () {
-          target
-            .velocity('stop')
-            .velocity('transition.slideDownIn', 200)
-            .addClass(activePanelClassName);
-        });
-
-        item.siblings().removeClass(activeTabClassName);
-        item.addClass(activeTabClassName);
-      });
-
-      $('.post-toc a').on('click', function (e) {
-        e.preventDefault();
-        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
-        html.velocity('stop').velocity('scroll', {
-          offset: offset  + 'px',
-          mobileHA: false
-        });
-      });
-
-      // Expand sidebar on post detail page by default, when post has a toc.
-      var $tocContent = $('.post-toc-content');
-      if (isDesktop() && CONFIG.sidebar === 'post') {
-        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
-          displaySidebar();
-        }
-      }
-    });
-  </script>
-
-
-
 
   <script type="text/javascript">
     $(document).ready(function () {
