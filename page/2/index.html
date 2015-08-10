@@ -152,6 +152,96 @@
           
           
             
+              <a class="post-title-link" href="/2011/05/15/android-xml-shape-get-started/">
+                Android XML Shape使用入门
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2011-05-15
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Android/">Android</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2011/05/15/android-xml-shape-get-started/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2011/05/15/android-xml-shape-get-started/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>XML<br>Drawable是google为android定义的一种声明式图形文件格式，类似于SVG，但更简单，官方文档非常少，网上有人整理了一份文档，值得细看：</p>
+<p><a href="http://idunnolol.com/android/drawables.html" target="_blank" rel="external">Android Drawable XML<br>Documentation</a></p>
+<p>下面是一个简单的使用例子：</p>
+<p>Activity代码  </p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.app.<span class="type">Activity</span>;  </span><br><span class="line"><span class="keyword">import</span> android.os.<span class="type">Bundle</span>;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">DrawableTest</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">Activity</span> &#123;</span>  </span><br><span class="line"><span class="annotation">@Override</span>  </span><br><span class="line">public void onCreate(<span class="type">Bundle</span> savedInstanceState) &#123;  </span><br><span class="line"><span class="keyword">super</span>.onCreate(savedInstanceState);  </span><br><span class="line">setContentView(<span class="type">R</span>.layout.main);  </span><br><span class="line">&#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>布局文件  </p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml <span class="variable">version=</span><span class="string">"1.0"</span> <span class="variable">encoding=</span><span class="string">"utf-8"</span>?&gt;  </span><br><span class="line">&lt;LinearLayout</span><br><span class="line">xmlns:<span class="variable">android=</span><span class="string">"http://schemas.android.com/apk/res/android"</span>  </span><br><span class="line">android:<span class="variable">orientation=</span><span class="string">"vertical"</span> android:<span class="variable">layout_width=</span><span class="string">"fill_parent"</span>  </span><br><span class="line">android:<span class="variable">layout_height=</span><span class="string">"fill_parent"</span>&gt;  </span><br><span class="line">&lt;TextView android:<span class="variable">textSize=</span><span class="string">"16sp"</span></span><br><span class="line">android:<span class="variable">layout_width=</span><span class="string">"fill_parent"</span>  </span><br><span class="line">android:<span class="variable">layout_height=</span><span class="string">"wrap_content"</span> android:<span class="variable">text=</span><span class="string">"@string/hello"</span>  </span><br><span class="line">android:<span class="variable">background=</span><span class="string">"@drawable/rect_gradient_linear"</span> /&gt;  </span><br><span class="line">&lt;TextView android:<span class="variable">textSize=</span><span class="string">"16sp"</span></span><br><span class="line">android:<span class="variable">layout_width=</span><span class="string">"fill_parent"</span>  </span><br><span class="line">android:<span class="variable">layout_height=</span><span class="string">"wrap_content"</span> android:<span class="variable">text=</span><span class="string">"@string/hello"</span>  </span><br><span class="line">android:<span class="variable">background=</span><span class="string">"@drawable/oval_gradient_linear"</span> /&gt;  </span><br><span class="line">&lt;TextView android:<span class="variable">textSize=</span><span class="string">"16sp"</span></span><br><span class="line">android:<span class="variable">layout_width=</span><span class="string">"fill_parent"</span>  </span><br><span class="line">android:<span class="variable">layout_height=</span><span class="string">"wrap_content"</span> android:<span class="variable">text=</span><span class="string">"@string/hello"</span>  </span><br><span class="line">android:<span class="variable">background=</span><span class="string">"@drawable/rect_solid_stroke"</span> /&gt;  </span><br><span class="line">&lt;TextView android:<span class="variable">textSize=</span><span class="string">"16sp"</span></span><br><span class="line">android:<span class="variable">layout_width=</span><span class="string">"fill_parent"</span>  </span><br><span class="line">android:<span class="variable">layout_height=</span><span class="string">"wrap_content"</span> android:<span class="variable">text=</span><span class="string">"@string/hello"</span>  </span><br><span class="line">android:<span class="variable">background=</span><span class="string">"@drawable/rect_solid_corners"</span> /&gt;  </span><br><span class="line">&lt;/LinearLayout&gt;</span><br></pre></td></tr></table></figure>
+<p>Shapre使用实例，共四个：  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">shape</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span>  </span><br><span class="line"><span class="attribute">android:shape</span>=<span class="value">"rectangle"</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">gradient</span> <span class="attribute">android:startColor</span>=<span class="value">"#ffff0000"</span></span><br><span class="line"><span class="attribute">android:endColor</span>=<span class="value">"#FF4488ee"</span>  </span><br><span class="line"><span class="attribute">android:type</span>=<span class="value">"linear"</span> <span class="attribute">android:angle</span>=<span class="value">"270"</span> /&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">padding</span> <span class="attribute">android:left</span>=<span class="value">"2dp"</span> <span class="attribute">android:top</span>=<span class="value">"2dp"</span> <span class="attribute">android:right</span>=<span class="value">"2dp"</span>  </span><br><span class="line"><span class="attribute">android:bottom</span>=<span class="value">"2dp"</span> /&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="title">shape</span>&gt;</span>  </span><br><span class="line">[/xml]  </span><br><span class="line">[xml]  </span><br><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">shape</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span>  </span><br><span class="line"><span class="attribute">android:shape</span>=<span class="value">"oval"</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">gradient</span> <span class="attribute">android:startColor</span>=<span class="value">"#FFaa6622"</span></span><br><span class="line"><span class="attribute">android:endColor</span>=<span class="value">"#FF2288ee"</span>  </span><br><span class="line"><span class="attribute">android:type</span>=<span class="value">"linear"</span> /&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">padding</span> <span class="attribute">android:left</span>=<span class="value">"2dp"</span> <span class="attribute">android:top</span>=<span class="value">"2dp"</span> <span class="attribute">android:right</span>=<span class="value">"2dp"</span>  </span><br><span class="line"><span class="attribute">android:bottom</span>=<span class="value">"2dp"</span> /&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="title">shape</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">shape</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span>  </span><br><span class="line"><span class="attribute">android:shape</span>=<span class="value">"rectangle"</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">solid</span> <span class="attribute">android:color</span>=<span class="value">"#ffff0000"</span> /&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">padding</span> <span class="attribute">android:left</span>=<span class="value">"5dp"</span> <span class="attribute">android:top</span>=<span class="value">"2dp"</span> <span class="attribute">android:right</span>=<span class="value">"2dp"</span>  </span><br><span class="line"><span class="attribute">android:bottom</span>=<span class="value">"5dp"</span> /&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">stroke</span> <span class="attribute">android:width</span>=<span class="value">"2dp"</span> <span class="attribute">android:color</span>=<span class="value">"#ffffffff"</span></span><br><span class="line"><span class="attribute">android:dashGap</span>=<span class="value">"5dp"</span>  </span><br><span class="line"><span class="attribute">android:dashWidth</span>=<span class="value">"10dp"</span> /&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="title">shape</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">shape</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span>  </span><br><span class="line"><span class="attribute">android:shape</span>=<span class="value">"rectangle"</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">solid</span> <span class="attribute">android:color</span>=<span class="value">"#8800ff00"</span> /&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">padding</span> <span class="attribute">android:left</span>=<span class="value">"5dp"</span> <span class="attribute">android:top</span>=<span class="value">"5dp"</span> <span class="attribute">android:right</span>=<span class="value">"5dp"</span>  </span><br><span class="line"><span class="attribute">android:bottom</span>=<span class="value">"5dp"</span> /&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">corners</span> <span class="attribute">android:radius</span>=<span class="value">"15dp"</span> /&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="title">shape</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>下面是系统源码里的例子，文件为：source/frameworks/base/core/res/res/drawable/progress_horizontal.xml  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">layer-list</span></span><br><span class="line"><span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">item</span> <span class="attribute">android:id</span>=<span class="value">"@android:id/background"</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">shape</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">corners</span> <span class="attribute">android:radius</span>=<span class="value">"5dip"</span> /&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">gradient</span>  </span><br><span class="line"><span class="attribute">android:startColor</span>=<span class="value">"#ff9d9e9d"</span>  </span><br><span class="line"><span class="attribute">android:centerColor</span>=<span class="value">"#ff5a5d5a"</span>  </span><br><span class="line"><span class="attribute">android:centerY</span>=<span class="value">"0.75"</span>  </span><br><span class="line"><span class="attribute">android:endColor</span>=<span class="value">"#ff747674"</span>  </span><br><span class="line"><span class="attribute">android:angle</span>=<span class="value">"270"</span>  </span><br><span class="line">/&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="title">shape</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="title">item</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">item</span> <span class="attribute">android:id</span>=<span class="value">"@android:id/secondaryProgress"</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">clip</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">shape</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">corners</span> <span class="attribute">android:radius</span>=<span class="value">"5dip"</span> /&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">gradient</span>  </span><br><span class="line"><span class="attribute">android:startColor</span>=<span class="value">"#80ffd300"</span>  </span><br><span class="line"><span class="attribute">android:centerColor</span>=<span class="value">"#80ffb600"</span>  </span><br><span class="line"><span class="attribute">android:centerY</span>=<span class="value">"0.75"</span>  </span><br><span class="line"><span class="attribute">android:endColor</span>=<span class="value">"#a0ffcb00"</span>  </span><br><span class="line"><span class="attribute">android:angle</span>=<span class="value">"270"</span>  </span><br><span class="line">/&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="title">shape</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="title">clip</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="title">item</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">item</span> <span class="attribute">android:id</span>=<span class="value">"@android:id/progress"</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">clip</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">shape</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">corners</span> <span class="attribute">android:radius</span>=<span class="value">"5dip"</span> /&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">gradient</span>  </span><br><span class="line"><span class="attribute">android:startColor</span>=<span class="value">"#ffffd300"</span>  </span><br><span class="line"><span class="attribute">android:centerColor</span>=<span class="value">"#ffffb600"</span>  </span><br><span class="line"><span class="attribute">android:centerY</span>=<span class="value">"0.75"</span>  </span><br><span class="line"><span class="attribute">android:endColor</span>=<span class="value">"#ffffcb00"</span>  </span><br><span class="line"><span class="attribute">android:angle</span>=<span class="value">"270"</span>  </span><br><span class="line">/&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="title">shape</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="title">clip</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="title">item</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">layer-list</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>可供参考的资料：<br>Layout secrets: “layer-list” and “include”<br><a href="http://android.amberfog.com/?p=9" target="_blank" rel="external">http://android.amberfog.com/?p=9</a></p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2011/02/26/android-dev-notes-01/">
                 Android开发杂记（一）
               </a>
@@ -1142,92 +1232,6 @@ make <span class="operator">-f</span> Makefile.m32
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2010/10/09/android-handler/">
-                Android Handler使用笔记
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2010-10-09
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <a href="/categories/Android/">Android</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2010/10/09/android-handler/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2010/10/09/android-handler/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>最近项目里要用到后台任务和多线程，看了一些资料，记录一下重点备忘。</p>
-<p>Handler可用于在主线程中处理消息队列（MessageQueue），处理其它线程发送过来的Message，例如根据后台任务的处理过程更新前台UI。<br>Handler类的使用过程一般是：  </p>
-<ol>
-<li>主线程，即UI线程中重写handleMessage方法，处理消息队列  </li>
-<li>后台线程中使用sendMessage发送消息</li>
-</ol>
-<p>下面是一个简单的例子：  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.app.Activity;  </span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;  </span><br><span class="line"><span class="keyword">import</span> android.os.Handler;  </span><br><span class="line"><span class="keyword">import</span> android.os.Message;  </span><br><span class="line"><span class="keyword">import</span> android.widget.TextView;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**  </span><br><span class="line">* <span class="doctag">@author</span> mcxiaoke  </span><br><span class="line">* <span class="doctag">@date</span> 2010.10.09  </span><br><span class="line">* <span class="doctag">@description</span>: Handler Test  </span><br><span class="line">*  </span><br><span class="line">*/</span>  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestHandler</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;  </span><br><span class="line">TextView label;  </span><br><span class="line">Handler myHandler;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;  </span><br><span class="line"><span class="keyword">super</span>.onCreate(savedInstanceState);  </span><br><span class="line">setContentView(R.layout.main);  </span><br><span class="line">label = (TextView) findViewById(R.id.label);  </span><br><span class="line">myHandler = <span class="keyword">new</span> Handler() &#123;  </span><br><span class="line"><span class="annotation">@Override</span>  </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;  </span><br><span class="line"><span class="keyword">super</span>.handleMessage(msg);  </span><br><span class="line">Bundle b = msg.getData();  </span><br><span class="line">String color = b.getString(<span class="string">"text"</span>);  </span><br><span class="line">TestHandler.<span class="keyword">this</span>.label.append(color);  </span><br><span class="line">&#125;  </span><br><span class="line">&#125;;  </span><br><span class="line">MyThread m = <span class="keyword">new</span> MyThread();  </span><br><span class="line"><span class="keyword">new</span> Thread(m).start();  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;  </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;  </span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i &amp;lt; <span class="number">20</span>; i++) &#123;  </span><br><span class="line"><span class="keyword">try</span> &#123;  </span><br><span class="line">Thread.sleep(<span class="number">2000</span>);  </span><br><span class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;  </span><br><span class="line">e.printStackTrace();  </span><br><span class="line">&#125;  </span><br><span class="line">Message msg = <span class="keyword">new</span> Message();  </span><br><span class="line">Bundle b = <span class="keyword">new</span> Bundle();  </span><br><span class="line">b.putString(<span class="string">"text"</span>, <span class="string">"nMessage "</span>+i+<span class="string">"..."</span>);  </span><br><span class="line">msg.setData(b);  </span><br><span class="line">myHandler.sendMessage(msg);  </span><br><span class="line">&#125;  </span><br><span class="line">&#125;  </span><br><span class="line">&#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>更完整的例子可以参考：<a href="http://www.javaeye.com/topic/435147" target="_blank" rel="external">http://www.javaeye.com/topic/435147</a></p>
-<p>推荐代码高亮插件：<br><a href="http://wordpress.org/extend/plugins/syntax-highlighter-and-code-prettifier/" target="_blank" rel="external">Syntax Highlighter and Code Colorizer for Wordpress</a></p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -1266,7 +1270,7 @@ make <span class="operator">-f</span> Makefile.m32
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

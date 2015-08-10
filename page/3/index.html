@@ -152,6 +152,92 @@
           
           
             
+              <a class="post-title-link" href="/2010/10/09/android-handler/">
+                Android Handler使用笔记
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2010-10-09
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Android/">Android</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2010/10/09/android-handler/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2010/10/09/android-handler/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>最近项目里要用到后台任务和多线程，看了一些资料，记录一下重点备忘。</p>
+<p>Handler可用于在主线程中处理消息队列（MessageQueue），处理其它线程发送过来的Message，例如根据后台任务的处理过程更新前台UI。<br>Handler类的使用过程一般是：  </p>
+<ol>
+<li>主线程，即UI线程中重写handleMessage方法，处理消息队列  </li>
+<li>后台线程中使用sendMessage发送消息</li>
+</ol>
+<p>下面是一个简单的例子：  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.app.Activity;  </span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;  </span><br><span class="line"><span class="keyword">import</span> android.os.Handler;  </span><br><span class="line"><span class="keyword">import</span> android.os.Message;  </span><br><span class="line"><span class="keyword">import</span> android.widget.TextView;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**  </span><br><span class="line">* <span class="doctag">@author</span> mcxiaoke  </span><br><span class="line">* <span class="doctag">@date</span> 2010.10.09  </span><br><span class="line">* <span class="doctag">@description</span>: Handler Test  </span><br><span class="line">*  </span><br><span class="line">*/</span>  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestHandler</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;  </span><br><span class="line">TextView label;  </span><br><span class="line">Handler myHandler;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;  </span><br><span class="line"><span class="keyword">super</span>.onCreate(savedInstanceState);  </span><br><span class="line">setContentView(R.layout.main);  </span><br><span class="line">label = (TextView) findViewById(R.id.label);  </span><br><span class="line">myHandler = <span class="keyword">new</span> Handler() &#123;  </span><br><span class="line"><span class="annotation">@Override</span>  </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;  </span><br><span class="line"><span class="keyword">super</span>.handleMessage(msg);  </span><br><span class="line">Bundle b = msg.getData();  </span><br><span class="line">String color = b.getString(<span class="string">"text"</span>);  </span><br><span class="line">TestHandler.<span class="keyword">this</span>.label.append(color);  </span><br><span class="line">&#125;  </span><br><span class="line">&#125;;  </span><br><span class="line">MyThread m = <span class="keyword">new</span> MyThread();  </span><br><span class="line"><span class="keyword">new</span> Thread(m).start();  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;  </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;  </span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i &amp;lt; <span class="number">20</span>; i++) &#123;  </span><br><span class="line"><span class="keyword">try</span> &#123;  </span><br><span class="line">Thread.sleep(<span class="number">2000</span>);  </span><br><span class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;  </span><br><span class="line">e.printStackTrace();  </span><br><span class="line">&#125;  </span><br><span class="line">Message msg = <span class="keyword">new</span> Message();  </span><br><span class="line">Bundle b = <span class="keyword">new</span> Bundle();  </span><br><span class="line">b.putString(<span class="string">"text"</span>, <span class="string">"nMessage "</span>+i+<span class="string">"..."</span>);  </span><br><span class="line">msg.setData(b);  </span><br><span class="line">myHandler.sendMessage(msg);  </span><br><span class="line">&#125;  </span><br><span class="line">&#125;  </span><br><span class="line">&#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>更完整的例子可以参考：<a href="http://www.javaeye.com/topic/435147" target="_blank" rel="external">http://www.javaeye.com/topic/435147</a></p>
+<p>推荐代码高亮插件：<br><a href="http://wordpress.org/extend/plugins/syntax-highlighter-and-code-prettifier/" target="_blank" rel="external">Syntax Highlighter and Code Colorizer for Wordpress</a></p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2010/05/13/compile-qt-use462-vs-or-mingw/">
                 Windows下编译QT 4.6.2
               </a>
@@ -292,7 +378,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
