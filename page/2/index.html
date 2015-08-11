@@ -152,6 +152,191 @@
           
           
             
+              <a class="post-title-link" href="/2011/05/30/ubuntu-install-software-and-config/">
+                Ubuntu软件安装和使用配置
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2011-05-30
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Linux/">Linux</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2011/05/30/ubuntu-install-software-and-config/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2011/05/30/ubuntu-install-software-and-config/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <ul>
+<li>2011.05.06 Ver 1.0</li>
+<li>2011.05.11 Ver 1.1</li>
+<li>2011.05.12 Ver 1.2</li>
+<li>2011.05.29 Ver 1.3 增加Dropbox安装配置，删除过时内容  </li>
+</ul>
+<p>每次重装的话都要安装很多软件，修改配置，我的记性不是很好，每次都要网上查，这次记下来这些资料备用</p>
+<h2 id="系统安装">系统安装</h2><h3 id="全新安装">全新安装</h3><p>WIN+LINUX双系统的话，在WIN下面可以用easybcd启动ISO安装，当然，最简单的方式是直接刻盘光盘安装。要补充的一点是，如果安装时要使用lvm，就必须使用文本模式安装，图形模式虽然也可以，但比较复杂，而且容易出问题<br>单系统模式就简单了，直接使用整个硬盘，但是要自己控制分区方案的话，分区时要选择高级，手动分区</p>
+<h3 id="保留数据重装">保留数据重装</h3><p>保留数据一般是指保留/home分区的数据，前提是你的/home是单独分区的。重装系统时选高级手动分区，只格式化/分区，/home分区直接挂载为新的/home分区(我不清楚lvm虚拟卷可不可直接识别和挂载)，不能格式化，为避免新系统的配置文件冲突，最好使用livecd先删除/home/username目录下的.开头的大量配置文件，如果nautilus里看不到，使用Ctrl+H就可以看到所有的隐藏文件，新系统的用户名最好和原来的一致，这样就可以减少转移文件的麻烦。更详细的说明可以参考这篇文章：<a href="http://ubuntuabc.com/123/?p=23" target="_blank" rel="external">http://ubuntuabc.com/123/?p=23</a></p>
+<h2 id="新系统配置">新系统配置</h2><h3 id="配置软件源">配置软件源</h3><p>首先备份原有的软件源 </p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /etc/apt/sources<span class="class">.list</span> /etc/apt/sources<span class="class">.list</span><span class="class">.bak</span></span><br></pre></td></tr></table></figure>
+<p>然后去 </p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">http:</span>//wiki.ubuntu<span class="preprocessor">.org</span>.cn/Qref/Source</span><br></pre></td></tr></table></figure>
+<p>挑选一个速度最快的源加入 sources.list 不要加入多个，反而影响索引速度  </p>
+<h4 id="更新软件源">更新软件源</h4><figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> <span class="keyword">update</span></span><br></pre></td></tr></table></figure>
+<h4 id="更新系统">更新系统</h4><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> <span class="built_in">dist</span>-upgrade</span><br></pre></td></tr></table></figure>
+<h4 id="Unity配置工具">Unity配置工具</h4><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install compizconfig-settings-manager</span><br></pre></td></tr></table></figure>
+<h4 id="PPA管理器">PPA管理器</h4><p>安装y-ppa manager</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo<span class="instruction"> add-apt-repository </span>ppa:webupd8team/y-ppa-manager</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install y-ppa-manager</span><br></pre></td></tr></table></figure>
+<h4 id="字体安装">字体安装</h4><p>直接双击字体，在查看对话框中点击安装即可<br>或者直接复制到~/.fonts目录就可以，不需要任何配置，非常简单<br>文件浏览右键管理员</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install nautilus-gksu</span><br></pre></td></tr></table></figure>
+<h4 id="设置中文MAN">设置中文MAN</h4><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alias cman='<span class="keyword">man</span> -M /usr/share/<span class="keyword">man</span>/zh_CN'</span><br></pre></td></tr></table></figure>
+<p>想用中文man时： cman command<br>想用英文man： man command</p>
+<p>设置curl不检查SSL证书</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo <span class="string">'insecure'</span> &amp;<span class="keyword">gt</span>;&amp;<span class="keyword">gt</span>; ~/.curlrc</span><br></pre></td></tr></table></figure>
+<h4 id="Unity配置">Unity配置</h4><p>解除Unity的系统托盘显示限制</p>
+<ul>
+<li>命令行方式：<br>解禁所有程序</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gsettings set com<span class="class">.canonical</span><span class="class">.Unity</span><span class="class">.Panel</span> systray-whitelist <span class="string">"['all']"</span></span><br></pre></td></tr></table></figure>
+<p>或者只解禁部分程序，把 YOUR_APPLICATION 替换成你需要解禁的程序</p>
+<figure class="highlight scilab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gsettings set <span class="transposed_variable">com.</span><span class="transposed_variable">canonical.</span><span class="transposed_variable">Unity.</span>Panel systray-whitelist <span class="string">"['</span><span class="transposed_variable">JavaEmbeddedFrame'</span>, <span class="string">'Mumble'</span>, <span class="string">'Wine'</span>, <span class="string">'Skype'</span>, <span class="string">'hp-systray'</span>, <span class="string">'YOUR_APPLICATION'</span>]<span class="string">"</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>GUI 方式：<br>安装 dconf-tools</li>
+</ul>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install dconf-tools</span><br></pre></td></tr></table></figure>
+<p>在终端中输入 dconf-editor ，然后找到  desktop &gt; unity &gt; panel ，把 systray-whitelist 的值改为 [‘all’]</p>
+<h2 id="安装常用软件">安装常用软件</h2><h4 id="压缩和解压缩">压缩和解压缩</h4><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install unace unrar zip unzip p7zip-full p7zip-rar sharutils uudeview mpack lha arj cabextract <span class="type">file</span>-roller</span><br></pre></td></tr></table></figure>
+<p>不要安装源里的rar，会乱码，p7zip-rar和unrar都不会乱码  </p>
+<p>新版iBus输入法，自带的版本很老，可以用ppa安装最新版</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo<span class="instruction"> add-apt-repository </span>ppa:shawn-p-huang/ppa</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install ibus-gtk ibus-pinyin ibus-pinyin-db-open-phrase</span><br></pre></td></tr></table></figure>
+<h4 id="文本编辑器">文本编辑器</h4><p>自带的gedit其实够用，可以不安装其他的，需要的话也可以安装scribes，geany<br>需要修改一点gedit的配置才可以自动识别中文编码：运行gconf-editor，展开/apps/gedit-2/preferences/encodings节点，加入GB18030和BIG5-HKSCS</p>
+<h4 id="浏览器">浏览器</h4><p>11.04自带最新的4.0</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo<span class="instruction"> add-apt-repository </span>ppa:mozillateam/firefox-stable</span><br><span class="line">sudo apt-get update &amp;amp;&amp;amp; sudo apt-get upgrade</span><br></pre></td></tr></table></figure>
+<p>如果没有安装Firefox可以直接</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install firefox</span><br></pre></td></tr></table></figure>
+<p>安装Chrome稳定版，需要直接去官网下载</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget http<span class="variable">s:</span>//<span class="keyword">dl</span>-ssl.google.<span class="keyword">com</span>/linux/direct/google-chrome-stable_current_i386.<span class="keyword">deb</span></span><br><span class="line">sudo dpkg -<span class="keyword">i</span> google-chrome-stable_current_i386.<span class="keyword">deb</span></span><br></pre></td></tr></table></figure>
+<p>Chrome 10以后的版本默认为难看的楷体，字体修改方法</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//imcn.me/html/y2011/3306.html</span></span><br><span class="line"><span class="string">http:</span><span class="comment">//imcn.me/html/y2011/3386.html</span></span><br><span class="line"><span class="string">http:</span><span class="comment">//www.linuxidc.com/Linux/2011-05/35375.htm</span></span><br></pre></td></tr></table></figure>
+<h4 id="文档阅读">文档阅读</h4><p>增强自带的PDF阅读能力，增加pdf和其它格式的相互转换</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">sudo</span> apt-<span class="preprocessor">get</span> install <span class="keyword">poppler-data </span><span class="keyword">poppler-utils</span></span><br></pre></td></tr></table></figure>
+<h4 id="备份同步">备份同步</h4><p>安装dropbox<br>首先官网下载</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http<span class="variable">s:</span>//www.dropbox.<span class="keyword">com</span>/download?<span class="keyword">dl</span>=packages/nautilus-dropbox_0.<span class="number">6.7</span>_i386.<span class="keyword">deb</span></span><br></pre></td></tr></table></figure>
+<p>安装后还需要安装dropbox的daemon，这个无法直接下载，可以用vpn<br>或者直接用代理下载下面这个</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//www.getdropbox.com/download?plat=lnx.x86</span></span><br></pre></td></tr></table></figure>
+<p>然后直接在～目录解压，文件会解压到 ~/.dropbox-dist/ ，daemon就装好了，直接就可以运行<br>更详细的说明见：<br><a href="http://freedomhui.com/?p=149" target="_blank" rel="external">http://freedomhui.com/?p=149</a><br>电子书制作和阅读</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install calibre fbreader</span><br></pre></td></tr></table></figure>
+<p>需要最新版的话可以自己下载源码编译安装</p>
+<h4 id="图像处理">图像处理</h4><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install gimp inkscape imagemagick dia</span><br></pre></td></tr></table></figure>
+<h4 id="音乐播放">音乐播放</h4><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo<span class="instruction"> add-apt-repository </span>ppa:nilarimogard/webupd8</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install audacious</span><br></pre></td></tr></table></figure>
+<p>MP3 GBK标签转码工具</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install <span class="keyword">python</span>-mutagen</span><br></pre></td></tr></table></figure>
+<p>执行转码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -iname <span class="string">"*.mp3"</span> -execdir mid3iconv <span class="operator">-e</span> gbk &#123;&#125; ;</span><br></pre></td></tr></table></figure>
+<h4 id="视频播放">视频播放</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get <span class="operator"><span class="keyword">install</span> vlc vlc-<span class="keyword">plugin</span>-pulse mozilla-<span class="keyword">plugin</span>-vlc</span><br><span class="line">sudo apt-<span class="keyword">get</span> <span class="keyword">install</span> mplayer smplayer</span></span><br></pre></td></tr></table></figure>
+<h4 id="下载工具">下载工具</h4><p>最常见的wget和aria2c</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install wget aria2</span><br></pre></td></tr></table></figure>
+<p>推荐用下面的Firefox插件</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo<span class="instruction"> add-apt-repository </span>ppa:plushuang-tw/uget-devel</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install uget</span><br></pre></td></tr></table></figure>
+<p>特别推荐使用优蛋 linux版，很好用<br>下载地址</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//bbs.ylmf.net/forum.php?mod=viewthread&amp;amp;tid=1916551</span></span><br></pre></td></tr></table></figure>
+<p>当然，用Firefox的话，有最强大的下载插件：DownThemAll，最好的下载工具</p>
+<h4 id="安装Ubuntu_Tweak">安装Ubuntu Tweak</h4><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo<span class="instruction"> add-apt-repository </span>ppa:tualatrix/ppa</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install ubuntu-tweak</span><br></pre></td></tr></table></figure>
+<h2 id="桌面美化">桌面美化</h2><h4 id="安装Faenza图标和equinox主题">安装Faenza图标和equinox主题</h4><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo<span class="instruction"> add-apt-repository </span>ppa:tiheum/equinox</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install faenza-icon-theme  gtk2-engines-equinox equinox-theme</span><br></pre></td></tr></table></figure>
+<h4 id="安装elementary主题">安装elementary主题</h4><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo<span class="instruction"> add-apt-repository </span>ppa:elementaryart/elementarydesktop</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install elementary-theme elementary-icon-theme elementary-wallpapers</span><br></pre></td></tr></table></figure>
+<h4 id="安装nautilus-elementary">安装nautilus-elementary</h4><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo<span class="instruction"> add-apt-repository </span>ppa:am-monkeyd/nautilus-elementary-ppa</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get dist-upgrade</span><br></pre></td></tr></table></figure>
+<p>打开/usr/share/themes/.gtkrc，注释掉这一行： <code>#include &quot;apps/nautilus-elementary.rc&quot;</code><br>重启 nautilus -q</p>
+<h4 id="安装系统状态指示器">安装系统状态指示器</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget http:<span class="comment">//mh21.de/temp/indicator-multiload_0.1-0~5_i386.deb</span></span><br><span class="line">sudo dpkg -<span class="tag">i</span> indicator-multiload_0.<span class="number">1</span>-<span class="number">0</span>~<span class="number">5</span>_i386.deb</span><br></pre></td></tr></table></figure>
+<h2 id="开发环境配置">开发环境配置</h2><h4 id="安装基本开发环境和版本工具">安装基本开发环境和版本工具</h4><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">sudo</span> apt-<span class="preprocessor">get</span> install <span class="keyword">build-essential </span>autoconf automake1.<span class="number">9</span> cvs <span class="keyword">subversion </span>git mercurial</span><br></pre></td></tr></table></figure>
+<h4 id="安装JDK">安装JDK</h4><p>需要在更新管理器里启用第三方软件源</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install <span class="keyword">sun</span>-java6-jdk <span class="keyword">sun</span>-java6-plugin</span><br></pre></td></tr></table></figure>
+<p>或者通过ppa安装</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo<span class="instruction"> add-apt-repository </span>ppa:ferramroberto/java</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install sun-java6-jdk sun-java6-plugin</span><br></pre></td></tr></table></figure>
+<h4 id="配置JDK">配置JDK</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="operator"><span class="keyword">update</span>-alternatives <span class="comment">--config java</span></span></span><br></pre></td></tr></table></figure>
+<p>解决Java程序乱码<br>注释掉此文件的所有行：</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/usr/lib/jvm/java-<span class="number">6</span>-sun/jre/lib/fonts/fonts.dir</span><br><span class="line">http:<span class="regexp">//wiki</span>.ubuntu.org.cn/Java<span class="variable">%E5</span><span class="variable">%AE</span><span class="variable">%89</span><span class="variable">%E8</span><span class="variable">%A3</span><span class="variable">%85</span><span class="variable">%E9</span><span class="variable">%85</span><span class="variable">%8D</span><span class="variable">%E7</span><span class="variable">%BD</span><span class="variable">%AE</span></span><br></pre></td></tr></table></figure>
+<h4 id="安装Android开发环境">安装Android开发环境</h4><figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install git-core gnupg flex bison gperf build-essential zip curl zlib1g-<span class="built_in">dev</span> libc6-<span class="built_in">dev</span> x11proto-core-<span class="built_in">dev</span> libx11-<span class="built_in">dev</span></span><br></pre></td></tr></table></figure>
+<h4 id="安装Eclipse">安装Eclipse</h4><p>不建议直接使用源安装，不好控制<br>建议直接去官网下载压缩包，解压即可使用，如果放在/usr/local 或 /opt 分区的话，为使用方便，需要chown root:root -R  一下，不过强烈建议直接解压放在/home分区的某个目录，使用最方便，不用担心莫名其妙的权限问题<br>添加桌面启动器和面板启动器可以参考这里：<br><a href="http://www.5dlinux.com/article/1/2008/linux_15330.html" target="_blank" rel="external">http://www.5dlinux.com/article/1/2008/linux_15330.html</a><br>我的方法是直接 ln -s一个放在~/bin目录里</p>
+<h4 id="安装Ruby">安装Ruby</h4><p>系统自带的是1.8.7，需要使用1.9.2的话必须自己编译安装，不过无论使用哪个版本，强烈推荐使用rvm安装和配置ruby环境，与系统隔离，使用和卸载都方便，官网的安装教程非常详细，推荐安装在～/目录</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash  &lt; <span class="list">(<span class="keyword">curl</span> -s https<span class="keyword">://rvm</span>.beginrescueend.com/install/rvm)</span></span><br></pre></td></tr></table></figure>
+<p>在.bashrc的最后加入</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[[ -s "$HOME/.rvm/scripts/rvm" ]]</span> &amp;amp;&amp;amp; . <span class="string">"$HOME/.rvm/scripts/rvm"</span></span><br><span class="line">rvm  install <span class="number">1.9</span>.2-p180</span><br><span class="line">rvm <span class="number">1.9</span>.2-p180</span><br><span class="line">rvm <span class="comment">--default use 1.9.2</span></span><br></pre></td></tr></table></figure>
+<p>检查安装情况 <code>which ruby</code></p>
+<h4 id="安装Eclipse插件">安装Eclipse插件</h4><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="constant">ADT：</span></span><br><span class="line"><span class="symbol">http:</span>/<span class="regexp">/dl-ssl.google.com/android</span><span class="regexp">/eclipse/</span></span><br><span class="line"><span class="symbol">https:</span>/<span class="regexp">/dl-ssl.google.com/android</span><span class="regexp">/eclipse/</span></span><br></pre></td></tr></table></figure>
+<h2 id="其它配置">其它配置</h2><h4 id="配置Evolution使用GMail">配置Evolution使用GMail</h4><p>imap配置里用户名必须是包含@gmail.com的，要不然无法链接，而且很bt的是根本没有提示和错误说明 #ubuntu 还有imap服务器必须加端口号993 加密方式为SSL</p>
+<h4 id="软件包备份还原">软件包备份还原</h4><p>备份</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tar cizvf apt-backup.tar.gz <span class="regexp">/var/</span>cache<span class="regexp">/apt/</span>archives --<span class="keyword">exclude</span>=<span class="regexp">/var/</span>cache<span class="regexp">/apt/</span>archives<span class="regexp">/partial/</span>* --<span class="keyword">exclude</span>=<span class="regexp">/var/</span>cache<span class="regexp">/apt/</span>archives<span class="regexp">/lock</span></span><br></pre></td></tr></table></figure>
+<p>还原</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get <span class="operator"><span class="keyword">update</span> &amp;amp;</span>&amp;amp; sudo tar xzvf <span class="operator"><span class="keyword">backup</span>.tar.gz -C /</span></span><br></pre></td></tr></table></figure>
+<h2 id="其它软件">其它软件</h2><h4 id="图形方式编辑启动菜单">图形方式编辑启动菜单</h4><p>安装Grub Customizer</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo<span class="instruction"> add-apt-repository </span>ppa:danielrichter2007/grub-customizer</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install grub-customizer</span><br></pre></td></tr></table></figure>
+<h4 id="安装和配置openvpn">安装和配置openvpn</h4><p>安装openvpn</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install openvpn</span><br><span class="line"></span><br><span class="line">复制配置文件到 <span class="regexp">/etc/</span>openvpn/ ，添加权限</span><br><span class="line">cd <span class="regexp">/etc/</span>openvpn/</span><br><span class="line">sudo chmod +x *</span><br><span class="line">连接openvpn</span><br><span class="line">sudo openvpn --config <span class="regexp">/etc/</span>openvpn/client.ovp --script-security <span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p>出现下列字样表示连接成功</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">openvpn</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">config</span> <span class="comment">/etc/openvpn/client</span><span class="string">.</span><span class="comment">ovp</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">script</span><span class="literal">-</span><span class="comment">security</span> <span class="comment">2</span></span><br></pre></td></tr></table></figure>
+<p>使用SSH Tunneling Proxy</p>
+<p><a href="http://wiki.wowubuntu.com/blog/ubuntu_ssh_tunneling" target="_blank" rel="external">http://wiki.wowubuntu.com/blog/ubuntu_ssh_tunneling</a><br><a href="http://wiki.wowubuntu.com/blog/gstm" target="_blank" rel="external">http://wiki.wowubuntu.com/blog/gstm</a></p>
+<h2 id="故障和问题">故障和问题</h2><p>暂无</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2011/05/15/android-xml-shape-get-started/">
                 Android XML Shape使用入门
               </a>
@@ -1132,106 +1317,6 @@ make <span class="operator">-f</span> Makefile.m32
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2010/10/10/windows-7-users-folder-robocopy/">
-                转移Windows的Users文件夹
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2010-10-10
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <a href="/categories/Windows/">Windows</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2010/10/10/windows-7-users-folder-robocopy/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2010/10/10/windows-7-users-folder-robocopy/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>转移用户文件夹，默认是在C:Users</p>
-<h2 id="安装系统时可用">安装系统时可用</h2><p>在安装Win7的过程中，要求输入用户名及密码的时候，先不如输入任何信息，按“Shift+F10”呼出命令行窗口，输入以下命令：  </p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">robocopy <span class="string">"C:Users"</span> <span class="string">"D:Users"</span> <span class="regexp">/E /</span>COPYALL /XJ  </span><br><span class="line">rmdir <span class="string">"C:Users"</span> <span class="regexp">/S /</span>Q  </span><br><span class="line">mklink /J <span class="string">"C:Users"</span> <span class="string">"D:Users"</span></span><br></pre></td></tr></table></figure>
-<p>而后关闭命令行窗口，继续安装直至完成。</p>
-<h2 id="安装完成后">安装完成后</h2><ol>
-<li>关闭所有应用程序；  </li>
-<li>在我的电脑（计算机）上点右键，选择管理，进入计算机管理，展开本地用户和组选项；  </li>
-<li>鼠标点击“Administrator”，选择属性，而后在随后的对话框中去掉“帐户已禁用”之前的勾；  </li>
-<li>注销当前用户（注意，不是“切换用户”），而后以“Administrator”登录  </li>
-<li><p>打开命令行窗口，输入以下命令：  </p>
- <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">robocopy <span class="string">"C:Users"</span> <span class="string">"D:Users"</span> <span class="regexp">/E /</span>COPYALL <span class="regexp">/XJ /</span>XD <span class="string">"C:UsersAdministrator"</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>注销Administrator，重新用你的用户名登录Windows<br>7，而后到“计算机管理器”里禁用Administrator；  </p>
-</li>
-<li>以管理员身份打开一个DOS窗口，输入以下命令：   <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rmdir <span class="string">"C:Users"</span> <span class="regexp">/S /</span>Q  </span><br><span class="line">mklink /J <span class="string">"C:Users"</span> <span class="string">"D:Users"</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ol>
-<li>完成</li>
-</ol>
-<p>robocopy是Windows 7自带的一个很强大的工具，XP用户可在此下载：<br><a href="http://www.brothersoft.com/robocopy-gui-105335.html" target="_blank" rel="external">RobocopyGUI</a>  </p>
-<p>微软MSDN的介绍：<a href="http://technet.microsoft.com/en-us/library/cc733145(WS.10).aspx" target="_blank" rel="external">http://technet.microsoft.com/en-us/library/cc733145(WS.10).aspx</a><br>Robocopy的介绍：<a href="http://en.wikipedia.org/wiki/Robocopy" target="_blank" rel="external">http://en.wikipedia.org/wiki/Robocopy</a><br>Robocopy的用法：<a href="http://ss64.com/nt/robocopy.html" target="_blank" rel="external">http://ss64.com/nt/robocopy.html</a>  </p>
-<p>Robocopy的教程两篇：<br><a href="http://marui.blog.51cto.com/1034148/296473" target="_blank" rel="external">http://marui.blog.51cto.com/1034148/296473</a><br><a href="http://marui.blog.51cto.com/1034148/297397" target="_blank" rel="external">http://marui.blog.51cto.com/1034148/297397</a></p>
-<p>Windows 7完整安装实例：<a href="http://isouth.org/archives/294.html" target="_blank" rel="external">http://isouth.org/archives/294.html</a></p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -1270,7 +1355,7 @@ make <span class="operator">-f</span> Makefile.m32
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">23</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

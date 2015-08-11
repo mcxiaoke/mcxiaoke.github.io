@@ -152,6 +152,106 @@
           
           
             
+              <a class="post-title-link" href="/2010/10/10/windows-7-users-folder-robocopy/">
+                转移Windows的Users文件夹
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2010-10-10
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Windows/">Windows</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2010/10/10/windows-7-users-folder-robocopy/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2010/10/10/windows-7-users-folder-robocopy/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>转移用户文件夹，默认是在C:Users</p>
+<h2 id="安装系统时可用">安装系统时可用</h2><p>在安装Win7的过程中，要求输入用户名及密码的时候，先不如输入任何信息，按“Shift+F10”呼出命令行窗口，输入以下命令：  </p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">robocopy <span class="string">"C:Users"</span> <span class="string">"D:Users"</span> <span class="regexp">/E /</span>COPYALL /XJ  </span><br><span class="line">rmdir <span class="string">"C:Users"</span> <span class="regexp">/S /</span>Q  </span><br><span class="line">mklink /J <span class="string">"C:Users"</span> <span class="string">"D:Users"</span></span><br></pre></td></tr></table></figure>
+<p>而后关闭命令行窗口，继续安装直至完成。</p>
+<h2 id="安装完成后">安装完成后</h2><ol>
+<li>关闭所有应用程序；  </li>
+<li>在我的电脑（计算机）上点右键，选择管理，进入计算机管理，展开本地用户和组选项；  </li>
+<li>鼠标点击“Administrator”，选择属性，而后在随后的对话框中去掉“帐户已禁用”之前的勾；  </li>
+<li>注销当前用户（注意，不是“切换用户”），而后以“Administrator”登录  </li>
+<li><p>打开命令行窗口，输入以下命令：  </p>
+ <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">robocopy <span class="string">"C:Users"</span> <span class="string">"D:Users"</span> <span class="regexp">/E /</span>COPYALL <span class="regexp">/XJ /</span>XD <span class="string">"C:UsersAdministrator"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>注销Administrator，重新用你的用户名登录Windows<br>7，而后到“计算机管理器”里禁用Administrator；  </p>
+</li>
+<li>以管理员身份打开一个DOS窗口，输入以下命令：   <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rmdir <span class="string">"C:Users"</span> <span class="regexp">/S /</span>Q  </span><br><span class="line">mklink /J <span class="string">"C:Users"</span> <span class="string">"D:Users"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li>完成</li>
+</ol>
+<p>robocopy是Windows 7自带的一个很强大的工具，XP用户可在此下载：<br><a href="http://www.brothersoft.com/robocopy-gui-105335.html" target="_blank" rel="external">RobocopyGUI</a>  </p>
+<p>微软MSDN的介绍：<a href="http://technet.microsoft.com/en-us/library/cc733145(WS.10).aspx" target="_blank" rel="external">http://technet.microsoft.com/en-us/library/cc733145(WS.10).aspx</a><br>Robocopy的介绍：<a href="http://en.wikipedia.org/wiki/Robocopy" target="_blank" rel="external">http://en.wikipedia.org/wiki/Robocopy</a><br>Robocopy的用法：<a href="http://ss64.com/nt/robocopy.html" target="_blank" rel="external">http://ss64.com/nt/robocopy.html</a>  </p>
+<p>Robocopy的教程两篇：<br><a href="http://marui.blog.51cto.com/1034148/296473" target="_blank" rel="external">http://marui.blog.51cto.com/1034148/296473</a><br><a href="http://marui.blog.51cto.com/1034148/297397" target="_blank" rel="external">http://marui.blog.51cto.com/1034148/297397</a></p>
+<p>Windows 7完整安装实例：<a href="http://isouth.org/archives/294.html" target="_blank" rel="external">http://isouth.org/archives/294.html</a></p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2010/10/09/android-handler/">
                 Android Handler使用笔记
               </a>
@@ -378,7 +478,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">23</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
