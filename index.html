@@ -202,9 +202,9 @@
 <li><a href="https://github.com/mcxiaoke/xBus" target="_blank" rel="external"><code>xBus</code> 项目GitHub地址</a></li>
 </ul>
 <h2 id="系列文章">系列文章</h2><ul>
-<li><a href="how-to-write-an-eventbus-part1.md"><code>跟我一起写EventBus（一）</code></a></li>
-<li><a href="how-to-write-an-eventbus-part2.md"><code>跟我一起写EventBus（二）</code></a></li>
-<li><a href="how-to-write-an-eventbus-part2.md"><code>跟我一起写EventBus（三）</code></a></li>
+<li><a href="/2015/08/03/how-to-write-an-eventbus-part1/"><code>跟我一起写EventBus（一）</code></a></li>
+<li><a href="/2015/08/04/how-to-write-an-eventbus-part2/"><code>跟我一起写EventBus（二）</code></a></li>
+<li><a href="/2015/08/10/how-to-write-an-eventbus-part3/"><code>跟我一起写EventBus（三）</code></a></li>
 </ul>
 <h2 id="概述">概述</h2><p>前面三部分我们已经实现了一个完整的 <code>EventBus</code> ，这一部分主要是优化和增强，包括事件类型模糊匹配和缓存优化，还有扩展功能和高级用法。</p>
 <h2 id="方法缓存">方法缓存</h2><p>Java中的反射虽然速度已经很快，但相对于正常的方法调用来说还是慢很多，使用注解也有不小的性能成本，但是通过使用缓存，一次查找多次使用，可以最大程度较少这个成本，实际使用中几乎可以忽略不计。</p>
