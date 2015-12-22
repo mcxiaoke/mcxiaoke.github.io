@@ -1,633 +1,165 @@
-<!doctype html>
-<html class="theme-next use-motion theme-next-mist">
+<!DOCTYPE html>
+<html>
+
 <head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>跟我一起写EventBus（四） | Xiaoke&#39;s Blog</title>
+  <meta name="description" content="未觉池塘春草梦，阶前梧叶已秋声" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+
+  <meta name="generator" content="Xiaoke's Blog">
+
+  
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="atom.xml">
+  
   
 
-<meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-
-
-
-
-
-  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
-
-
-
-
-<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
-
-
-    <meta name="description" content="零碎的笔记" />
-
-
-
-  <meta name="keywords" content="Android,EventBus,HowTo,Java," />
-
-
-
-
-
-  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
-
-
-
-<script type="text/javascript" id="hexo.configuration">
-  var CONFIG = {
-    scheme: 'Mist',
-    analytics: {
-      google: 'UA-49960399-2'
-    },
-    sidebar: 'hide'
-  };
-</script>
-
-
-
-
-  <title> 跟我一起写EventBus（四） // Xiaoke's Blog </title>
+  
 </head>
 
-<body>
-  <!--[if lte IE 8]>
-  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
-    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
-           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
-           style='margin-left:auto;margin-right:auto;display: block;'/>
-    </a>
-  </div>
-<![endif]-->
 
-  <div class="container one-column page-post-detail">
-    <div class="headband"></div>
+<body class="post-template">
 
-    <div id="header" class="header">
-      <div class="header-inner">
-        <h1 class="site-meta">
-  <span class="logo-line-before"><i></i></span>
-  <a href="/" class="brand">
-      <span class="logo">
-        <i class="icon-logo"></i>
-      </span>
-      <span class="site-title">Xiaoke's Blog</span>
-  </a>
-  <span class="logo-line-after"><i></i></span>
-</h1>
-
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
-
-<div class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu ">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/">
-            <i class="menu-item-icon icon-home"></i> <br />
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about">
-            <i class="menu-item-icon icon-about"></i> <br />
-            关于
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives">
-            <i class="menu-item-icon icon-archives"></i> <br />
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags">
-            <i class="menu-item-icon icon-tags"></i> <br />
-            标签
-          </a>
-        </li>
-      
-    </ul>
-  
-
-  
-</div>
-
-
-      </div>
+  <header class="site-head"  style="background-image: url(//blog.ghost.org/content/images/2013/Nov/cover.png)" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="//blog.ghost.org/content/images/2013/Nov/bloglogo_1-1.png" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">Xiaoke's Blog</h1>
+            <h2 class="blog-description">未觉池塘春草梦，阶前梧叶已秋声</h2>
+        </div>
     </div>
+</header>
+  
 
-    <div id="main" class="main">
-      <div class="main-inner">
-        <div id="content" class="content">
-          
-
-  <div id="posts" class="posts-expand">
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2015-08-11T06:37:25.000Z" itemprop="datePublished">
+          2015-08-11
+      </time>
     
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              跟我一起写EventBus（四）
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2015-08-11
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <a href="/categories/Android-Java/">Android, Java</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/11/how-to-write-an-eventbus-part4/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/11/how-to-write-an-eventbus-part4/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        <h2 id="项目链接">项目链接</h2><ul>
+    
+    | 
+    <a href='/tags/Android/'>Android</a>,
+    
+    <a href='/tags/EventBus/'>EventBus</a>,
+    
+    <a href='/tags/HowTo/'>HowTo</a>,
+    
+    <a href='/tags/Java/'>Java</a>
+    
+    
+</span>
+    <h1 class="post-title">跟我一起写EventBus（四）</h1>
+    <section class="post-content">
+      <h2 id="u9879_u76EE_u94FE_u63A5"><a href="#u9879_u76EE_u94FE_u63A5" class="headerlink" title="项目链接"></a>项目链接</h2><ul>
 <li><a href="https://github.com/mcxiaoke/xBus" target="_blank" rel="external"><code>xBus</code> 项目GitHub地址</a></li>
 </ul>
-<h2 id="系列文章">系列文章</h2><ul>
+<h2 id="u7CFB_u5217_u6587_u7AE0"><a href="#u7CFB_u5217_u6587_u7AE0" class="headerlink" title="系列文章"></a>系列文章</h2><ul>
 <li><a href="/2015/08/03/how-to-write-an-eventbus-part1/"><code>跟我一起写EventBus（一）</code></a></li>
 <li><a href="/2015/08/04/how-to-write-an-eventbus-part2/"><code>跟我一起写EventBus（二）</code></a></li>
 <li><a href="/2015/08/10/how-to-write-an-eventbus-part3/"><code>跟我一起写EventBus（三）</code></a></li>
 </ul>
-<h2 id="概述">概述</h2><p>前面三部分我们已经实现了一个完整的 <code>EventBus</code> ，这一部分主要是优化和增强，包括事件类型模糊匹配和缓存优化，还有扩展功能和高级用法。</p>
-<h2 id="方法缓存">方法缓存</h2><p>Java中的反射虽然速度已经很快，但相对于正常的方法调用来说还是慢很多，使用注解也有不小的性能成本，但是通过使用缓存，一次查找多次使用，可以最大程度较少这个成本，实际使用中几乎可以忽略不计。</p>
+<h2 id="u6982_u8FF0"><a href="#u6982_u8FF0" class="headerlink" title="概述"></a>概述</h2><p>前面三部分我们已经实现了一个完整的 <code>EventBus</code> ，这一部分主要是优化和增强，包括事件类型模糊匹配和缓存优化，还有扩展功能和高级用法。</p>
+<h2 id="u65B9_u6CD5_u7F13_u5B58"><a href="#u65B9_u6CD5_u7F13_u5B58" class="headerlink" title="方法缓存"></a>方法缓存</h2><p>Java中的反射虽然速度已经很快，但相对于正常的方法调用来说还是慢很多，使用注解也有不小的性能成本，但是通过使用缓存，一次查找多次使用，可以最大程度较少这个成本，实际使用中几乎可以忽略不计。</p>
 <p>对于 <code>xBus</code> 来说，主要两种东西需要缓存，一是某个对象包含的事件接收器方法列表，一个是事件类型对应的泛类型列表。前者是在注册时需要查找，后者是在发送事件时需要查找。下面分开说明。</p>
-<h3 id="方法表缓存">方法表缓存</h3><h4 id="数据结构">数据结构</h4><p>实现原理其实非常简单，就是用一个Map保存对象和方法列表，但不是保存原始的 <code>Method</code> 对象，而是保存经过处理的 <code>MethodInfo</code> 对象，第三部分里提到过，这个类保存了一些解析出来的额外信息：比如事件类型和分发模式等，它的结构如下：</p>
+<h3 id="u65B9_u6CD5_u8868_u7F13_u5B58"><a href="#u65B9_u6CD5_u8868_u7F13_u5B58" class="headerlink" title="方法表缓存"></a>方法表缓存</h3><h4 id="u6570_u636E_u7ED3_u6784"><a href="#u6570_u636E_u7ED3_u6784" class="headerlink" title="数据结构"></a>数据结构</h4><p>实现原理其实非常简单，就是用一个Map保存对象和方法列表，但不是保存原始的 <code>Method</code> 对象，而是保存经过处理的 <code>MethodInfo</code> 对象，第三部分里提到过，这个类保存了一些解析出来的额外信息：比如事件类型和分发模式等，它的结构如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodInfo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> Method method;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> Class&lt;?&gt; targetType;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> Class&lt;?&gt; eventType;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> String name;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> Bus.EventMode mode;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>缓存方法的Map定义如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="keyword">static</span> Map&lt;String, Set&lt;MethodInfo&gt;&gt; sMethodCache =</span><br><span class="line">                <span class="keyword">new</span> ConcurrentHashMap&lt;String, Set&lt;MethodInfo&gt;&gt;();</span><br></pre></td></tr></table></figure>
 <p>使用static是为了跨多个<code>Bus</code>实例共享，鉴于大多数应用都是使用默认的实例，改成普通的非static变量也可以。</p>
-<h4 id="缓存流程">缓存流程</h4><p>调用 <code>register(target)</code> 时会检查方法表缓存，如果不存在，就通过 <code>MethodFinder</code> 查找对象的事件接收器方法，然后添加到缓存；如果存在缓存，直接忽略这一步。代码如下：</p>
+<h4 id="u7F13_u5B58_u6D41_u7A0B"><a href="#u7F13_u5B58_u6D41_u7A0B" class="headerlink" title="缓存流程"></a>缓存流程</h4><p>调用 <code>register(target)</code> 时会检查方法表缓存，如果不存在，就通过 <code>MethodFinder</code> 查找对象的事件接收器方法，然后添加到缓存；如果存在缓存，直接忽略这一步。代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">register</span><span class="params">(<span class="keyword">final</span> T target)</span> </span>&#123;</span><br><span class="line"><span class="comment">// 真正的实现代码在 addSubscribers() 里</span></span><br><span class="line">    addSubscribers(target);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">addSubscribers</span><span class="params">(<span class="keyword">final</span> Object target)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 这里找出target里包含的所有事件接收器方法</span></span><br><span class="line">    Set&lt;MethodInfo&gt; methods = getMethods(targetType);</span><br><span class="line">    <span class="keyword">for</span> (MethodInfo method : methods) &#123;</span><br><span class="line">        addSubscriber(subscriber);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查找方法和缓存的实现在这里</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> Set&lt;MethodInfo&gt; <span class="title">getMethods</span><span class="params">(Class&lt;?&gt; targetClass)</span> </span>&#123;</span><br><span class="line">    String cacheKey = targetClass.getName();</span><br><span class="line">    Set&lt;MethodInfo&gt; methods;</span><br><span class="line">    <span class="keyword">synchronized</span> (Cache.sMethodCache) &#123;</span><br><span class="line">        methods = Cache.sMethodCache.get(cacheKey);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (methods == <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="comment">// 如果不存在缓存， 就查找一次</span></span><br><span class="line">        methods = mMethodFinder.find(<span class="keyword">this</span>, targetClass);</span><br><span class="line">        <span class="keyword">synchronized</span> (Cache.sMethodCache) &#123;</span><br><span class="line">        <span class="comment">// 然后添加到方法表缓存</span></span><br><span class="line">            Cache.sMethodCache.put(cacheKey, methods);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> methods;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>简单的测试显示，包含一千个方法的类，一次查找最多可能需要差不多20毫秒，Android应用大多数Activity和Fragment类都不会有这么多方法，大部分情况消耗的时间都在5毫秒以下，详细的性能测试后续会补充。有了缓存之后，后续再进入同一个界面，不需要重复查找，消耗的时间就是零了。</p>
-<h3 id="事件类型缓存">事件类型缓存</h3><p>事件类型缓存主要用于事件的泛匹配。在 <code>post(event)</code> 方法中需要用到。</p>
+<h3 id="u4E8B_u4EF6_u7C7B_u578B_u7F13_u5B58"><a href="#u4E8B_u4EF6_u7C7B_u578B_u7F13_u5B58" class="headerlink" title="事件类型缓存"></a>事件类型缓存</h3><p>事件类型缓存主要用于事件的泛匹配。在 <code>post(event)</code> 方法中需要用到。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> &lt;E&gt; <span class="function"><span class="keyword">void</span> <span class="title">post</span><span class="params">(E event)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> Class&lt;?&gt; theEventType = event.getClass();</span><br><span class="line">    <span class="keyword">final</span> String cacheKey = theEventType.getName();</span><br><span class="line">    Set&lt;Class&lt;?&gt;&gt; eventTypes;</span><br><span class="line">    <span class="comment">// 检查缓存中是否存在</span></span><br><span class="line">    <span class="keyword">synchronized</span> (Cache.sEventTypeCache) &#123;</span><br><span class="line">        eventTypes = Cache.sEventTypeCache.get(cacheKey);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (eventTypes == <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="comment">// 如果没有缓存， 递归查找父类和接口，然后保存到缓存中</span></span><br><span class="line">        eventTypes = Helper.findSuperTypes(theEventType);</span><br><span class="line">        <span class="keyword">synchronized</span> (Cache.sEventTypeCache) &#123;</span><br><span class="line">            Cache.sEventTypeCache.put(cacheKey, eventTypes);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (Class&lt;?&gt; eventType : eventTypes) &#123;</span><br><span class="line">        postEventByType(event, eventType);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="事件类型模糊匹配">事件类型模糊匹配</h3><p>这个过程可以简单的理解为是 <code>event instanceof ClassType</code> 的过程，如果事件能强制转换为 <code>ClassType</code> 类型，就可以收到事件。举例，假设 <code>post(event)</code> 中 <code>event</code> 的类型是 ClassA，四个接收器方法的参数类型分别是Object，IClass, BaseClass，ClassA，ClassB，ClassC，那么前面四个方法都可以接收到事件，最后两个类型不匹配，收不到事件，代码示例如下。</p>
+<h3 id="u4E8B_u4EF6_u7C7B_u578B_u6A21_u7CCA_u5339_u914D"><a href="#u4E8B_u4EF6_u7C7B_u578B_u6A21_u7CCA_u5339_u914D" class="headerlink" title="事件类型模糊匹配"></a>事件类型模糊匹配</h3><p>这个过程可以简单的理解为是 <code>event instanceof ClassType</code> 的过程，如果事件能强制转换为 <code>ClassType</code> 类型，就可以收到事件。举例，假设 <code>post(event)</code> 中 <code>event</code> 的类型是 ClassA，四个接收器方法的参数类型分别是Object，IClass, BaseClass，ClassA，ClassB，ClassC，那么前面四个方法都可以接收到事件，最后两个类型不匹配，收不到事件，代码示例如下。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">IClass</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseClass</span> <span class="keyword">implements</span> <span class="title">IClass</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ClassA</span> <span class="keyword">extends</span> <span class="title">BaseClass</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ClassB</span> <span class="keyword">extends</span> <span class="title">ClassA</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ClassC</span> <span class="keyword">extends</span> <span class="title">ClassB</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EventMatchDemo</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postTestEvent</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">// 假设发送的事件类型是 ClassA </span></span><br><span class="line">        ClassA event=<span class="keyword">new</span> ClassA();</span><br><span class="line">        Bus.getDefault().post(event);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="annotation">@BusReceiver</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent0</span><span class="params">(Object event)</span></span>&#123;</span><br><span class="line">        <span class="comment">// 所有的类都是Object的子类，能收到</span></span><br><span class="line">       <span class="comment">// (event instanceof Object)==True  </span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="annotation">@BusReceiver</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent0</span><span class="params">(IClass event)</span></span>&#123;</span><br><span class="line">        <span class="comment">// ClassA是IClass的实现类，能收到</span></span><br><span class="line">       <span class="comment">// (event instanceof IClass)==True  </span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@BusReceiver</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent1</span><span class="params">(BaseClass event)</span></span>&#123;</span><br><span class="line">        <span class="comment">// ClassA是BaseClass的子类，能收到</span></span><br><span class="line">        <span class="comment">// (event instanceof BaseClass)==True  </span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@BusReceiver</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEventA</span><span class="params">(ClassA event)</span></span>&#123;</span><br><span class="line">        <span class="comment">// ClassA类型相同，能收到</span></span><br><span class="line">        <span class="comment">//  (event instanceof ClassA)==True  </span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@BusReceiver</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEventB</span><span class="params">(ClassB event)</span></span>&#123;</span><br><span class="line">        <span class="comment">// 收不到，ClassA 不能强制类型转换为ClassB</span></span><br><span class="line">        <span class="comment">// (event instanceof Object)==False  </span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@BusReceiver</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEventC</span><span class="params">(ClassC event)</span></span>&#123;</span><br><span class="line">        <span class="comment">// 收不到，ClassA 不能强制类型转换为ClassC</span></span><br><span class="line">        <span class="comment">// (event instanceof Object)==False  </span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>简单的说，发送一个事件 <code>post(event)</code> ，如果 <code>event</code> 对象能转换为 <code>onEvent(SomeType e)</code> 中参数 <code>SomeType</code> 的类型，那么这个方法就能收到事件，否则收不到，遵循Java中一般的类型转换原则。</p>
-<h3 id="扩展接口">扩展接口</h3><h4 id="MethodFinder">MethodFinder</h4><p>首先是方法查找接口，默认支持注解和方法名两种方式，实现 <code>MethodFinder</code> ，可以设置自定义的方法查找策略。</p>
+<h3 id="u6269_u5C55_u63A5_u53E3"><a href="#u6269_u5C55_u63A5_u53E3" class="headerlink" title="扩展接口"></a>扩展接口</h3><h4 id="MethodFinder"><a href="#MethodFinder" class="headerlink" title="MethodFinder"></a>MethodFinder</h4><p>首先是方法查找接口，默认支持注解和方法名两种方式，实现 <code>MethodFinder</code> ，可以设置自定义的方法查找策略。</p>
 <p><code>MethodFinder</code> 接口非常简单，返回给定的对象中符合某些条件的方法列表。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MethodFinder</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">Set&lt;MethodInfo&gt; <span class="title">find</span><span class="params">(<span class="keyword">final</span> Bus bus, <span class="keyword">final</span> Class&lt;?&gt; targetClass)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="其它方法">其它方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Bus <span class="title">setDebug</span><span class="params">(<span class="keyword">final</span> <span class="keyword">boolean</span> debug)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> Bus <span class="title">setMethodFinder</span><span class="params">(<span class="keyword">final</span> MethodFinder finder)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> Bus <span class="title">setStrictMode</span><span class="params">(<span class="keyword">final</span> <span class="keyword">boolean</span> strictMode)</span></span>;</span><br></pre></td></tr></table></figure>
-<h2 id="总结">总结</h2><p>到这里，我们实现了一个完整的 <code>EventBus</code> ，它已经可以用在实际项目中。下一部分，也是最后一部分会介绍它的使用方法和一些自定义配置。</p>
+<h4 id="u5176_u5B83_u65B9_u6CD5"><a href="#u5176_u5B83_u65B9_u6CD5" class="headerlink" title="其它方法"></a>其它方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Bus <span class="title">setDebug</span><span class="params">(<span class="keyword">final</span> <span class="keyword">boolean</span> debug)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> Bus <span class="title">setMethodFinder</span><span class="params">(<span class="keyword">final</span> MethodFinder finder)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> Bus <span class="title">setStrictMode</span><span class="params">(<span class="keyword">final</span> <span class="keyword">boolean</span> strictMode)</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="u603B_u7ED3"><a href="#u603B_u7ED3" class="headerlink" title="总结"></a>总结</h2><p>到这里，我们实现了一个完整的 <code>EventBus</code> ，它已经可以用在实际项目中。下一部分，也是最后一部分会介绍它的使用方法和一些自定义配置。</p>
 
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Android/"> #Android </a>
-          
-            <a href="/tags/EventBus/"> #EventBus </a>
-          
-            <a href="/tags/HowTo/"> #HowTo </a>
-          
-            <a href="/tags/Java/"> #Java </a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-prev post-nav-item">
-            
-          </div>
-
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2015/08/10/how-to-write-an-eventbus-part3/">跟我一起写EventBus（三）</a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </div>
-  </div>
-
-
-
-    <div class="post-spread">
-      
-    </div>
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>mcxiaoke</h4>
+    <p>A designer, developer and entrepreneur. Spends his time travelling the world with a bag of kites. Likes journalism and publishing platforms.</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?url=http://blog.mcxiaoke.com/2015/08/11/how-to-write-an-eventbus-part4/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.mcxiaoke.com/2015/08/11/how-to-write-an-eventbus-part4/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://blog.mcxiaoke.com/2015/08/11/how-to-write-an-eventbus-part4/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/2015/08/10/how-to-write-an-eventbus-part3/">
+        跟我一起写EventBus（三） →
+    </a>
+    
+</nav>
+  <div id="comment" class="comments-area">
+    <h1 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h1>
 
     
-      <div class="comments" id="comments">
-        
-          <div class="ds-thread" data-thread-key="2015/08/11/how-to-write-an-eventbus-part4/"
-               data-title="跟我一起写EventBus（四）" data-url="http://blog.mcxiaoke.com/2015/08/11/how-to-write-an-eventbus-part4/">
-          </div>
-        
-      </div>
-    
-  </div>
-
-
-        </div>
-
-        
-      </div>
-
-
-      
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <div class="site-overview">
-        <div class="site-author motion-element">
-          <img class="site-author-image" src="/images/avatar.jpg" alt="mcxiaoke" />
-          <p class="site-author-name">mcxiaoke</p>
-        </div>
-        <p class="site-description motion-element">零碎的笔记</p>
-        <div class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">23</span>
-              <span class="site-state-item-name">日志</span>
-            </a>
-          </div>
-
-          <div class="site-state-item site-state-categories">
-            
-              <span class="site-state-item-count">9</span>
-              <span class="site-state-item-name">分类</span>
-              
-          </div>
-
-          <div class="site-state-item site-state-tags">
-            <a href="/tags">
-              <span class="site-state-item-count">27</span>
-              <span class="site-state-item-name">标签</span>
-              </a>
-          </div>
-
-        </div>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-            
-              <span class="links-of-author-item">
-              <a href="https://github.com/mcxiaoke" target="_blank">GitHub</a>
-            </span>
-            
-              <span class="links-of-author-item">
-              <a href="http://www.douban.com/people/doiv" target="_blank">DouBan</a>
-            </span>
-            
-              <span class="links-of-author-item">
-              <a href="http://mcxiaoke.com/" target="_blank">Home</a>
-            </span>
-            
-          
-        </div>
-
-        
-        
-          <div class="cc-license motion-element">
-            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
-              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
-            </a>
-          </div>
-        
-
-        <div class="links-of-author motion-element">
-          
-            <p class="site-author-name">Links</p>
-            
-              <span class="links-of-author-item">
-              <a href="http://moment.douban.com/app/" target="_blank">豆瓣一刻</a>
-              </span>
-            
-          
-        </div>
-        
-      </div>
-
-      
-        <div class="post-toc-wrap sidebar-panel-active">
-          <div class="post-toc-indicator-top post-toc-indicator"></div>
-          <div class="post-toc">
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#项目链接"><span class="nav-number">1.</span> <span class="nav-text">项目链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系列文章"><span class="nav-number">2.</span> <span class="nav-text">系列文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">3.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法缓存"><span class="nav-number">4.</span> <span class="nav-text">方法缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法表缓存"><span class="nav-number">4.1.</span> <span class="nav-text">方法表缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数据结构"><span class="nav-number">4.1.1.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缓存流程"><span class="nav-number">4.1.2.</span> <span class="nav-text">缓存流程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件类型缓存"><span class="nav-number">4.2.</span> <span class="nav-text">事件类型缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件类型模糊匹配"><span class="nav-number">4.3.</span> <span class="nav-text">事件类型模糊匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展接口"><span class="nav-number">4.4.</span> <span class="nav-text">扩展接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MethodFinder"><span class="nav-number">4.4.1.</span> <span class="nav-text">MethodFinder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其它方法"><span class="nav-number">4.4.2.</span> <span class="nav-text">其它方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
-            
-          </div>
-          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
-        </div>
-      
-
-    </div>
-  </div>
-
-
-    </div>
-
-    <div id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">
-  
-  &copy; &nbsp;  2007 - 
-  2015
-  <span class="with-love">
-    <i class="icon-heart"></i>
-  </span>
-  <span class="author">mcxiaoke</span>
 </div>
-
-<div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
+</main>
 
 
-
-      </div>
-    </div>
-
-    <div class="back-to-top"></div>
+  
+<footer class="site-footer">
+  
+  <a class="subscribe icon-feed" href="atom.xml"><span class="tooltip">Subscribe!</span></a>
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Xiaoke's Blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
   </div>
+</footer>
 
-  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
-  
-  
-
-  
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
 
 
-  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
-  
+<script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-49960399-2']);
+    _gaq.push(['_trackPageview']);
 
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
-
-  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
-
-
-
-  <script type="text/javascript" src="/js/search-toggle.js"></script>
-
-  
-  
-<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
-
-
-<script type="text/javascript" id="sidebar.toc.highlight">
-  $(document).ready(function () {
-    var tocSelector = '.post-toc';
-    var $tocSelector = $(tocSelector);
-    var activeCurrentSelector = '.active-current';
-
-    $tocSelector
-      .on('activate.bs.scrollspy', function () {
-        var $currentActiveElement = $(tocSelector + ' .active').last();
-
-        removeCurrentActiveClass();
-        $currentActiveElement.addClass('active-current');
-
-        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
-      })
-      .on('clear.bs.scrollspy', function () {
-        removeCurrentActiveClass();
-      });
-
-    function removeCurrentActiveClass () {
-      $(tocSelector + ' ' + activeCurrentSelector)
-        .removeClass(activeCurrentSelector.substring(1));
-    }
-
-    function processTOC () {
-      getTOCMaxHeight();
-      toggleTOCOverflowIndicators();
-    }
-
-    function getTOCMaxHeight () {
-      var $sidebarInner = $('.sidebar-inner');
-      var height = $('.sidebar').height() -
-                   $tocSelector.position().top -
-                   $('.post-toc-indicator-bottom').height();
-
-      $tocSelector.css('height', height);
-
-      return height;
-    }
-
-    function toggleTOCOverflowIndicators () {
-      tocOverflowIndicator(
-        '.post-toc-indicator-top',
-        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
-      );
-
-      tocOverflowIndicator(
-        '.post-toc-indicator-bottom',
-        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
-      )
-    }
-
-    $(document).on('sidebar.didShow', function () {
-      processTOC();
-    });
-
-    $('body').scrollspy({ target: tocSelector });
-    $(window).on('resize', function () {
-      if ( $('.sidebar').hasClass('sidebar-active') ) {
-        processTOC();
-      }
-    });
-
-    onScroll($tocSelector);
-
-    function onScroll (element) {
-      element.on('mousewheel DOMMouseScroll', function (event) {
-          var oe = event.originalEvent;
-          var delta = oe.wheelDelta || -oe.detail;
-          var self = this;
-
-          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
-          event.preventDefault();
-
-          toggleTOCOverflowIndicators();
-      });
-    }
-
-    function tocOverflowIndicator (indicator, action) {
-      $(indicator).velocity('stop').velocity({
-        opacity: action === 'show' ? 0.4 : 0
-      }, { duration: 100 });
-    }
-
-  });
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
 </script>
 
 
-  <script type="text/javascript" id="sidebar.nav">
-    $(document).ready(function () {
-      var html = $('html');
 
-      $('.sidebar-nav li').on('click', function () {
-        var item = $(this);
-        var activeTabClassName = 'sidebar-nav-active';
-        var activePanelClassName = 'sidebar-panel-active';
-        if (item.hasClass(activeTabClassName)) {
-          return;
-        }
-
-        var currentTarget = $('.' + activePanelClassName);
-        var target = $('.' + item.data('target'));
-
-        currentTarget.velocity('transition.slideUpOut', 200, function () {
-          target
-            .velocity('stop')
-            .velocity('transition.slideDownIn', 200)
-            .addClass(activePanelClassName);
-        });
-
-        item.siblings().removeClass(activeTabClassName);
-        item.addClass(activeTabClassName);
-      });
-
-      $('.post-toc a').on('click', function (e) {
-        e.preventDefault();
-        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
-        html.velocity('stop').velocity('scroll', {
-          offset: offset  + 'px',
-          mobileHA: false
-        });
-      });
-
-      // Expand sidebar on post detail page by default, when post has a toc.
-      var $tocContent = $('.post-toc-content');
-      if (isDesktop() && CONFIG.sidebar === 'post') {
-        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
-          displaySidebar();
-        }
-      }
-    });
-  </script>
-
-
-
-
-  <script type="text/javascript">
-    $(document).ready(function () {
-      if (CONFIG.sidebar === 'always') {
-        displaySidebar();
-      }
-    });
-  </script>
-
-  
-
-  
-  
-
-  
-    
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"mcxiaoke"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
-
-
-  
-  
-  <script type="text/javascript" src="/js/analytics_google-analytics.js?v=0.4.3"></script>
 
 
 </body>

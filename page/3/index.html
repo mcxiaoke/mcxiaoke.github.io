@@ -1,644 +1,189 @@
-<!doctype html>
-<html class="theme-next use-motion theme-next-mist">
+<!DOCTYPE html>
+<html>
+
 <head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>Xiaoke&#39;s Blog</title>
+  <meta name="description" content="未觉池塘春草梦，阶前梧叶已秋声" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+
+  <meta name="generator" content="Xiaoke's Blog">
+
+  
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="atom.xml">
+  
   
 
-<meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+  
+</head>
 
 
+<body class="home-template">
+
+  <header class="site-head"  style="background-image: url(//blog.ghost.org/content/images/2013/Nov/cover.png)" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="//blog.ghost.org/content/images/2013/Nov/bloglogo_1-1.png" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">Xiaoke's Blog</h1>
+            <h2 class="blog-description">未觉池塘春草梦，阶前梧叶已秋声</h2>
+        </div>
+    </div>
+</header>
+  
+<main class="content" role="main">
+  
+  <article class="post">
+    <header class="post-header">
+      <span class="post-meta">
+      <time datetime="2010-10-10T06:19:00.000Z" itemprop="datePublished">
+          2010-10-10
+      </time>
+    
+    
+    | 
+    <a href='/tags/Windows/'>Windows</a>
+    
+    
+</span>
+      <h2 class="post-title"><a href="/2010/10/10/windows-7-users-folder-robocopy/">转移Windows的Users文件夹</a></h2>
+    </header>
+    <section class="post-excerpt">
+      <p>
+      
+        转移用户文件夹，默认是在C:Users
+安装系统时可用在安装Win7的过程中，要求输入用户名及密码的时候，先不如输入任何信息，按“Shift+F10”呼出命令行窗口，输入以下命令：  
+123robocopy "C:Users" "D:Users" /E /COPYALL /XJ  rmdir "C:Users" /S /Q  mklink /J "C:Users" "D:Users"
+而后关闭命令行窗口，继续安装直至完成。
+安装完成后
+      
+      </p>
+      
+      <p>
+          <a href="/2010/10/10/windows-7-users-folder-robocopy/" class="excerpt-link">Read More...</a>
+      </p>
+      
+    </section>
+  </article>
+  
+  <article class="post">
+    <header class="post-header">
+      <span class="post-meta">
+      <time datetime="2010-10-09T03:00:00.000Z" itemprop="datePublished">
+          2010-10-09
+      </time>
+    
+    
+    | 
+    <a href='/tags/Android/'>Android</a>,
+    
+    <a href='/tags/Handler/'>Handler</a>
+    
+    
+</span>
+      <h2 class="post-title"><a href="/2010/10/09/android-handler/">Android Handler使用笔记</a></h2>
+    </header>
+    <section class="post-excerpt">
+      <p>
+      
+        最近项目里要用到后台任务和多线程，看了一些资料，记录一下重点备忘。
+Handler可用于在主线程中处理消息队列（MessageQueue），处理其它线程发送过来的Message，例如根据后台任务的处理过程更新前台UI。Handler类的使用过程一般是：  
+
+主线程，即UI线程中重写handleMessage方法，处理消息队列  
+后台线程中使用sendMessage发送消息
+
+下面是一个简单的例子：  
+123456789101112
+      
+      </p>
+      
+      <p>
+          <a href="/2010/10/09/android-handler/" class="excerpt-link">Read More...</a>
+      </p>
+      
+    </section>
+  </article>
+  
+  <article class="post">
+    <header class="post-header">
+      <span class="post-meta">
+      <time datetime="2010-05-12T16:19:00.000Z" itemprop="datePublished">
+          2010-05-13
+      </time>
+    
+    
+    | 
+    <a href='/tags/MinGW/'>MinGW</a>,
+    
+    <a href='/tags/QT/'>QT</a>,
+    
+    <a href='/tags/Windows/'>Windows</a>
+    
+    
+</span>
+      <h2 class="post-title"><a href="/2010/05/13/compile-qt-use462-vs-or-mingw/">Windows下编译QT 4.6.2</a></h2>
+    </header>
+    <section class="post-excerpt">
+      <p>
+      
+        编译准备下载NOKIA网站上的QT SDK，解压或安装到相关目录。本文以QT4.6.2为例，下载地址：http://get.qt.nokia.com/qt/source/qt-win-opensource-4.6.2-vs2008.exe
+或者直接下载源码：http://get.qt.nokia.com/qt/source/qt-everywhere-opensource-src-4.6.2.zip
+下载后安装好的目录结构为（假设安装到
+      
+      </p>
+      
+      <p>
+          <a href="/2010/05/13/compile-qt-use462-vs-or-mingw/" class="excerpt-link">Read More...</a>
+      </p>
+      
+    </section>
+  </article>
+  
+  <nav class="pagination" role="pagination">
+    <a class="newer-posts" href="/page/2/">← Newer Posts</a>
+    <span class="page-number">Page 3 of 3</span>
+    
+  </nav>
+</main>
 
 
+  
+<footer class="site-footer">
+  
+  <a class="subscribe icon-feed" href="atom.xml"><span class="tooltip">Subscribe!</span></a>
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Xiaoke's Blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
 
 
-  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+<script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-49960399-2']);
+    _gaq.push(['_trackPageview']);
 
-
-
-
-<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
-
-
-    <meta name="description" content="零碎的笔记" />
-
-
-
-  <meta name="keywords" content="Hexo,next" />
-
-
-
-
-
-  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
-
-
-
-<script type="text/javascript" id="hexo.configuration">
-  var CONFIG = {
-    scheme: 'Mist',
-    analytics: {
-      google: 'UA-49960399-2'
-    },
-    sidebar: 'hide'
-  };
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
 </script>
 
 
 
-
-  <title> Xiaoke's Blog </title>
-</head>
-
-<body>
-  <!--[if lte IE 8]>
-  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
-    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
-           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
-           style='margin-left:auto;margin-right:auto;display: block;'/>
-    </a>
-  </div>
-<![endif]-->
-
-  <div class="container one-column 
-   page-home 
-">
-    <div class="headband"></div>
-
-    <div id="header" class="header">
-      <div class="header-inner">
-        <h1 class="site-meta">
-  <span class="logo-line-before"><i></i></span>
-  <a href="/" class="brand">
-      <span class="logo">
-        <i class="icon-logo"></i>
-      </span>
-      <span class="site-title">Xiaoke's Blog</span>
-  </a>
-  <span class="logo-line-after"><i></i></span>
-</h1>
-
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
-
-<div class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu ">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/">
-            <i class="menu-item-icon icon-home"></i> <br />
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about">
-            <i class="menu-item-icon icon-about"></i> <br />
-            关于
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives">
-            <i class="menu-item-icon icon-archives"></i> <br />
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags">
-            <i class="menu-item-icon icon-tags"></i> <br />
-            标签
-          </a>
-        </li>
-      
-    </ul>
-  
-
-  
-</div>
-
-
-      </div>
-    </div>
-
-    <div id="main" class="main">
-      <div class="main-inner">
-        <div id="content" class="content">
-          
-  <div id="posts" class="posts-expand">
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2010/10/10/windows-7-users-folder-robocopy/">
-                转移Windows的Users文件夹
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2010-10-10
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <a href="/categories/Windows/">Windows</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2010/10/10/windows-7-users-folder-robocopy/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2010/10/10/windows-7-users-folder-robocopy/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>转移用户文件夹，默认是在C:Users</p>
-<h2 id="安装系统时可用">安装系统时可用</h2><p>在安装Win7的过程中，要求输入用户名及密码的时候，先不如输入任何信息，按“Shift+F10”呼出命令行窗口，输入以下命令：  </p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">robocopy <span class="string">"C:Users"</span> <span class="string">"D:Users"</span> <span class="regexp">/E /</span>COPYALL /XJ  </span><br><span class="line">rmdir <span class="string">"C:Users"</span> <span class="regexp">/S /</span>Q  </span><br><span class="line">mklink /J <span class="string">"C:Users"</span> <span class="string">"D:Users"</span></span><br></pre></td></tr></table></figure>
-<p>而后关闭命令行窗口，继续安装直至完成。</p>
-<h2 id="安装完成后">安装完成后</h2><ol>
-<li>关闭所有应用程序；  </li>
-<li>在我的电脑（计算机）上点右键，选择管理，进入计算机管理，展开本地用户和组选项；  </li>
-<li>鼠标点击“Administrator”，选择属性，而后在随后的对话框中去掉“帐户已禁用”之前的勾；  </li>
-<li>注销当前用户（注意，不是“切换用户”），而后以“Administrator”登录  </li>
-<li><p>打开命令行窗口，输入以下命令：  </p>
- <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">robocopy <span class="string">"C:Users"</span> <span class="string">"D:Users"</span> <span class="regexp">/E /</span>COPYALL <span class="regexp">/XJ /</span>XD <span class="string">"C:UsersAdministrator"</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>注销Administrator，重新用你的用户名登录Windows<br>7，而后到“计算机管理器”里禁用Administrator；  </p>
-</li>
-<li>以管理员身份打开一个DOS窗口，输入以下命令：   <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rmdir <span class="string">"C:Users"</span> <span class="regexp">/S /</span>Q  </span><br><span class="line">mklink /J <span class="string">"C:Users"</span> <span class="string">"D:Users"</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ol>
-<li>完成</li>
-</ol>
-<p>robocopy是Windows 7自带的一个很强大的工具，XP用户可在此下载：<br><a href="http://www.brothersoft.com/robocopy-gui-105335.html" target="_blank" rel="external">RobocopyGUI</a>  </p>
-<p>微软MSDN的介绍：<a href="http://technet.microsoft.com/en-us/library/cc733145(WS.10).aspx" target="_blank" rel="external">http://technet.microsoft.com/en-us/library/cc733145(WS.10).aspx</a><br>Robocopy的介绍：<a href="http://en.wikipedia.org/wiki/Robocopy" target="_blank" rel="external">http://en.wikipedia.org/wiki/Robocopy</a><br>Robocopy的用法：<a href="http://ss64.com/nt/robocopy.html" target="_blank" rel="external">http://ss64.com/nt/robocopy.html</a>  </p>
-<p>Robocopy的教程两篇：<br><a href="http://marui.blog.51cto.com/1034148/296473" target="_blank" rel="external">http://marui.blog.51cto.com/1034148/296473</a><br><a href="http://marui.blog.51cto.com/1034148/297397" target="_blank" rel="external">http://marui.blog.51cto.com/1034148/297397</a></p>
-<p>Windows 7完整安装实例：<a href="http://isouth.org/archives/294.html" target="_blank" rel="external">http://isouth.org/archives/294.html</a></p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2010/10/09/android-handler/">
-                Android Handler使用笔记
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2010-10-09
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <a href="/categories/Android/">Android</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2010/10/09/android-handler/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2010/10/09/android-handler/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>最近项目里要用到后台任务和多线程，看了一些资料，记录一下重点备忘。</p>
-<p>Handler可用于在主线程中处理消息队列（MessageQueue），处理其它线程发送过来的Message，例如根据后台任务的处理过程更新前台UI。<br>Handler类的使用过程一般是：  </p>
-<ol>
-<li>主线程，即UI线程中重写handleMessage方法，处理消息队列  </li>
-<li>后台线程中使用sendMessage发送消息</li>
-</ol>
-<p>下面是一个简单的例子：  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.app.Activity;  </span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;  </span><br><span class="line"><span class="keyword">import</span> android.os.Handler;  </span><br><span class="line"><span class="keyword">import</span> android.os.Message;  </span><br><span class="line"><span class="keyword">import</span> android.widget.TextView;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**  </span><br><span class="line">* <span class="doctag">@author</span> mcxiaoke  </span><br><span class="line">* <span class="doctag">@date</span> 2010.10.09  </span><br><span class="line">* <span class="doctag">@description</span>: Handler Test  </span><br><span class="line">*  </span><br><span class="line">*/</span>  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestHandler</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;  </span><br><span class="line">TextView label;  </span><br><span class="line">Handler myHandler;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;  </span><br><span class="line"><span class="keyword">super</span>.onCreate(savedInstanceState);  </span><br><span class="line">setContentView(R.layout.main);  </span><br><span class="line">label = (TextView) findViewById(R.id.label);  </span><br><span class="line">myHandler = <span class="keyword">new</span> Handler() &#123;  </span><br><span class="line"><span class="annotation">@Override</span>  </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;  </span><br><span class="line"><span class="keyword">super</span>.handleMessage(msg);  </span><br><span class="line">Bundle b = msg.getData();  </span><br><span class="line">String color = b.getString(<span class="string">"text"</span>);  </span><br><span class="line">TestHandler.<span class="keyword">this</span>.label.append(color);  </span><br><span class="line">&#125;  </span><br><span class="line">&#125;;  </span><br><span class="line">MyThread m = <span class="keyword">new</span> MyThread();  </span><br><span class="line"><span class="keyword">new</span> Thread(m).start();  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;  </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;  </span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i &amp;lt; <span class="number">20</span>; i++) &#123;  </span><br><span class="line"><span class="keyword">try</span> &#123;  </span><br><span class="line">Thread.sleep(<span class="number">2000</span>);  </span><br><span class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;  </span><br><span class="line">e.printStackTrace();  </span><br><span class="line">&#125;  </span><br><span class="line">Message msg = <span class="keyword">new</span> Message();  </span><br><span class="line">Bundle b = <span class="keyword">new</span> Bundle();  </span><br><span class="line">b.putString(<span class="string">"text"</span>, <span class="string">"nMessage "</span>+i+<span class="string">"..."</span>);  </span><br><span class="line">msg.setData(b);  </span><br><span class="line">myHandler.sendMessage(msg);  </span><br><span class="line">&#125;  </span><br><span class="line">&#125;  </span><br><span class="line">&#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>更完整的例子可以参考：<a href="http://www.javaeye.com/topic/435147" target="_blank" rel="external">http://www.javaeye.com/topic/435147</a></p>
-<p>推荐代码高亮插件：<br><a href="http://wordpress.org/extend/plugins/syntax-highlighter-and-code-prettifier/" target="_blank" rel="external">Syntax Highlighter and Code Colorizer for Wordpress</a></p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2010/05/13/compile-qt-use462-vs-or-mingw/">
-                Windows下编译QT 4.6.2
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2010-05-13
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <a href="/categories/Develop/">Develop</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2010/05/13/compile-qt-use462-vs-or-mingw/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2010/05/13/compile-qt-use462-vs-or-mingw/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="编译准备">编译准备</h3><p>下载NOKIA网站上的QT SDK，解压或安装到相关目录。<br>本文以QT<br>4.6.2为例，下载地址：<br><a href="http://get.qt.nokia.com/qt/source/qt-win-opensource-4.6.2-vs2008.exe" target="_blank" rel="external">http://get.qt.nokia.com/qt/source/qt-win-opensource-4.6.2-vs2008.exe</a></p>
-<p>或者直接下载源码：<br><a href="http://get.qt.nokia.com/qt/source/qt-everywhere-opensource-src-4.6.2.zip" target="_blank" rel="external">http://get.qt.nokia.com/qt/source/qt-everywhere-opensource-src-4.6.2.zip</a></p>
-<p>下载后安装好的目录结构为（假设安装到D:QT）：  </p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">├─share  </span><br><span class="line">├─lib  </span><br><span class="line">├─<span class="keyword">bin </span> </span><br><span class="line">├─mingw  </span><br><span class="line">└─qt  </span><br><span class="line">    ├─translations（QT语言文件目录）  </span><br><span class="line">    ├─tools（QT相关工具源码目录）  </span><br><span class="line">    ├─src（源代码目录）  </span><br><span class="line">    ├─qmake（qmake源代码目录）  </span><br><span class="line">    ├─plugins（图形，数据库等插件目录）  </span><br><span class="line">    ├─mkspecs（平台配置文件）  </span><br><span class="line">    ├─lib（库文件）  </span><br><span class="line">    ├─<span class="preprocessor">include</span>（头文件）  </span><br><span class="line">    ├─examples（示例程序）  </span><br><span class="line">    ├─doc（文档）  </span><br><span class="line">    ├─demos（演示程序）  </span><br><span class="line">    ├─config.tests  </span><br><span class="line">    ├─<span class="keyword">bin（命令行工具） </span> </span><br><span class="line">    └─qtc-debugging-helper</span><br></pre></td></tr></table></figure>
-<p>configure配置工具在qt目录，以下假设QTDIR=D:QTSDKqt，编译前最好清空lib,demos,examples,docs四个目录，配置完成后在这几个目录下放一个空的Makefile文件，避免make时报错。</p>
-<h3 id="VS2005动态编译">VS2005动态编译</h3><p>1.设置VS2005的环境变量<br>2.设置目标平台<br>set QMAKESPEC=win32-msvc2005<br>3.进入QTDIR目录运行配置，生成Makefile文件 </p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">configure -platform win32-msvc2005 -<span class="operator"><span class="keyword">release</span> -opensource -shared -<span class="keyword">fast</span></span><br><span class="line">-qt-<span class="keyword">sql</span>-sqlite -<span class="keyword">plugin</span>-<span class="keyword">sql</span>-sqlite -<span class="keyword">no</span>-qt3support  -qt-zlib -qt-gif</span><br><span class="line">-qt-libpng -qt-libmng -qt-libtiff -qt-libjpeg -<span class="keyword">no</span>-webkit</span><br><span class="line">-qt-style-windowsxp -qt-style-windowsvista</span></span><br></pre></td></tr></table></figure>
-<p>4.运行nmake /I /K（附带/I /K<br>选项可以避免出现错误时编译自动终止，用于跳过错误继续编译其它文件）</p>
-<p>经过这样编译的Qt库不依赖mingwm10.dll,libgcc_s_dw2-1.dll，但依赖Qt库的Dll文件和微软的CRT运行时库，使用此Qt库编译Windows平台下的程序，发布时需带上用到的Qt链接库Dll文件和微软的CRT运行时库Dll文件。</p>
-<h2 id="VS2005静态编译">VS2005静态编译</h2><p>（VS2008编译同理，启动相应的命令行，设置相应的目标平台，修改相应的配置文件）  </p>
-<p>1.设置VS2005的环境变量<br>2.设置目标平台<br>    set QMAKESPEC=win32-msvc2005<br>3.修改mkspecs/win32-msvc2005目录下的配置文件qmake.conf<br>将下面两行：  </p>
-<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">QMAKE<span class="command">\_</span>CFLAGS<span class="command">\_</span>RELEASE    = -O2 -MD  </span><br><span class="line">QMAKE<span class="command">\_</span>CFLAGS<span class="command">\_</span>DEBUG      = -Zi -MDd</span><br></pre></td></tr></table></figure>
-<p>修改为：  </p>
-<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">QMAKE<span class="command">\_</span>CFLAGS<span class="command">\_</span>RELEASE    = -O2 -MT  </span><br><span class="line">QMAKE<span class="command">\_</span>CFLAGS<span class="command">\_</span>DEBUG      = -Zi -MTd</span><br></pre></td></tr></table></figure>
-<p>（D是指dynamic，T是指static，d是指debug）<br>4.进入QTDIR目录，运行配置，生成Makefile文件  </p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">set</span> QMAKESPEC=win32-msvc2005  </span><br><span class="line">configure -platform win32-msvc2005 -<span class="keyword">release</span> -<span class="keyword">no</span>-exceptions -opensource</span><br><span class="line">-static -<span class="keyword">fast</span> -qt-<span class="keyword">sql</span>-sqlite -<span class="keyword">plugin</span>-<span class="keyword">sql</span>-sqlite -<span class="keyword">no</span>-qt3support  -qt-zlib</span><br><span class="line">-qt-gif -qt-libpng -qt-libmng -qt-libtiff -qt-libjpeg -<span class="keyword">no</span>-webkit</span><br><span class="line">-qt-style-windowsxp -qt-style-windowsvista</span></span><br></pre></td></tr></table></figure>
-<p>5.运行运行nmake /I /K</p>
-<p>经过这样编译的Qt库不依赖于任何Dll文件（如微软的CRT运行时库），使用此Qt库编译Windows平台下的程序发布时不需要附带任何额外的Dll文件。</p>
-<h2 id="MinGW静态编译">MinGW静态编译</h2><p>1.设置MinGW的环境变量<br>2.设置目标平台<br>set QMAKESPEC=win32-g++<br>3.修改mkspecs/win32-g++目录下的配置文件qmake.conf<br>将下面一行：  </p>
-<figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="constant">Q</span>MAKE\_LFLAGS = -<span class="literal">enable</span>-stdcall-fixup -<span class="constant">Wl</span>,-<span class="literal">enable</span>-auto-<span class="keyword">import</span></span><br><span class="line">-<span class="constant">Wl</span>,-<span class="literal">enable</span>-runtime-pseudo-reloc</span><br></pre></td></tr></table></figure>
-<p>修改为：  </p>
-<figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="constant">Q</span>MAKE\_LFLAGS = -static -<span class="literal">enable</span>-stdcall-fixup -<span class="constant">Wl</span>,-<span class="literal">enable</span>-auto-<span class="keyword">import</span></span><br><span class="line">-<span class="constant">Wl</span>,-<span class="literal">enable</span>-runtime-pseudo-reloc</span><br></pre></td></tr></table></figure>
-<p>然后将下面一行：  </p>
-<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QMAKE<span class="command">\_</span>LFLAGS<span class="command">\_</span>DLL        = -shared</span><br></pre></td></tr></table></figure>
-<p>修改为：  </p>
-<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QMAKE<span class="command">\_</span>LFLAGS<span class="command">\_</span>DLL        = -static</span><br></pre></td></tr></table></figure>
-<p>4.QTDIR目录，运行配置，生成Makefile文件  </p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">set</span> QMAKESPEC=win32-g++  </span><br><span class="line">configure -platform win32-g++ -<span class="keyword">release</span> -<span class="keyword">no</span>-exceptions -opensource</span><br><span class="line">-static -<span class="keyword">fast</span> -qt-<span class="keyword">sql</span>-sqlite -<span class="keyword">plugin</span>-<span class="keyword">sql</span>-sqlite -<span class="keyword">no</span>-qt3support  -qt-zlib</span><br><span class="line">-qt-gif -qt-libpng -qt-libmng -qt-libtiff -qt-libjpeg -<span class="keyword">no</span>-webkit</span><br><span class="line">-qt-style-windowsxp -qt-style-windowsvista</span></span><br></pre></td></tr></table></figure>
-<p>5.运行运行mingw32-make -i -k（-i -k选项的含义与上面nmake的相同）</p>
-<p> 经过这样编译的Qt库，不依赖任何Dll文件（如mingwm10.dll,libgcc_s_dw2-1.dll），使用此Qt库编译的Windows平台下的程序发布时不需要附带任何额外的Dll文件。</p>
-<h2 id="编译事项说明">编译事项说明</h2><p>编译完成后可以删除bin目录中所有不是当前编译日期的文件。</p>
-<p>建议编译前移除examples和demos文件夹的所有文件，避免重编译这两个文件夹，加快编译速度。</p>
-<p>另外，编译命令请根据自己的实际情况配置，上面我的配置是（以VS2005静态编译为例）： </p>
-<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">platform win32-msvc2005 目标平台  </span><br><span class="line"></span>-<span class="ruby">release 关闭调试信息  </span><br><span class="line"></span>-<span class="ruby">no-exceptions 除去异常支持  </span><br><span class="line"></span>-<span class="ruby">opensource 开源版  </span><br><span class="line"></span>-<span class="ruby">static 创建静态库  </span><br><span class="line"></span>-<span class="ruby">fast</span></span><br></pre></td></tr></table></figure>
-<p>快速配置，只生成Qt库文件及子目录的Makefile文件，其它的Makefile文件后面再使用qmake生成  </p>
-<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">qt-sql-sqlite <span class="constant">SQLite</span>驱动支持  </span><br><span class="line"></span>-<span class="ruby">plugin-sql-sqlite  <span class="constant">SQLite</span>链接插件支持  </span><br><span class="line"></span>-<span class="ruby">no-qt3support  不编译<span class="constant">Qt3</span>兼容库  </span><br><span class="line"></span>-<span class="ruby">qt-zlib zlib库  </span><br><span class="line"></span>-<span class="ruby">qt-gif -qt-libpng -qt-libmng -qt-libtiff -qt-libjpeg 图形格式插件库  </span><br><span class="line"></span>-<span class="ruby">no-webkit 不编译webkit，此选项可极大加快编译速度，需要使用<span class="constant">WebKit</span>的可以删除此选项  </span><br><span class="line"></span>-<span class="ruby">qt-style-windowsxp -qt-style-windowsvista 支持<span class="constant">XP</span>和<span class="constant">Vista</span>主题样式</span></span><br></pre></td></tr></table></figure>
-<p>注意：使用静态编译的程序通常较大，建议发布前使用UPX压缩，一般可以减少至少50%的大小。</p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-  </div>
-
-  
-  <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
-  </div>
-
-
-        </div>
-
-        
-      </div>
-
-
-      
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      <div class="site-overview">
-        <div class="site-author motion-element">
-          <img class="site-author-image" src="/images/avatar.jpg" alt="mcxiaoke" />
-          <p class="site-author-name">mcxiaoke</p>
-        </div>
-        <p class="site-description motion-element">零碎的笔记</p>
-        <div class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">23</span>
-              <span class="site-state-item-name">日志</span>
-            </a>
-          </div>
-
-          <div class="site-state-item site-state-categories">
-            
-              <span class="site-state-item-count">9</span>
-              <span class="site-state-item-name">分类</span>
-              
-          </div>
-
-          <div class="site-state-item site-state-tags">
-            <a href="/tags">
-              <span class="site-state-item-count">27</span>
-              <span class="site-state-item-name">标签</span>
-              </a>
-          </div>
-
-        </div>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-            
-              <span class="links-of-author-item">
-              <a href="https://github.com/mcxiaoke" target="_blank">GitHub</a>
-            </span>
-            
-              <span class="links-of-author-item">
-              <a href="http://www.douban.com/people/doiv" target="_blank">DouBan</a>
-            </span>
-            
-              <span class="links-of-author-item">
-              <a href="http://mcxiaoke.com/" target="_blank">Home</a>
-            </span>
-            
-          
-        </div>
-
-        
-        
-          <div class="cc-license motion-element">
-            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
-              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
-            </a>
-          </div>
-        
-
-        <div class="links-of-author motion-element">
-          
-            <p class="site-author-name">Links</p>
-            
-              <span class="links-of-author-item">
-              <a href="http://moment.douban.com/app/" target="_blank">豆瓣一刻</a>
-              </span>
-            
-          
-        </div>
-        
-      </div>
-
-      
-
-    </div>
-  </div>
-
-
-    </div>
-
-    <div id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">
-  
-  &copy; &nbsp;  2007 - 
-  2015
-  <span class="with-love">
-    <i class="icon-heart"></i>
-  </span>
-  <span class="author">mcxiaoke</span>
-</div>
-
-<div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
-
-
-
-      </div>
-    </div>
-
-    <div class="back-to-top"></div>
-  </div>
-
-  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
-
-  
-  
-
-  
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
-
-
-  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
-  
-
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
-
-  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
-
-
-
-  <script type="text/javascript" src="/js/search-toggle.js"></script>
-
-  
-
-  <script type="text/javascript">
-    $(document).ready(function () {
-      if (CONFIG.sidebar === 'always') {
-        displaySidebar();
-      }
-    });
-  </script>
-
-  
-
-  
-  
-
-  
-    
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"mcxiaoke"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
-
-
-  
-  
-  <script type="text/javascript" src="/js/analytics_google-analytics.js?v=0.4.3"></script>
 
 
 </body>

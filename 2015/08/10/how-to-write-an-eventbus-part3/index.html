@@ -1,647 +1,181 @@
-<!doctype html>
-<html class="theme-next use-motion theme-next-mist">
+<!DOCTYPE html>
+<html>
+
 <head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>跟我一起写EventBus（三） | Xiaoke&#39;s Blog</title>
+  <meta name="description" content="未觉池塘春草梦，阶前梧叶已秋声" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+
+  <meta name="generator" content="Xiaoke's Blog">
+
+  
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="atom.xml">
+  
   
 
-<meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-
-
-
-
-
-  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
-
-
-
-
-<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
-
-
-    <meta name="description" content="零碎的笔记" />
-
-
-
-  <meta name="keywords" content="Android,EventBus,HowTo,Java," />
-
-
-
-
-
-  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
-
-
-
-<script type="text/javascript" id="hexo.configuration">
-  var CONFIG = {
-    scheme: 'Mist',
-    analytics: {
-      google: 'UA-49960399-2'
-    },
-    sidebar: 'hide'
-  };
-</script>
-
-
-
-
-  <title> 跟我一起写EventBus（三） // Xiaoke's Blog </title>
+  
 </head>
 
-<body>
-  <!--[if lte IE 8]>
-  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
-    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
-           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
-           style='margin-left:auto;margin-right:auto;display: block;'/>
-    </a>
-  </div>
-<![endif]-->
 
-  <div class="container one-column page-post-detail">
-    <div class="headband"></div>
+<body class="post-template">
 
-    <div id="header" class="header">
-      <div class="header-inner">
-        <h1 class="site-meta">
-  <span class="logo-line-before"><i></i></span>
-  <a href="/" class="brand">
-      <span class="logo">
-        <i class="icon-logo"></i>
-      </span>
-      <span class="site-title">Xiaoke's Blog</span>
-  </a>
-  <span class="logo-line-after"><i></i></span>
-</h1>
-
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
-
-<div class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu ">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/">
-            <i class="menu-item-icon icon-home"></i> <br />
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about">
-            <i class="menu-item-icon icon-about"></i> <br />
-            关于
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives">
-            <i class="menu-item-icon icon-archives"></i> <br />
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags">
-            <i class="menu-item-icon icon-tags"></i> <br />
-            标签
-          </a>
-        </li>
-      
-    </ul>
-  
-
-  
-</div>
-
-
-      </div>
+  <header class="site-head"  style="background-image: url(//blog.ghost.org/content/images/2013/Nov/cover.png)" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="//blog.ghost.org/content/images/2013/Nov/bloglogo_1-1.png" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">Xiaoke's Blog</h1>
+            <h2 class="blog-description">未觉池塘春草梦，阶前梧叶已秋声</h2>
+        </div>
     </div>
+</header>
+  
 
-    <div id="main" class="main">
-      <div class="main-inner">
-        <div id="content" class="content">
-          
-
-  <div id="posts" class="posts-expand">
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2015-08-10T03:34:47.000Z" itemprop="datePublished">
+          2015-08-10
+      </time>
     
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              跟我一起写EventBus（三）
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2015-08-10
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <a href="/categories/Android-Java/">Android, Java</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/10/how-to-write-an-eventbus-part3/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/10/how-to-write-an-eventbus-part3/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        <h2 id="项目链接">项目链接</h2><ul>
+    
+    | 
+    <a href='/tags/Android/'>Android</a>,
+    
+    <a href='/tags/EventBus/'>EventBus</a>,
+    
+    <a href='/tags/HowTo/'>HowTo</a>,
+    
+    <a href='/tags/Java/'>Java</a>
+    
+    
+</span>
+    <h1 class="post-title">跟我一起写EventBus（三）</h1>
+    <section class="post-content">
+      <h2 id="u9879_u76EE_u94FE_u63A5"><a href="#u9879_u76EE_u94FE_u63A5" class="headerlink" title="项目链接"></a>项目链接</h2><ul>
 <li><a href="https://github.com/mcxiaoke/xBus" target="_blank" rel="external"><code>xBus</code> 项目GitHub地址</a></li>
 </ul>
-<h2 id="概述">概述</h2><p>在 <a href="/2015/08/03/how-to-write-an-eventbus-part1/"><code>跟我一起写EventBus（一）</code></a> 里实现了一个非常粗糙的<code>EventBus</code>，在 <a href="/2015/08/04/how-to-write-an-eventbus-part2/"><code>跟我一起写EventBus（二）</code></a> ，又增加了基类中注册和事件类型宽泛匹配的功能，这一节需要加上在不同线程分发事件的功能，下面会详细解释事件的分发流程。</p>
+<h2 id="u6982_u8FF0"><a href="#u6982_u8FF0" class="headerlink" title="概述"></a>概述</h2><p>在 <a href="/2015/08/03/how-to-write-an-eventbus-part1/"><code>跟我一起写EventBus（一）</code></a> 里实现了一个非常粗糙的<code>EventBus</code>，在 <a href="/2015/08/04/how-to-write-an-eventbus-part2/"><code>跟我一起写EventBus（二）</code></a> ，又增加了基类中注册和事件类型宽泛匹配的功能，这一节需要加上在不同线程分发事件的功能，下面会详细解释事件的分发流程。</p>
 <p>在不同的线程分发事件（即在指定的线程调用使用了 <code>@BusReceiver</code> 注解的事件接收器的方法），主要支持三种线程：</p>
 <ol>
 <li>事件发送者（调用 <code>post(event)</code>方法）所在的线程，这是上一版的处理方式，对于大部分场景来说，这都不太合适；</li>
 <li>主线程（UI线程），对Android来说，异步任务完成后一般是更新界面，而更新UI必须在主线程中操作，所以这是一个主要用例；</li>
 <li>独立线程，另外维护一个线程池，在单独的线程中处理事件，这个适用于需要在事件接收器方法中进行耗时操作的情况，可以避免堵塞发送者线程或主线程。</li>
 </ol>
-<h2 id="Scheduler接口">Scheduler接口</h2><p>在不同的线程分发事件，需要一个调度器，这里定义一个简单的调度器 <code>Scheduler</code> 接口：</p>
+<h2 id="Scheduler_u63A5_u53E3"><a href="#Scheduler_u63A5_u53E3" class="headerlink" title="Scheduler接口"></a>Scheduler接口</h2><p>在不同的线程分发事件，需要一个调度器，这里定义一个简单的调度器 <code>Scheduler</code> 接口：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Scheduler</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">post</span><span class="params">(Runnable runnable)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这和java.util.concurrent.Executor的接口几乎是一样的，其实可以直接使用这个接口，后面接口的实现需要扩充一些功能</span></span><br></pre></td></tr></table></figure>
 <p>调度器的作用很简单，就是执行一个 <code>Runnable</code> 定义的任务，可以是同步的、异步的，具体看实现类的定义。</p>
-<h3 id="发送者线程分发">发送者线程分发</h3><p>发送者线程分发是最简单的，直接调用事件接收器的方法即可，使用 <code>Scheduler</code> 接口的实现就是：</p>
+<h3 id="u53D1_u9001_u8005_u7EBF_u7A0B_u5206_u53D1"><a href="#u53D1_u9001_u8005_u7EBF_u7A0B_u5206_u53D1" class="headerlink" title="发送者线程分发"></a>发送者线程分发</h3><p>发送者线程分发是最简单的，直接调用事件接收器的方法即可，使用 <code>Scheduler</code> 接口的实现就是：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SenderScheduler</span> <span class="keyword">implements</span> <span class="title">Scheduler</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Bus mBus;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SenderScheduler</span><span class="params">(<span class="keyword">final</span> Bus bus)</span> </span>&#123;</span><br><span class="line">        mBus = bus;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">post</span><span class="params">(<span class="keyword">final</span> Runnable runnable)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 直接调用方法，就是在调用者线程</span></span><br><span class="line">        runnable.run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="主线程分发">主线程分发</h3><p>针对Android系统的特点，要在主线程分发事件，需要用到 <code>Handler</code> ，再定义一个使用Handler的调度器：</p>
+<h3 id="u4E3B_u7EBF_u7A0B_u5206_u53D1"><a href="#u4E3B_u7EBF_u7A0B_u5206_u53D1" class="headerlink" title="主线程分发"></a>主线程分发</h3><p>针对Android系统的特点，要在主线程分发事件，需要用到 <code>Handler</code> ，再定义一个使用Handler的调度器：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HandlerScheduler</span> <span class="keyword">implements</span> <span class="title">Scheduler</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Bus mBus;</span><br><span class="line">    <span class="keyword">private</span> Handler mHandler;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HandlerScheduler</span><span class="params">(<span class="keyword">final</span> Bus bus, <span class="keyword">final</span> Handler handler)</span> </span>&#123;</span><br><span class="line">        mBus = bus;</span><br><span class="line">        mHandler = handler;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">post</span><span class="params">(<span class="keyword">final</span> Runnable runnable)</span> </span>&#123;</span><br><span class="line">        mHandler.post(runnable);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>有了 <code>HandlerScheduler</code> 这个类，要实现在主线程分发事件就简单了：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> Scheduler <span class="title">getMainThreadScheduler</span><span class="params">(<span class="keyword">final</span> Bus bus)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">new</span> HandlerScheduler(bus, <span class="keyword">new</span> Handler(Looper.getMainLooper()));</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="独立线程分发">独立线程分发</h3><p>要在独立线程分发事件，可以使用并发框架里的 <code>Executor</code> ，不用额外的维护线程的创建和终止：</p>
+<h3 id="u72EC_u7ACB_u7EBF_u7A0B_u5206_u53D1"><a href="#u72EC_u7ACB_u7EBF_u7A0B_u5206_u53D1" class="headerlink" title="独立线程分发"></a>独立线程分发</h3><p>要在独立线程分发事件，可以使用并发框架里的 <code>Executor</code> ，不用额外的维护线程的创建和终止：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExecutorScheduler</span> <span class="keyword">implements</span> <span class="title">Scheduler</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Bus mBus;</span><br><span class="line">    <span class="keyword">private</span> Executor mExecutor;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ExecutorScheduler</span><span class="params">(<span class="keyword">final</span> Bus bus)</span> </span>&#123;</span><br><span class="line">        mBus = bus;</span><br><span class="line">        mExecutor = Executors.newCachedThreadPool();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">post</span><span class="params">(<span class="keyword">final</span> Runnable runnable)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 在线程池中执行任务</span></span><br><span class="line">        mExecutor.execute(runnable);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Scheduler使用">Scheduler使用</h2><h3 id="定义">定义</h3><p>最后创建三种调度器的工厂方法，调度器这边就准备好了：</p>
+<h2 id="Scheduler_u4F7F_u7528"><a href="#Scheduler_u4F7F_u7528" class="headerlink" title="Scheduler使用"></a>Scheduler使用</h2><h3 id="u5B9A_u4E49"><a href="#u5B9A_u4E49" class="headerlink" title="定义"></a>定义</h3><p>最后创建三种调度器的工厂方法，调度器这边就准备好了：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Schedulers</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Scheduler <span class="title">sender</span><span class="params">(<span class="keyword">final</span> Bus bus)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> SenderScheduler(bus);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Scheduler <span class="title">getMainThreadScheduler</span><span class="params">(<span class="keyword">final</span> Bus bus)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> HandlerScheduler(bus, <span class="keyword">new</span> Handler(Looper.getMainLooper()));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Scheduler <span class="title">thread</span><span class="params">(<span class="keyword">final</span> Bus bus)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ExecutorScheduler(bus);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="事件模式">事件模式</h3><p>在<code>Bus</code>类中使用Enum定义三种事件分发模式，在Android应用中，绝大部分的事件处理都是更新界面，因为这里把主线程分发定为默认模式：</p>
+<h3 id="u4E8B_u4EF6_u6A21_u5F0F"><a href="#u4E8B_u4EF6_u6A21_u5F0F" class="headerlink" title="事件模式"></a>事件模式</h3><p>在<code>Bus</code>类中使用Enum定义三种事件分发模式，在Android应用中，绝大部分的事件处理都是更新界面，因为这里把主线程分发定为默认模式：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 事件发送模式：</span><br><span class="line"> *</span><br><span class="line"> * Sender - 在发送者的线程调用<span class="doctag">@BusReceiver</span>/onEvent方法</span><br><span class="line"> * Main - 在主线程调用<span class="doctag">@BusReceiver</span>/onEvent方法（默认为此模式）</span><br><span class="line"> * Thread - 在一个单独的线程调用<span class="doctag">@BusReceiver</span>/onEvent方法</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> EventMode &#123;</span><br><span class="line"></span><br><span class="line">    Sender, Main, Thread</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="使用方法">使用方法</h3><p>在事件接收器方法中使用mode指定分发模式，默认是主线程分发，示例如下</p>
+<h3 id="u4F7F_u7528_u65B9_u6CD5"><a href="#u4F7F_u7528_u65B9_u6CD5" class="headerlink" title="使用方法"></a>使用方法</h3><p>在事件接收器方法中使用mode指定分发模式，默认是主线程分发，示例如下</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// default is main thread</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent0</span><span class="params">(String event)</span></span>&#123;</span><br><span class="line">    <span class="comment">// handle event </span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="annotation">@BusReceiver</span>(mode= EventMode.Main)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent1</span><span class="params">(String event)</span></span>&#123;</span><br><span class="line">   <span class="comment">// handle event </span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="annotation">@BusReceiver</span>(mode= EventMode.Sender)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent2</span><span class="params">(String event)</span></span>&#123;</span><br><span class="line">    <span class="comment">// handle event </span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="annotation">@BusReceiver</span>(mode= EventMode.Thread)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent3</span><span class="params">(String event)</span></span>&#123;</span><br><span class="line">    <span class="comment">// handle event </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="事件分发流程">事件分发流程</h2><p>目标调用 <code>Bus.getDefault().register(target)</code> 的时候，查找目标对象中包含的事件接收器方法，然后构造 <code>MethodInfo</code> 对象和 <code>Subscriber</code> 对象，保存在Map中，同时保存事件类型和 <code>Subscriber</code> 直接的对应关系，发送者调用 <code>post(event)</code> 时会从Map中查找事件对应的订阅者，然后根据事件分发模式使用 <code>Scheduler</code> 分发事件，大概流程就是这样的，下面是几个重要的数据结构。</p>
-<h3 id="EventEmitter">EventEmitter</h3><p><code>Scheduler</code> 接受的是 <code>Runnable</code> 参数，因此我们实现一个事件发送器类 <code>EventEmitter</code> ，它实现了 <code>Runnable</code> 接口。</p>
+<h2 id="u4E8B_u4EF6_u5206_u53D1_u6D41_u7A0B"><a href="#u4E8B_u4EF6_u5206_u53D1_u6D41_u7A0B" class="headerlink" title="事件分发流程"></a>事件分发流程</h2><p>目标调用 <code>Bus.getDefault().register(target)</code> 的时候，查找目标对象中包含的事件接收器方法，然后构造 <code>MethodInfo</code> 对象和 <code>Subscriber</code> 对象，保存在Map中，同时保存事件类型和 <code>Subscriber</code> 直接的对应关系，发送者调用 <code>post(event)</code> 时会从Map中查找事件对应的订阅者，然后根据事件分发模式使用 <code>Scheduler</code> 分发事件，大概流程就是这样的，下面是几个重要的数据结构。</p>
+<h3 id="EventEmitter"><a href="#EventEmitter" class="headerlink" title="EventEmitter"></a>EventEmitter</h3><p><code>Scheduler</code> 接受的是 <code>Runnable</code> 参数，因此我们实现一个事件发送器类 <code>EventEmitter</code> ，它实现了 <code>Runnable</code> 接口。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EventEmitter</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = Bus.TAG;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> Bus bus; <span class="comment">// Bus对象</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> Object event; <span class="comment">// 事件对象</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> Subscriber subscriber; <span class="comment">// 订阅关系</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> Bus.EventMode mode; <span class="comment">// 分发模式</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">EventEmitter</span><span class="params">(<span class="keyword">final</span> Bus bus, <span class="keyword">final</span> Object event,</span><br><span class="line">                        <span class="keyword">final</span> Subscriber subscriber)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.bus = bus;</span><br><span class="line">        <span class="keyword">this</span>.event = event;</span><br><span class="line">        <span class="keyword">this</span>.subscriber = subscriber;</span><br><span class="line">        <span class="keyword">this</span>.mode = subscriber.mode;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            subscriber.invoke(event);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Subscriber">Subscriber</h3><p><code>Subscriber</code> 类保存事件类型，事件接收器方法和事件目标之间的关系，定义如下：</p>
+<h3 id="Subscriber"><a href="#Subscriber" class="headerlink" title="Subscriber"></a>Subscriber</h3><p><code>Subscriber</code> 类保存事件类型，事件接收器方法和事件目标之间的关系，定义如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Subscriber</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> MethodInfo method;<span class="comment">// 保存事件方法的信息，下面会解释</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> Object target; <span class="comment">// 事件目标对象</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> Class&lt;?&gt; targetType; <span class="comment">// 目标类型</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> Class&lt;?&gt; eventType; <span class="comment">// 事件类型</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> Bus.EventMode mode; <span class="comment">// 分发模式</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> String name; <span class="comment">// 名字</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Subscriber</span><span class="params">(<span class="keyword">final</span> MethodInfo method, <span class="keyword">final</span> Object target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.method = method;</span><br><span class="line">        <span class="keyword">this</span>.target = target;</span><br><span class="line">        <span class="keyword">this</span>.eventType = method.eventType;</span><br><span class="line">        <span class="keyword">this</span>.targetType = method.targetType;</span><br><span class="line">        <span class="keyword">this</span>.mode = method.mode;</span><br><span class="line">        <span class="keyword">this</span>.name = method.name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object event)</span></span><br><span class="line">            <span class="keyword">throws</span> InvocationTargetException, IllegalAccessException </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.method.method.invoke(<span class="keyword">this</span>.target, event);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="MethodInfo">MethodInfo</h3><p><code>MethodInfo</code> 保存通过注解或方法名查找到的事件接收器方法的信息，包含 <code>Method</code> 对象和参数类型（也就是接受的事件类型），还有注解指定的分发模式，定义如下：</p>
+<h3 id="MethodInfo"><a href="#MethodInfo" class="headerlink" title="MethodInfo"></a>MethodInfo</h3><p><code>MethodInfo</code> 保存通过注解或方法名查找到的事件接收器方法的信息，包含 <code>Method</code> 对象和参数类型（也就是接受的事件类型），还有注解指定的分发模式，定义如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodInfo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> Method method;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> Class&lt;?&gt; targetType;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> Class&lt;?&gt; eventType;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> String name;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> Bus.EventMode mode;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MethodInfo</span><span class="params">(<span class="keyword">final</span> Method method, <span class="keyword">final</span> Class&lt;?&gt; targetClass, <span class="keyword">final</span> Bus.EventMode mode)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.method = method;</span><br><span class="line">        <span class="keyword">this</span>.targetType = targetClass;</span><br><span class="line">        <span class="keyword">this</span>.eventType = method.getParameterTypes()[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">this</span>.mode = mode;</span><br><span class="line">        <span class="keyword">this</span>.name = targetType.getName() + <span class="string">"."</span> + method.getName()</span><br><span class="line">                + <span class="string">"("</span> + eventType.getName() + <span class="string">")"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="分发事件">分发事件</h3><p>发送者调用 <code>post(event)</code> 方法时， <code>Bus</code> 会找到所有可能的接受者，然后构造  <code>EventEmitter</code> 对象，调用 <code>sendEvent(emitter)</code> 方法根据接受者指定的分发模式分发每一个事件，如下：</p>
+<h3 id="u5206_u53D1_u4E8B_u4EF6"><a href="#u5206_u53D1_u4E8B_u4EF6" class="headerlink" title="分发事件"></a>分发事件</h3><p>发送者调用 <code>post(event)</code> 方法时， <code>Bus</code> 会找到所有可能的接受者，然后构造  <code>EventEmitter</code> 对象，调用 <code>sendEvent(emitter)</code> 方法根据接受者指定的分发模式分发每一个事件，如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendEvent</span><span class="params">(EventEmitter emitter)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (EventMode.Sender.equals(emitter.mode)) &#123;</span><br><span class="line">        mSenderScheduler.post(emitter);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (EventMode.Main.equals(emitter.mode)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (Helper.isMainThread()) &#123;</span><br><span class="line">            mSenderScheduler.post(emitter);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            mMainScheduler.post(emitter);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (EventMode.Thread.equals(emitter.mode)) &#123;</span><br><span class="line">        mThreadScheduler.post(emitter);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="总结">总结</h2><p>以上就是在发送者线程、主线程、独立线程分发事件的全过程，下一节会介绍事件类型的模糊匹配和缓存优化，还有扩展功能和高级用法。</p>
-<h2 id="系列文章">系列文章</h2><ul>
+<h2 id="u603B_u7ED3"><a href="#u603B_u7ED3" class="headerlink" title="总结"></a>总结</h2><p>以上就是在发送者线程、主线程、独立线程分发事件的全过程，下一节会介绍事件类型的模糊匹配和缓存优化，还有扩展功能和高级用法。</p>
+<h2 id="u7CFB_u5217_u6587_u7AE0"><a href="#u7CFB_u5217_u6587_u7AE0" class="headerlink" title="系列文章"></a>系列文章</h2><ul>
 <li><a href="https://github.com/mcxiaoke/xBus#实现教程" target="_blank" rel="external"><code>跟我一起写EventBus（一）</code></a></li>
 <li><a href="https://github.com/mcxiaoke/xBus#实现教程" target="_blank" rel="external"><code>跟我一起写EventBus（二）</code></a> </li>
 </ul>
 
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Android/"> #Android </a>
-          
-            <a href="/tags/EventBus/"> #EventBus </a>
-          
-            <a href="/tags/HowTo/"> #HowTo </a>
-          
-            <a href="/tags/Java/"> #Java </a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/08/11/how-to-write-an-eventbus-part4/">跟我一起写EventBus（四）</a>
-            
-          </div>
-
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2015/08/04/how-to-write-an-eventbus-part2/">跟我一起写EventBus（二）</a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </div>
-  </div>
-
-
-
-    <div class="post-spread">
-      
-    </div>
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>mcxiaoke</h4>
+    <p>A designer, developer and entrepreneur. Spends his time travelling the world with a bag of kites. Likes journalism and publishing platforms.</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?url=http://blog.mcxiaoke.com/2015/08/10/how-to-write-an-eventbus-part3/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.mcxiaoke.com/2015/08/10/how-to-write-an-eventbus-part3/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://blog.mcxiaoke.com/2015/08/10/how-to-write-an-eventbus-part3/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/2015/08/11/how-to-write-an-eventbus-part4/">
+        ← 跟我一起写EventBus（四）
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/2015/08/04/how-to-write-an-eventbus-part2/">
+        跟我一起写EventBus（二） →
+    </a>
+    
+</nav>
+  <div id="comment" class="comments-area">
+    <h1 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h1>
 
     
-      <div class="comments" id="comments">
-        
-          <div class="ds-thread" data-thread-key="2015/08/10/how-to-write-an-eventbus-part3/"
-               data-title="跟我一起写EventBus（三）" data-url="http://blog.mcxiaoke.com/2015/08/10/how-to-write-an-eventbus-part3/">
-          </div>
-        
-      </div>
-    
-  </div>
-
-
-        </div>
-
-        
-      </div>
-
-
-      
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <div class="site-overview">
-        <div class="site-author motion-element">
-          <img class="site-author-image" src="/images/avatar.jpg" alt="mcxiaoke" />
-          <p class="site-author-name">mcxiaoke</p>
-        </div>
-        <p class="site-description motion-element">零碎的笔记</p>
-        <div class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">23</span>
-              <span class="site-state-item-name">日志</span>
-            </a>
-          </div>
-
-          <div class="site-state-item site-state-categories">
-            
-              <span class="site-state-item-count">9</span>
-              <span class="site-state-item-name">分类</span>
-              
-          </div>
-
-          <div class="site-state-item site-state-tags">
-            <a href="/tags">
-              <span class="site-state-item-count">27</span>
-              <span class="site-state-item-name">标签</span>
-              </a>
-          </div>
-
-        </div>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-            
-              <span class="links-of-author-item">
-              <a href="https://github.com/mcxiaoke" target="_blank">GitHub</a>
-            </span>
-            
-              <span class="links-of-author-item">
-              <a href="http://www.douban.com/people/doiv" target="_blank">DouBan</a>
-            </span>
-            
-              <span class="links-of-author-item">
-              <a href="http://mcxiaoke.com/" target="_blank">Home</a>
-            </span>
-            
-          
-        </div>
-
-        
-        
-          <div class="cc-license motion-element">
-            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
-              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
-            </a>
-          </div>
-        
-
-        <div class="links-of-author motion-element">
-          
-            <p class="site-author-name">Links</p>
-            
-              <span class="links-of-author-item">
-              <a href="http://moment.douban.com/app/" target="_blank">豆瓣一刻</a>
-              </span>
-            
-          
-        </div>
-        
-      </div>
-
-      
-        <div class="post-toc-wrap sidebar-panel-active">
-          <div class="post-toc-indicator-top post-toc-indicator"></div>
-          <div class="post-toc">
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#项目链接"><span class="nav-number">1.</span> <span class="nav-text">项目链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">2.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scheduler接口"><span class="nav-number">3.</span> <span class="nav-text">Scheduler接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#发送者线程分发"><span class="nav-number">3.1.</span> <span class="nav-text">发送者线程分发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主线程分发"><span class="nav-number">3.2.</span> <span class="nav-text">主线程分发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#独立线程分发"><span class="nav-number">3.3.</span> <span class="nav-text">独立线程分发</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scheduler使用"><span class="nav-number">4.</span> <span class="nav-text">Scheduler使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">4.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件模式"><span class="nav-number">4.2.</span> <span class="nav-text">事件模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方法"><span class="nav-number">4.3.</span> <span class="nav-text">使用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件分发流程"><span class="nav-number">5.</span> <span class="nav-text">事件分发流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EventEmitter"><span class="nav-number">5.1.</span> <span class="nav-text">EventEmitter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Subscriber"><span class="nav-number">5.2.</span> <span class="nav-text">Subscriber</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MethodInfo"><span class="nav-number">5.3.</span> <span class="nav-text">MethodInfo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分发事件"><span class="nav-number">5.4.</span> <span class="nav-text">分发事件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系列文章"><span class="nav-number">7.</span> <span class="nav-text">系列文章</span></a></li></ol></div>
-            
-          </div>
-          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
-        </div>
-      
-
-    </div>
-  </div>
-
-
-    </div>
-
-    <div id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">
-  
-  &copy; &nbsp;  2007 - 
-  2015
-  <span class="with-love">
-    <i class="icon-heart"></i>
-  </span>
-  <span class="author">mcxiaoke</span>
 </div>
-
-<div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
+</main>
 
 
-
-      </div>
-    </div>
-
-    <div class="back-to-top"></div>
+  
+<footer class="site-footer">
+  
+  <a class="subscribe icon-feed" href="atom.xml"><span class="tooltip">Subscribe!</span></a>
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Xiaoke's Blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
   </div>
+</footer>
 
-  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
-  
-  
-
-  
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
 
 
-  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
-  
+<script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-49960399-2']);
+    _gaq.push(['_trackPageview']);
 
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
-
-  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
-
-
-
-  <script type="text/javascript" src="/js/search-toggle.js"></script>
-
-  
-  
-<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
-
-
-<script type="text/javascript" id="sidebar.toc.highlight">
-  $(document).ready(function () {
-    var tocSelector = '.post-toc';
-    var $tocSelector = $(tocSelector);
-    var activeCurrentSelector = '.active-current';
-
-    $tocSelector
-      .on('activate.bs.scrollspy', function () {
-        var $currentActiveElement = $(tocSelector + ' .active').last();
-
-        removeCurrentActiveClass();
-        $currentActiveElement.addClass('active-current');
-
-        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
-      })
-      .on('clear.bs.scrollspy', function () {
-        removeCurrentActiveClass();
-      });
-
-    function removeCurrentActiveClass () {
-      $(tocSelector + ' ' + activeCurrentSelector)
-        .removeClass(activeCurrentSelector.substring(1));
-    }
-
-    function processTOC () {
-      getTOCMaxHeight();
-      toggleTOCOverflowIndicators();
-    }
-
-    function getTOCMaxHeight () {
-      var $sidebarInner = $('.sidebar-inner');
-      var height = $('.sidebar').height() -
-                   $tocSelector.position().top -
-                   $('.post-toc-indicator-bottom').height();
-
-      $tocSelector.css('height', height);
-
-      return height;
-    }
-
-    function toggleTOCOverflowIndicators () {
-      tocOverflowIndicator(
-        '.post-toc-indicator-top',
-        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
-      );
-
-      tocOverflowIndicator(
-        '.post-toc-indicator-bottom',
-        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
-      )
-    }
-
-    $(document).on('sidebar.didShow', function () {
-      processTOC();
-    });
-
-    $('body').scrollspy({ target: tocSelector });
-    $(window).on('resize', function () {
-      if ( $('.sidebar').hasClass('sidebar-active') ) {
-        processTOC();
-      }
-    });
-
-    onScroll($tocSelector);
-
-    function onScroll (element) {
-      element.on('mousewheel DOMMouseScroll', function (event) {
-          var oe = event.originalEvent;
-          var delta = oe.wheelDelta || -oe.detail;
-          var self = this;
-
-          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
-          event.preventDefault();
-
-          toggleTOCOverflowIndicators();
-      });
-    }
-
-    function tocOverflowIndicator (indicator, action) {
-      $(indicator).velocity('stop').velocity({
-        opacity: action === 'show' ? 0.4 : 0
-      }, { duration: 100 });
-    }
-
-  });
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
 </script>
 
 
-  <script type="text/javascript" id="sidebar.nav">
-    $(document).ready(function () {
-      var html = $('html');
 
-      $('.sidebar-nav li').on('click', function () {
-        var item = $(this);
-        var activeTabClassName = 'sidebar-nav-active';
-        var activePanelClassName = 'sidebar-panel-active';
-        if (item.hasClass(activeTabClassName)) {
-          return;
-        }
-
-        var currentTarget = $('.' + activePanelClassName);
-        var target = $('.' + item.data('target'));
-
-        currentTarget.velocity('transition.slideUpOut', 200, function () {
-          target
-            .velocity('stop')
-            .velocity('transition.slideDownIn', 200)
-            .addClass(activePanelClassName);
-        });
-
-        item.siblings().removeClass(activeTabClassName);
-        item.addClass(activeTabClassName);
-      });
-
-      $('.post-toc a').on('click', function (e) {
-        e.preventDefault();
-        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
-        html.velocity('stop').velocity('scroll', {
-          offset: offset  + 'px',
-          mobileHA: false
-        });
-      });
-
-      // Expand sidebar on post detail page by default, when post has a toc.
-      var $tocContent = $('.post-toc-content');
-      if (isDesktop() && CONFIG.sidebar === 'post') {
-        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
-          displaySidebar();
-        }
-      }
-    });
-  </script>
-
-
-
-
-  <script type="text/javascript">
-    $(document).ready(function () {
-      if (CONFIG.sidebar === 'always') {
-        displaySidebar();
-      }
-    });
-  </script>
-
-  
-
-  
-  
-
-  
-    
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"mcxiaoke"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
-
-
-  
-  
-  <script type="text/javascript" src="/js/analytics_google-analytics.js?v=0.4.3"></script>
 
 
 </body>

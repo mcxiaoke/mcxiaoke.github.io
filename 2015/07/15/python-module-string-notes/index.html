@@ -1,601 +1,135 @@
-<!doctype html>
-<html class="theme-next use-motion theme-next-mist">
+<!DOCTYPE html>
+<html>
+
 <head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>Python标准库笔记之string | Xiaoke&#39;s Blog</title>
+  <meta name="description" content="未觉池塘春草梦，阶前梧叶已秋声" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+
+  <meta name="generator" content="Xiaoke's Blog">
+
+  
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="atom.xml">
+  
   
 
-<meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-
-
-
-
-
-  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
-
-
-
-
-<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
-
-
-    <meta name="description" content="零碎的笔记" />
-
-
-
-  <meta name="keywords" content="Python," />
-
-
-
-
-
-  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
-
-
-
-<script type="text/javascript" id="hexo.configuration">
-  var CONFIG = {
-    scheme: 'Mist',
-    analytics: {
-      google: 'UA-49960399-2'
-    },
-    sidebar: 'hide'
-  };
-</script>
-
-
-
-
-  <title> Python标准库笔记之string // Xiaoke's Blog </title>
+  
 </head>
 
-<body>
-  <!--[if lte IE 8]>
-  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
-    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
-           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
-           style='margin-left:auto;margin-right:auto;display: block;'/>
+
+<body class="post-template">
+
+  <header class="site-head"  style="background-image: url(//blog.ghost.org/content/images/2013/Nov/cover.png)" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="//blog.ghost.org/content/images/2013/Nov/bloglogo_1-1.png" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">Xiaoke's Blog</h1>
+            <h2 class="blog-description">未觉池塘春草梦，阶前梧叶已秋声</h2>
+        </div>
+    </div>
+</header>
+  
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2015-07-15T06:40:14.000Z" itemprop="datePublished">
+          2015-07-15
+      </time>
+    
+    
+    | 
+    <a href='/tags/Python/'>Python</a>
+    
+    
+</span>
+    <h1 class="post-title">Python标准库笔记之string</h1>
+    <section class="post-content">
+      <h4 id="String"><a href="#String" class="headerlink" title="String"></a>String</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="comment"># Created by mcxiaoke on 15/7/4 17:01.</span></span><br><span class="line">__author__ = <span class="string">'mcxiaoke'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">from</span> string <span class="keyword">import</span> Template</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一些常量</span></span><br><span class="line"><span class="string">'''</span><br><span class="line">whitespace = ' \t\n\r\v\f'</span><br><span class="line">lowercase = 'abcdefghijklmnopqrstuvwxyz'</span><br><span class="line">uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'</span><br><span class="line">letters = lowercase + uppercase</span><br><span class="line">ascii_lowercase = lowercase</span><br><span class="line">ascii_uppercase = uppercase</span><br><span class="line">ascii_letters = ascii_lowercase + ascii_uppercase</span><br><span class="line">digits = '0123456789'</span><br><span class="line">hexdigits = digits + 'abcdef' + 'ABCDEF'</span><br><span class="line">octdigits = '01234567'</span><br><span class="line">punctuation = """!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`&#123;|&#125;~"""</span><br><span class="line">printable = digits + letters + punctuation + whitespace</span><br><span class="line">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 字符串格式化</span></span><br><span class="line"><span class="comment"># 字符串格式化格式为 "hello, world &#123;0&#125; &#123;1&#125;"</span></span><br><span class="line"><span class="comment"># 默认调用 __format()__方法，可以显示使用str()或repr()</span></span><br><span class="line"><span class="comment"># "Harold's a clever &#123;0!s&#125;"        # Calls str() on the argument first</span></span><br><span class="line"><span class="comment"># "Bring out the holy &#123;name!r&#125;"    # Calls repr() on the argument first</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"hello, world &#123;0&#125; &#123;1&#125; !"</span>.format(<span class="string">'first'</span>, <span class="string">'second'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 字符串格式 %s</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"Welcome to %s"</span> % <span class="string">"China"</span></span><br><span class="line"><span class="comment"># 命名参数</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'I love %(cat)s and %(dog)s.'</span> % &#123;<span class="string">'cat'</span>: <span class="string">'BadCat'</span>, <span class="string">'dog'</span>: <span class="string">'BadDog'</span>&#125;</span><br><span class="line"><span class="comment"># out:I love BadCat and BadDog.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 整数格式</span></span><br><span class="line"><span class="string">'''</span><br><span class="line">'b' 二进制整数</span><br><span class="line">'c' Unicode字符</span><br><span class="line">'d' 十进制整数</span><br><span class="line">'o' 八进制整数</span><br><span class="line">'x' 十六进制，小写</span><br><span class="line">'X' 十六进制，大写</span><br><span class="line">'n' 十进制，带分隔符</span><br><span class="line">'''</span></span><br><span class="line">num = <span class="number">1234567890</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"十进制:%d 八进制:%o 十六进制:0x%x 十六进制:0X%X"</span> % (num, num, num, num)</span><br><span class="line"><span class="comment"># out: 十进制:1234567890 八进制:11145401322 十六进制:0x499602d2 十六进制:0X499602D2</span></span><br><span class="line"><span class="comment"># 浮点数格式</span></span><br><span class="line">fnum = <span class="number">987123456.78901234567890123</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'%e'</span> % fnum, <span class="string">'%E'</span> % fnum, <span class="string">'%f'</span> % fnum, <span class="string">'%F'</span> % fnum, <span class="string">'%g'</span> % fnum, <span class="string">'%G'</span> % fnum</span><br><span class="line"><span class="comment"># out: 9.871235e+08 9.871235E+08 987123456.789012 987123456.789012 9.87123e+08 9.87123E+08</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 格式化例子</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;0&#125;, &#123;1&#125;, &#123;2&#125;'</span>.format(<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>)  <span class="comment"># a, b, c</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;&#125;, &#123;&#125;, &#123;&#125;'</span>.format(<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>)  <span class="comment"># a, b, c</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;2&#125;, &#123;1&#125;, &#123;0&#125;'</span>.format(<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>)  <span class="comment"># c, b, a</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;2&#125;, &#123;1&#125;, &#123;0&#125;'</span>.format(*<span class="string">'abc'</span>)  <span class="comment"># 参数解包</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;0&#125;&#123;1&#125;&#123;0&#125;'</span>.format(<span class="string">'hello-'</span>, <span class="string">'world-'</span>)  <span class="comment"># 参数可以重复使用</span></span><br><span class="line"><span class="comment"># out: hello-world-hello-</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 命名参数例子 # out: 经纬度: (37.24N, -115.81W)</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'经纬度: (&#123;0&#125;, &#123;1&#125;)'</span>.format(<span class="string">'37.24N'</span>, <span class="string">'-115.81W'</span>)</span><br><span class="line"><span class="keyword">print</span> <span class="string">'A 经纬度: (&#123;latitude&#125;, &#123;longitude&#125;)'</span>.format(latitude=<span class="string">'37.24N'</span>, longitude=<span class="string">'-115.81W'</span>)</span><br><span class="line">args = (<span class="string">'37.24N'</span>, <span class="string">'-115.81W'</span>)</span><br><span class="line"><span class="keyword">print</span> <span class="string">'B 经纬度: (&#123;&#125;, &#123;&#125;)'</span>.format(*args)</span><br><span class="line">kwargs = &#123;<span class="string">'latitude'</span>: <span class="string">'37.24N'</span>, <span class="string">'longitude'</span>: <span class="string">'-115.81W'</span>&#125;</span><br><span class="line"><span class="keyword">print</span> <span class="string">'C 经纬度: (&#123;latitude&#125;, &#123;longitude&#125;)'</span>.format(**kwargs)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 自定义对象例子</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, x, y)</span>:</span></span><br><span class="line">        self.x, self.y = x, y</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Point(&#123;self.x&#125;,&#123;self.y&#125;)"</span>.format(self=self)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"(x=&#123;self.x&#125;,y=&#123;self.y&#125;)"</span>.format(self=self)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pt = Point(<span class="number">15</span>, <span class="number">238</span>)</span><br><span class="line"><span class="keyword">print</span> <span class="string">'Point is &#123;&#125;'</span>.format(pt)  <span class="comment"># Point is Point(15,238)</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'Point(x=&#123;0.x&#125;, y=&#123;0.y&#125;)'</span>.format(pt)  <span class="comment"># Point(x=15, y=238)</span></span><br><span class="line">two = (<span class="string">'hello'</span>, <span class="string">'world'</span>)</span><br><span class="line"><span class="keyword">print</span> <span class="string">'A=&#123;0[0]&#125;, B=&#123;0[1]&#125;'</span>.format(two)  <span class="comment"># A=hello, B=world</span></span><br><span class="line"><span class="comment"># 使用 repr()和str()的示例</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"repr() shows quotes: &#123;!r&#125;; str() doesn't: &#123;!s&#125;"</span>.format(<span class="string">'test1'</span>, <span class="string">'test2'</span>)</span><br><span class="line"><span class="keyword">print</span> <span class="string">'Point is &#123;0!r&#125; &#123;0!s&#125;'</span>.format(pt)  <span class="comment"># Point is (x=15,y=238) Point(15,238)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 对其方式</span></span><br><span class="line"><span class="comment"># 星号用于加强显示效果，默认是空白</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;:*&lt;30&#125;'</span>.format(<span class="string">'左对齐'</span>)  <span class="comment"># 左对齐*********************</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;:*&gt;30&#125;'</span>.format(<span class="string">'右对齐'</span>)  <span class="comment"># *********************右对齐</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;:*^30&#125;'</span>.format(<span class="string">'居中对其'</span>)  <span class="comment"># *********居中对其*********</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 数字格式处理</span></span><br><span class="line"><span class="comment"># 不带前缀</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"int: &#123;0:d&#125;;  hex: &#123;0:x&#125;;  oct: &#123;0:o&#125;;  bin: &#123;0:b&#125;"</span>.format(<span class="number">2015</span>)</span><br><span class="line"><span class="comment"># out: int: 2015;  hex: 7df;  oct: 3737;  bin: 11111011111</span></span><br><span class="line"><span class="comment"># 带前缀</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"int: &#123;0:d&#125;;  hex: &#123;0:#x&#125;;  oct: &#123;0:#o&#125;;  bin: &#123;0:#b&#125;"</span>.format(<span class="number">2015</span>)</span><br><span class="line"><span class="comment"># int: 2015;  hex: 0x7df;  oct: 0o3737;  bin: 0b11111011111</span></span><br><span class="line"><span class="comment"># 添加分隔符</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;:,&#125;'</span>.format(<span class="number">1234567890</span>)  <span class="comment"># 1,234,567,890</span></span><br><span class="line"><span class="comment"># 日期时间格式化</span></span><br><span class="line">d = datetime.datetime.now()</span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;:%Y-%m-%d %H:%M:%S&#125;'</span>.format(d)  <span class="comment"># 2015-07-04 18:34:28</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 字符串模板</span></span><br><span class="line">s = Template(<span class="string">'$who likes to eat $what'</span>)</span><br><span class="line"><span class="keyword">print</span> s.substitute(who=<span class="string">'john'</span>, what=<span class="string">'fish'</span>)  <span class="comment"># john likes to eat fish</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 字符串函数</span></span><br><span class="line">s = <span class="string">'this is some sample text.'</span></span><br><span class="line"><span class="comment"># 首字母大写</span></span><br><span class="line"><span class="keyword">print</span> string.capitalize(s)  <span class="comment"># This is some sample text.</span></span><br><span class="line"><span class="comment"># 结果等于 s.capitalize()</span></span><br><span class="line"><span class="comment"># 查找字符串</span></span><br><span class="line"><span class="keyword">print</span> s.find(<span class="string">'is'</span>)  <span class="comment"># 2</span></span><br><span class="line"><span class="keyword">print</span> s.find(<span class="string">'hello'</span>)  <span class="comment"># -1</span></span><br><span class="line"><span class="comment"># 分割字符串</span></span><br><span class="line"><span class="keyword">print</span> s.split(<span class="string">' '</span>)  <span class="comment"># ['this', 'is', 'some', 'sample', 'text.']</span></span><br><span class="line"><span class="keyword">print</span> s.split(<span class="string">' '</span>, <span class="number">1</span>)  <span class="comment"># ['this', 'is some sample text.']</span></span><br><span class="line"><span class="keyword">print</span> s.rsplit(<span class="string">' '</span>, <span class="number">1</span>)  <span class="comment"># ['this is some sample', 'text.']</span></span><br><span class="line"><span class="comment"># 合并字符串</span></span><br><span class="line"><span class="keyword">print</span> s.join([<span class="string">'A_'</span>, <span class="string">'B'</span>])  <span class="comment"># A_this is some sample text.B</span></span><br><span class="line"><span class="keyword">print</span> string.join([<span class="string">'there'</span>, <span class="string">'are'</span>, <span class="string">'joined'</span>, <span class="string">'words'</span>], <span class="string">' '</span>)  <span class="comment"># there are joined words</span></span><br><span class="line">s2 = <span class="string">'this\tis\tsome\tsample\ttext'</span></span><br><span class="line"><span class="comment"># 展开TAB</span></span><br><span class="line"><span class="keyword">print</span> s2.expandtabs(<span class="number">4</span>)  <span class="comment"># this    is  some    sample  text</span></span><br><span class="line">s3 = <span class="string">'     hello,     python!    '</span></span><br><span class="line"><span class="comment"># 检查结尾</span></span><br><span class="line"><span class="keyword">print</span> s.endswith(<span class="string">'hello'</span>)  <span class="comment"># out:False</span></span><br><span class="line"><span class="comment"># 去除前后空白</span></span><br><span class="line"><span class="keyword">print</span> s3.strip()  <span class="comment"># hello,     python!</span></span><br><span class="line">s4 = <span class="string">'THIS is SOME text.'</span></span><br><span class="line"><span class="comment"># 交换大小写</span></span><br><span class="line"><span class="keyword">print</span> s4.swapcase()  <span class="comment"># this IS some TEXT.</span></span><br><span class="line"><span class="comment"># 首字母大写</span></span><br><span class="line"><span class="keyword">print</span> s4.capitalize()  <span class="comment"># This is some text.</span></span><br><span class="line"><span class="comment"># 标题模式，单词首字母大写</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'title:'</span>, s4.title()  <span class="comment"># This Is Some Text.</span></span><br><span class="line"><span class="comment"># 全部小写</span></span><br><span class="line"><span class="keyword">print</span> s4.lower()  <span class="comment"># this is some text.</span></span><br><span class="line"><span class="comment"># 全部大写</span></span><br><span class="line"><span class="keyword">print</span> s4.upper()  <span class="comment"># THIS IS SOME TEXT.</span></span><br><span class="line"><span class="comment"># 全是字母和数字</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'12345678abcdefg'</span>.isalnum()  <span class="comment"># out:True</span></span><br><span class="line"><span class="comment"># 全是数字</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'12345'</span>.isdigit()  <span class="comment"># out:True</span></span><br><span class="line"><span class="comment"># 全是字母</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'12345, hello'</span>.isalpha()  <span class="comment"># out:False</span></span><br><span class="line"><span class="comment"># 删除指定字符</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'hello,world,I love cats'</span>.translate(<span class="keyword">None</span>, <span class="string">'o'</span>)  <span class="comment"># out:hell,wrld,I lve cats</span></span><br><span class="line"><span class="comment"># 补齐字符串</span></span><br><span class="line"><span class="keyword">print</span> s4.ljust(<span class="number">30</span>, <span class="string">'_'</span>)  <span class="comment"># THIS is SOME text.____________</span></span><br><span class="line"><span class="keyword">print</span> s4.rjust(<span class="number">30</span>, <span class="string">'_'</span>)  <span class="comment"># ____________THIS is SOME text.</span></span><br><span class="line"><span class="keyword">print</span> s4.center(<span class="number">30</span>, <span class="string">'_'</span>)  <span class="comment"># ______THIS is SOME text.______</span></span><br><span class="line"><span class="keyword">print</span> s4.zfill(<span class="number">30</span>)  <span class="comment"># 000000000000THIS is SOME text.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 替换字符串</span></span><br><span class="line">s5 = <span class="string">'color1 and color2 and color3 scheme files are tested.'</span></span><br><span class="line"><span class="keyword">print</span> s5.replace(<span class="string">'color'</span>, <span class="string">'dark'</span>)</span><br><span class="line"><span class="comment"># out: dark1 and dark2 and dark3 scheme files are tested.</span></span><br><span class="line"><span class="keyword">print</span> s5.replace(<span class="string">'and'</span>, <span class="string">''</span>)</span><br><span class="line"><span class="comment"># out: color1  color2  color3 scheme files are tested.</span></span><br><span class="line"><span class="keyword">print</span> s5.replace(<span class="string">' '</span>, <span class="string">'_'</span>)</span><br><span class="line"><span class="comment"># out: color1_and_color2_and_color3_scheme_files_are_tested.</span></span><br><span class="line"><span class="keyword">print</span> s5.replace(<span class="string">' '</span>, <span class="string">'-'</span>, <span class="number">2</span>)</span><br><span class="line"><span class="comment"># out: color1-and-color2 and color3 scheme files are tested.</span></span><br></pre></td></tr></table></figure>
+
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>mcxiaoke</h4>
+    <p>A designer, developer and entrepreneur. Spends his time travelling the world with a bag of kites. Likes journalism and publishing platforms.</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?url=http://blog.mcxiaoke.com/2015/07/15/python-module-string-notes/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
     </a>
-  </div>
-<![endif]-->
-
-  <div class="container one-column page-post-detail">
-    <div class="headband"></div>
-
-    <div id="header" class="header">
-      <div class="header-inner">
-        <h1 class="site-meta">
-  <span class="logo-line-before"><i></i></span>
-  <a href="/" class="brand">
-      <span class="logo">
-        <i class="icon-logo"></i>
-      </span>
-      <span class="site-title">Xiaoke's Blog</span>
-  </a>
-  <span class="logo-line-after"><i></i></span>
-</h1>
-
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
-
-<div class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu ">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/">
-            <i class="menu-item-icon icon-home"></i> <br />
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about">
-            <i class="menu-item-icon icon-about"></i> <br />
-            关于
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives">
-            <i class="menu-item-icon icon-archives"></i> <br />
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags">
-            <i class="menu-item-icon icon-tags"></i> <br />
-            标签
-          </a>
-        </li>
-      
-    </ul>
-  
-
-  
-</div>
-
-
-      </div>
-    </div>
-
-    <div id="main" class="main">
-      <div class="main-inner">
-        <div id="content" class="content">
-          
-
-  <div id="posts" class="posts-expand">
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.mcxiaoke.com/2015/07/15/python-module-string-notes/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://blog.mcxiaoke.com/2015/07/15/python-module-string-notes/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
     
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              Python标准库笔记之string
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2015-07-15
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <a href="/categories/Python/">Python</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/15/python-module-string-notes/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/15/python-module-string-notes/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        <h4 id="String">String</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="comment"># Created by mcxiaoke on 15/7/4 17:01.</span></span><br><span class="line">__author__ = <span class="string">'mcxiaoke'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">from</span> string <span class="keyword">import</span> Template</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一些常量</span></span><br><span class="line"><span class="string">'''</span><br><span class="line">whitespace = ' \t\n\r\v\f'</span><br><span class="line">lowercase = 'abcdefghijklmnopqrstuvwxyz'</span><br><span class="line">uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'</span><br><span class="line">letters = lowercase + uppercase</span><br><span class="line">ascii_lowercase = lowercase</span><br><span class="line">ascii_uppercase = uppercase</span><br><span class="line">ascii_letters = ascii_lowercase + ascii_uppercase</span><br><span class="line">digits = '0123456789'</span><br><span class="line">hexdigits = digits + 'abcdef' + 'ABCDEF'</span><br><span class="line">octdigits = '01234567'</span><br><span class="line">punctuation = """!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`&#123;|&#125;~"""</span><br><span class="line">printable = digits + letters + punctuation + whitespace</span><br><span class="line">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 字符串格式化</span></span><br><span class="line"><span class="comment"># 字符串格式化格式为 "hello, world &#123;0&#125; &#123;1&#125;"</span></span><br><span class="line"><span class="comment"># 默认调用 __format()__方法，可以显示使用str()或repr()</span></span><br><span class="line"><span class="comment"># "Harold's a clever &#123;0!s&#125;"        # Calls str() on the argument first</span></span><br><span class="line"><span class="comment"># "Bring out the holy &#123;name!r&#125;"    # Calls repr() on the argument first</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"hello, world &#123;0&#125; &#123;1&#125; !"</span>.format(<span class="string">'first'</span>, <span class="string">'second'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 字符串格式 %s</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"Welcome to %s"</span> % <span class="string">"China"</span></span><br><span class="line"><span class="comment"># 命名参数</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'I love %(cat)s and %(dog)s.'</span> % &#123;<span class="string">'cat'</span>: <span class="string">'BadCat'</span>, <span class="string">'dog'</span>: <span class="string">'BadDog'</span>&#125;</span><br><span class="line"><span class="comment"># out:I love BadCat and BadDog.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 整数格式</span></span><br><span class="line"><span class="string">'''</span><br><span class="line">'b' 二进制整数</span><br><span class="line">'c' Unicode字符</span><br><span class="line">'d' 十进制整数</span><br><span class="line">'o' 八进制整数</span><br><span class="line">'x' 十六进制，小写</span><br><span class="line">'X' 十六进制，大写</span><br><span class="line">'n' 十进制，带分隔符</span><br><span class="line">'''</span></span><br><span class="line">num = <span class="number">1234567890</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"十进制:%d 八进制:%o 十六进制:0x%x 十六进制:0X%X"</span> % (num, num, num, num)</span><br><span class="line"><span class="comment"># out: 十进制:1234567890 八进制:11145401322 十六进制:0x499602d2 十六进制:0X499602D2</span></span><br><span class="line"><span class="comment"># 浮点数格式</span></span><br><span class="line">fnum = <span class="number">987123456.78901234567890123</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'%e'</span> % fnum, <span class="string">'%E'</span> % fnum, <span class="string">'%f'</span> % fnum, <span class="string">'%F'</span> % fnum, <span class="string">'%g'</span> % fnum, <span class="string">'%G'</span> % fnum</span><br><span class="line"><span class="comment"># out: 9.871235e+08 9.871235E+08 987123456.789012 987123456.789012 9.87123e+08 9.87123E+08</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 格式化例子</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;0&#125;, &#123;1&#125;, &#123;2&#125;'</span>.format(<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>)  <span class="comment"># a, b, c</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;&#125;, &#123;&#125;, &#123;&#125;'</span>.format(<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>)  <span class="comment"># a, b, c</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;2&#125;, &#123;1&#125;, &#123;0&#125;'</span>.format(<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>)  <span class="comment"># c, b, a</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;2&#125;, &#123;1&#125;, &#123;0&#125;'</span>.format(*<span class="string">'abc'</span>)  <span class="comment"># 参数解包</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;0&#125;&#123;1&#125;&#123;0&#125;'</span>.format(<span class="string">'hello-'</span>, <span class="string">'world-'</span>)  <span class="comment"># 参数可以重复使用</span></span><br><span class="line"><span class="comment"># out: hello-world-hello-</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 命名参数例子 # out: 经纬度: (37.24N, -115.81W)</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'经纬度: (&#123;0&#125;, &#123;1&#125;)'</span>.format(<span class="string">'37.24N'</span>, <span class="string">'-115.81W'</span>)</span><br><span class="line"><span class="keyword">print</span> <span class="string">'A 经纬度: (&#123;latitude&#125;, &#123;longitude&#125;)'</span>.format(latitude=<span class="string">'37.24N'</span>, longitude=<span class="string">'-115.81W'</span>)</span><br><span class="line">args = (<span class="string">'37.24N'</span>, <span class="string">'-115.81W'</span>)</span><br><span class="line"><span class="keyword">print</span> <span class="string">'B 经纬度: (&#123;&#125;, &#123;&#125;)'</span>.format(*args)</span><br><span class="line">kwargs = &#123;<span class="string">'latitude'</span>: <span class="string">'37.24N'</span>, <span class="string">'longitude'</span>: <span class="string">'-115.81W'</span>&#125;</span><br><span class="line"><span class="keyword">print</span> <span class="string">'C 经纬度: (&#123;latitude&#125;, &#123;longitude&#125;)'</span>.format(**kwargs)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 自定义对象例子</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, x, y)</span>:</span></span><br><span class="line">        self.x, self.y = x, y</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Point(&#123;self.x&#125;,&#123;self.y&#125;)"</span>.format(self=self)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"(x=&#123;self.x&#125;,y=&#123;self.y&#125;)"</span>.format(self=self)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pt = Point(<span class="number">15</span>, <span class="number">238</span>)</span><br><span class="line"><span class="keyword">print</span> <span class="string">'Point is &#123;&#125;'</span>.format(pt)  <span class="comment"># Point is Point(15,238)</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'Point(x=&#123;0.x&#125;, y=&#123;0.y&#125;)'</span>.format(pt)  <span class="comment"># Point(x=15, y=238)</span></span><br><span class="line">two = (<span class="string">'hello'</span>, <span class="string">'world'</span>)</span><br><span class="line"><span class="keyword">print</span> <span class="string">'A=&#123;0[0]&#125;, B=&#123;0[1]&#125;'</span>.format(two)  <span class="comment"># A=hello, B=world</span></span><br><span class="line"><span class="comment"># 使用 repr()和str()的示例</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"repr() shows quotes: &#123;!r&#125;; str() doesn't: &#123;!s&#125;"</span>.format(<span class="string">'test1'</span>, <span class="string">'test2'</span>)</span><br><span class="line"><span class="keyword">print</span> <span class="string">'Point is &#123;0!r&#125; &#123;0!s&#125;'</span>.format(pt)  <span class="comment"># Point is (x=15,y=238) Point(15,238)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 对其方式</span></span><br><span class="line"><span class="comment"># 星号用于加强显示效果，默认是空白</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;:*&lt;30&#125;'</span>.format(<span class="string">'左对齐'</span>)  <span class="comment"># 左对齐*********************</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;:*&gt;30&#125;'</span>.format(<span class="string">'右对齐'</span>)  <span class="comment"># *********************右对齐</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;:*^30&#125;'</span>.format(<span class="string">'居中对其'</span>)  <span class="comment"># *********居中对其*********</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 数字格式处理</span></span><br><span class="line"><span class="comment"># 不带前缀</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"int: &#123;0:d&#125;;  hex: &#123;0:x&#125;;  oct: &#123;0:o&#125;;  bin: &#123;0:b&#125;"</span>.format(<span class="number">2015</span>)</span><br><span class="line"><span class="comment"># out: int: 2015;  hex: 7df;  oct: 3737;  bin: 11111011111</span></span><br><span class="line"><span class="comment"># 带前缀</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"int: &#123;0:d&#125;;  hex: &#123;0:#x&#125;;  oct: &#123;0:#o&#125;;  bin: &#123;0:#b&#125;"</span>.format(<span class="number">2015</span>)</span><br><span class="line"><span class="comment"># int: 2015;  hex: 0x7df;  oct: 0o3737;  bin: 0b11111011111</span></span><br><span class="line"><span class="comment"># 添加分隔符</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;:,&#125;'</span>.format(<span class="number">1234567890</span>)  <span class="comment"># 1,234,567,890</span></span><br><span class="line"><span class="comment"># 日期时间格式化</span></span><br><span class="line">d = datetime.datetime.now()</span><br><span class="line"><span class="keyword">print</span> <span class="string">'&#123;:%Y-%m-%d %H:%M:%S&#125;'</span>.format(d)  <span class="comment"># 2015-07-04 18:34:28</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 字符串模板</span></span><br><span class="line">s = Template(<span class="string">'$who likes to eat $what'</span>)</span><br><span class="line"><span class="keyword">print</span> s.substitute(who=<span class="string">'john'</span>, what=<span class="string">'fish'</span>)  <span class="comment"># john likes to eat fish</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 字符串函数</span></span><br><span class="line">s = <span class="string">'this is some sample text.'</span></span><br><span class="line"><span class="comment"># 首字母大写</span></span><br><span class="line"><span class="keyword">print</span> string.capitalize(s)  <span class="comment"># This is some sample text.</span></span><br><span class="line"><span class="comment"># 结果等于 s.capitalize()</span></span><br><span class="line"><span class="comment"># 查找字符串</span></span><br><span class="line"><span class="keyword">print</span> s.find(<span class="string">'is'</span>)  <span class="comment"># 2</span></span><br><span class="line"><span class="keyword">print</span> s.find(<span class="string">'hello'</span>)  <span class="comment"># -1</span></span><br><span class="line"><span class="comment"># 分割字符串</span></span><br><span class="line"><span class="keyword">print</span> s.split(<span class="string">' '</span>)  <span class="comment"># ['this', 'is', 'some', 'sample', 'text.']</span></span><br><span class="line"><span class="keyword">print</span> s.split(<span class="string">' '</span>, <span class="number">1</span>)  <span class="comment"># ['this', 'is some sample text.']</span></span><br><span class="line"><span class="keyword">print</span> s.rsplit(<span class="string">' '</span>, <span class="number">1</span>)  <span class="comment"># ['this is some sample', 'text.']</span></span><br><span class="line"><span class="comment"># 合并字符串</span></span><br><span class="line"><span class="keyword">print</span> s.join([<span class="string">'A_'</span>, <span class="string">'B'</span>])  <span class="comment"># A_this is some sample text.B</span></span><br><span class="line"><span class="keyword">print</span> string.join([<span class="string">'there'</span>, <span class="string">'are'</span>, <span class="string">'joined'</span>, <span class="string">'words'</span>], <span class="string">' '</span>)  <span class="comment"># there are joined words</span></span><br><span class="line">s2 = <span class="string">'this\tis\tsome\tsample\ttext'</span></span><br><span class="line"><span class="comment"># 展开TAB</span></span><br><span class="line"><span class="keyword">print</span> s2.expandtabs(<span class="number">4</span>)  <span class="comment"># this    is  some    sample  text</span></span><br><span class="line">s3 = <span class="string">'     hello,     python!    '</span></span><br><span class="line"><span class="comment"># 检查结尾</span></span><br><span class="line"><span class="keyword">print</span> s.endswith(<span class="string">'hello'</span>)  <span class="comment"># out:False</span></span><br><span class="line"><span class="comment"># 去除前后空白</span></span><br><span class="line"><span class="keyword">print</span> s3.strip()  <span class="comment"># hello,     python!</span></span><br><span class="line">s4 = <span class="string">'THIS is SOME text.'</span></span><br><span class="line"><span class="comment"># 交换大小写</span></span><br><span class="line"><span class="keyword">print</span> s4.swapcase()  <span class="comment"># this IS some TEXT.</span></span><br><span class="line"><span class="comment"># 首字母大写</span></span><br><span class="line"><span class="keyword">print</span> s4.capitalize()  <span class="comment"># This is some text.</span></span><br><span class="line"><span class="comment"># 标题模式，单词首字母大写</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'title:'</span>, s4.title()  <span class="comment"># This Is Some Text.</span></span><br><span class="line"><span class="comment"># 全部小写</span></span><br><span class="line"><span class="keyword">print</span> s4.lower()  <span class="comment"># this is some text.</span></span><br><span class="line"><span class="comment"># 全部大写</span></span><br><span class="line"><span class="keyword">print</span> s4.upper()  <span class="comment"># THIS IS SOME TEXT.</span></span><br><span class="line"><span class="comment"># 全是字母和数字</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'12345678abcdefg'</span>.isalnum()  <span class="comment"># out:True</span></span><br><span class="line"><span class="comment"># 全是数字</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'12345'</span>.isdigit()  <span class="comment"># out:True</span></span><br><span class="line"><span class="comment"># 全是字母</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'12345, hello'</span>.isalpha()  <span class="comment"># out:False</span></span><br><span class="line"><span class="comment"># 删除指定字符</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'hello,world,I love cats'</span>.translate(<span class="keyword">None</span>, <span class="string">'o'</span>)  <span class="comment"># out:hell,wrld,I lve cats</span></span><br><span class="line"><span class="comment"># 补齐字符串</span></span><br><span class="line"><span class="keyword">print</span> s4.ljust(<span class="number">30</span>, <span class="string">'_'</span>)  <span class="comment"># THIS is SOME text.____________</span></span><br><span class="line"><span class="keyword">print</span> s4.rjust(<span class="number">30</span>, <span class="string">'_'</span>)  <span class="comment"># ____________THIS is SOME text.</span></span><br><span class="line"><span class="keyword">print</span> s4.center(<span class="number">30</span>, <span class="string">'_'</span>)  <span class="comment"># ______THIS is SOME text.______</span></span><br><span class="line"><span class="keyword">print</span> s4.zfill(<span class="number">30</span>)  <span class="comment"># 000000000000THIS is SOME text.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 替换字符串</span></span><br><span class="line">s5 = <span class="string">'color1 and color2 and color3 scheme files are tested.'</span></span><br><span class="line"><span class="keyword">print</span> s5.replace(<span class="string">'color'</span>, <span class="string">'dark'</span>)</span><br><span class="line"><span class="comment"># out: dark1 and dark2 and dark3 scheme files are tested.</span></span><br><span class="line"><span class="keyword">print</span> s5.replace(<span class="string">'and'</span>, <span class="string">''</span>)</span><br><span class="line"><span class="comment"># out: color1  color2  color3 scheme files are tested.</span></span><br><span class="line"><span class="keyword">print</span> s5.replace(<span class="string">' '</span>, <span class="string">'_'</span>)</span><br><span class="line"><span class="comment"># out: color1_and_color2_and_color3_scheme_files_are_tested.</span></span><br><span class="line"><span class="keyword">print</span> s5.replace(<span class="string">' '</span>, <span class="string">'-'</span>, <span class="number">2</span>)</span><br><span class="line"><span class="comment"># out: color1-and-color2 and color3 scheme files are tested.</span></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Python/"> #Python </a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/07/15/python-module-date-time-notes/">Python标准库笔记之datetime</a>
-            
-          </div>
-
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2015/07/15/python-image-exif-rename/">根据EXIF拍摄时间批量重命名照片</a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </div>
-  </div>
-
-
-
-    <div class="post-spread">
-      
-    </div>
+    <a class="newer-posts" href="/2015/07/15/python-module-date-time-notes/">
+        ← Python标准库笔记之datetime
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/2015/07/15/python-image-exif-rename/">
+        根据EXIF拍摄时间批量重命名照片 →
+    </a>
+    
+</nav>
+  <div id="comment" class="comments-area">
+    <h1 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h1>
 
     
-      <div class="comments" id="comments">
-        
-          <div class="ds-thread" data-thread-key="2015/07/15/python-module-string-notes/"
-               data-title="Python标准库笔记之string" data-url="http://blog.mcxiaoke.com/2015/07/15/python-module-string-notes/">
-          </div>
-        
-      </div>
-    
-  </div>
-
-
-        </div>
-
-        
-      </div>
-
-
-      
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <div class="site-overview">
-        <div class="site-author motion-element">
-          <img class="site-author-image" src="/images/avatar.jpg" alt="mcxiaoke" />
-          <p class="site-author-name">mcxiaoke</p>
-        </div>
-        <p class="site-description motion-element">零碎的笔记</p>
-        <div class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">23</span>
-              <span class="site-state-item-name">日志</span>
-            </a>
-          </div>
-
-          <div class="site-state-item site-state-categories">
-            
-              <span class="site-state-item-count">9</span>
-              <span class="site-state-item-name">分类</span>
-              
-          </div>
-
-          <div class="site-state-item site-state-tags">
-            <a href="/tags">
-              <span class="site-state-item-count">27</span>
-              <span class="site-state-item-name">标签</span>
-              </a>
-          </div>
-
-        </div>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-            
-              <span class="links-of-author-item">
-              <a href="https://github.com/mcxiaoke" target="_blank">GitHub</a>
-            </span>
-            
-              <span class="links-of-author-item">
-              <a href="http://www.douban.com/people/doiv" target="_blank">DouBan</a>
-            </span>
-            
-              <span class="links-of-author-item">
-              <a href="http://mcxiaoke.com/" target="_blank">Home</a>
-            </span>
-            
-          
-        </div>
-
-        
-        
-          <div class="cc-license motion-element">
-            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
-              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
-            </a>
-          </div>
-        
-
-        <div class="links-of-author motion-element">
-          
-            <p class="site-author-name">Links</p>
-            
-              <span class="links-of-author-item">
-              <a href="http://moment.douban.com/app/" target="_blank">豆瓣一刻</a>
-              </span>
-            
-          
-        </div>
-        
-      </div>
-
-      
-        <div class="post-toc-wrap sidebar-panel-active">
-          <div class="post-toc-indicator-top post-toc-indicator"></div>
-          <div class="post-toc">
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#String"><span class="nav-number">1.</span> <span class="nav-text">String</span></a></li></ol></div>
-            
-          </div>
-          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
-        </div>
-      
-
-    </div>
-  </div>
-
-
-    </div>
-
-    <div id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">
-  
-  &copy; &nbsp;  2007 - 
-  2015
-  <span class="with-love">
-    <i class="icon-heart"></i>
-  </span>
-  <span class="author">mcxiaoke</span>
 </div>
-
-<div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
+</main>
 
 
-
-      </div>
-    </div>
-
-    <div class="back-to-top"></div>
+  
+<footer class="site-footer">
+  
+  <a class="subscribe icon-feed" href="atom.xml"><span class="tooltip">Subscribe!</span></a>
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Xiaoke's Blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
   </div>
+</footer>
 
-  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
-  
-  
-
-  
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
 
 
-  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
-  
+<script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-49960399-2']);
+    _gaq.push(['_trackPageview']);
 
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
-
-  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
-
-
-
-  <script type="text/javascript" src="/js/search-toggle.js"></script>
-
-  
-  
-<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
-
-
-<script type="text/javascript" id="sidebar.toc.highlight">
-  $(document).ready(function () {
-    var tocSelector = '.post-toc';
-    var $tocSelector = $(tocSelector);
-    var activeCurrentSelector = '.active-current';
-
-    $tocSelector
-      .on('activate.bs.scrollspy', function () {
-        var $currentActiveElement = $(tocSelector + ' .active').last();
-
-        removeCurrentActiveClass();
-        $currentActiveElement.addClass('active-current');
-
-        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
-      })
-      .on('clear.bs.scrollspy', function () {
-        removeCurrentActiveClass();
-      });
-
-    function removeCurrentActiveClass () {
-      $(tocSelector + ' ' + activeCurrentSelector)
-        .removeClass(activeCurrentSelector.substring(1));
-    }
-
-    function processTOC () {
-      getTOCMaxHeight();
-      toggleTOCOverflowIndicators();
-    }
-
-    function getTOCMaxHeight () {
-      var $sidebarInner = $('.sidebar-inner');
-      var height = $('.sidebar').height() -
-                   $tocSelector.position().top -
-                   $('.post-toc-indicator-bottom').height();
-
-      $tocSelector.css('height', height);
-
-      return height;
-    }
-
-    function toggleTOCOverflowIndicators () {
-      tocOverflowIndicator(
-        '.post-toc-indicator-top',
-        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
-      );
-
-      tocOverflowIndicator(
-        '.post-toc-indicator-bottom',
-        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
-      )
-    }
-
-    $(document).on('sidebar.didShow', function () {
-      processTOC();
-    });
-
-    $('body').scrollspy({ target: tocSelector });
-    $(window).on('resize', function () {
-      if ( $('.sidebar').hasClass('sidebar-active') ) {
-        processTOC();
-      }
-    });
-
-    onScroll($tocSelector);
-
-    function onScroll (element) {
-      element.on('mousewheel DOMMouseScroll', function (event) {
-          var oe = event.originalEvent;
-          var delta = oe.wheelDelta || -oe.detail;
-          var self = this;
-
-          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
-          event.preventDefault();
-
-          toggleTOCOverflowIndicators();
-      });
-    }
-
-    function tocOverflowIndicator (indicator, action) {
-      $(indicator).velocity('stop').velocity({
-        opacity: action === 'show' ? 0.4 : 0
-      }, { duration: 100 });
-    }
-
-  });
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
 </script>
 
 
-  <script type="text/javascript" id="sidebar.nav">
-    $(document).ready(function () {
-      var html = $('html');
 
-      $('.sidebar-nav li').on('click', function () {
-        var item = $(this);
-        var activeTabClassName = 'sidebar-nav-active';
-        var activePanelClassName = 'sidebar-panel-active';
-        if (item.hasClass(activeTabClassName)) {
-          return;
-        }
-
-        var currentTarget = $('.' + activePanelClassName);
-        var target = $('.' + item.data('target'));
-
-        currentTarget.velocity('transition.slideUpOut', 200, function () {
-          target
-            .velocity('stop')
-            .velocity('transition.slideDownIn', 200)
-            .addClass(activePanelClassName);
-        });
-
-        item.siblings().removeClass(activeTabClassName);
-        item.addClass(activeTabClassName);
-      });
-
-      $('.post-toc a').on('click', function (e) {
-        e.preventDefault();
-        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
-        html.velocity('stop').velocity('scroll', {
-          offset: offset  + 'px',
-          mobileHA: false
-        });
-      });
-
-      // Expand sidebar on post detail page by default, when post has a toc.
-      var $tocContent = $('.post-toc-content');
-      if (isDesktop() && CONFIG.sidebar === 'post') {
-        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
-          displaySidebar();
-        }
-      }
-    });
-  </script>
-
-
-
-
-  <script type="text/javascript">
-    $(document).ready(function () {
-      if (CONFIG.sidebar === 'always') {
-        displaySidebar();
-      }
-    });
-  </script>
-
-  
-
-  
-  
-
-  
-    
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"mcxiaoke"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
-
-
-  
-  
-  <script type="text/javascript" src="/js/analytics_google-analytics.js?v=0.4.3"></script>
 
 
 </body>
