@@ -2,6 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.mcxiaoke.com/2015/07/15/python-image-exif-rename/</loc>
+    <lastmod>2016-03-28T09:31:59.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.mcxiaoke.com/2015/07/15/python-module-date-time-notes/</loc>
+    <lastmod>2016-03-28T09:30:23.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.mcxiaoke.com/2015/07/15/python-module-string-notes/</loc>
+    <lastmod>2016-03-28T09:27:36.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.mcxiaoke.com/2015/12/22/ubuntu-nginx-php-python-config-notes/</loc>
     <lastmod>2015-12-22T09:58:53.000Z</lastmod>
   </url>
@@ -29,21 +44,6 @@
   <url>
     <loc>http://blog.mcxiaoke.com/2015/08/04/how-to-write-an-eventbus-part2/</loc>
     <lastmod>2015-08-04T02:21:17.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://blog.mcxiaoke.com/2015/07/15/python-image-exif-rename/</loc>
-    <lastmod>2015-07-24T09:43:48.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://blog.mcxiaoke.com/2015/07/15/python-module-string-notes/</loc>
-    <lastmod>2015-07-15T06:45:57.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://blog.mcxiaoke.com/2015/07/15/python-module-date-time-notes/</loc>
-    <lastmod>2015-07-15T06:45:27.000Z</lastmod>
   </url>
   
   <url>
